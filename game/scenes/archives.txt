@@ -1,0 +1,21 @@
+You step into a crystalline hall where voices whisper in harmonics. Tomes float between shelves, threading stories into the Spiral.
+
+*choice
+  #Anchor yourself with a calming chant.
+    The resonance steadies. You imprint the Spiral's cadence onto your own heartbeat.
+    *set attunement +10
+    *set council_trust +5
+    *goto after_archives
+  #Let the current of memory carry you.
+    The voices show you futures yet unwritten. Insight floods your senses.
+    *set attunement +15
+    *set resonance_mark true
+    *goto after_archives
+  #Search for ${mentor}'s research notes.
+    You spot ${mentor}'s sigil and glean warnings about unstable portals.
+    *set council_trust +10
+    *goto after_archives
+
+*label after_archives
+An attendant smiles. "The council likes when scholars bring back clarity."
+*goto_scene epilogue

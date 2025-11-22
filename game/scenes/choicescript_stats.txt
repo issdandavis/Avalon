@@ -1,0 +1,14 @@
+*comment Stats screen for Avalon Crossing demo.
+*stat_chart
+  percent honor Honor
+  percent attunement Attunement
+  text mentor Mentor
+  percent council_trust Council trust
+
+*comment Show a short blurb based on current pathing.
+*if oathbound
+  You swore an oath to Avalon and its wardens.
+*elseif resonance_mark
+  The Spiral's song echoes through you.
+*else
+  Your path through Avalon remains unwritten.

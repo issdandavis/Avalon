@@ -282,10 +282,8 @@ She points to three glowing regions on the map:
 
 Your training at Avalon continues in the traditional manner.
 
-Perhaps your story will find its extraordinary moment later.
+You've learned the fundamentals. Now it's time to deepen your understanding through daily practice.
 
 *line_break
 
-[i]"To be continued..."[/i]
-
-*finish
+*goto_scene academy_life

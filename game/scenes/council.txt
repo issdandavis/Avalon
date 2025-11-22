@@ -1,0 +1,29 @@
+The council chamber is a ring of suspended platforms. Holographic maps of the Spiral shimmer between the elders.
+
+*choice
+  #Present a balanced plan to strengthen both wards and archives.
+    Elders exchange impressed glances.
+    *set honor +5
+    *set attunement +5
+    *set council_trust +10
+    *goto after_council
+  #Advocate for deeper research into the Spiral's song.
+    Not all elders approve, but ${mentor} speaks in your favor.
+    *set attunement +10
+    *set council_trust +5
+    *goto after_council
+  #Request permission to reopen a dormant portal.
+    The room stills. This is bold.
+    *if council_trust >= 55
+      They allow a trial. Responsibility settles on your shoulders.
+      *set resonance_mark true
+      *set honor +5
+      *goto after_council
+    *else
+      The elders frown. "Earn our confidence first."
+      *set council_trust -5
+      *goto after_council
+
+*label after_council
+A bell tolls from deeper within the chamber, signaling a new phase of your time in Avalon.
+*goto_scene epilogue

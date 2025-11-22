@@ -1,0 +1,10 @@
+# Environment and secrets
+.env
+keys.txt
+
+# OS/filesystem cruft
+.DS_Store
+Thumbs.db
+
+# ChoiceScript engine clone (downloaded locally)
+game/choicescript/

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polly's Wingscroll - Play Now!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Georgia, serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e4e4e4;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(26, 26, 46, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(94, 132, 226, 0.4);
+            border: 2px solid rgba(94, 132, 226, 0.6);
+        }
+        h1 {
+            color: #5e84e2;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(94, 132, 226, 0.6);
+        }
+        .subtitle {
+            text-align: center;
+            color: #a8b2d1;
+            font-style: italic;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .big-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #5e84e2 0%, #4a6bb5 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.3em;
+            font-family: Georgia, serif;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .big-button:hover {
+            background: linear-gradient(135deg, #6a92f0 0%, #5577c9 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(94, 132, 226, 0.5);
+        }
+        .info {
+            background: rgba(94, 132, 226, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #5e84e2;
+        }
+        .info h3 {
+            color: #5e84e2;
+            margin-bottom: 10px;
+        }
+        .info p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .polly-quote {
+            color: #c792ea;
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(199, 146, 234, 0.1);
+            border-radius: 5px;
+        }
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .path-link {
+            display: block;
+            color: #5e84e2;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+        .path-link:hover {
+            color: #6a92f0;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Polly's Wingscroll</h1>
+        <p class="subtitle">The First Thread - A Choice-Based Adventure</p>
+
+        <div class="polly-quote">
+            *Caw!* "Welcome to Avalon Academy! Now let's get you playing without all this technical nonsense..."
+        </div>
+
+        <div class="info">
+            <h3>📍 You Have TWO Ways to Play:</h3>
+            <p><strong>Option 1:</strong> Simple HTML Version (Click button below)</p>
+            <p><strong>Option 2:</strong> Professional ChoiceScript Version (More setup needed)</p>
+        </div>
+
+        <button class="big-button" onclick="window.location.href='game/index.html'">
+            ▶️ PLAY NOW (HTML Version)
+        </button>
+
+        <div class="info">
+            <h3>✨ What You Get in HTML Version:</h3>
+            <ul>
+                <li>✅ <strong>Works Immediately</strong> - No setup required!</li>
+                <li>✅ <strong>Full Game</strong> - 30+ scenes, 14 endings</li>
+                <li>✅ <strong>3 Realm Explorations</strong> - Singing Dunes, Verdant Tithe, Rune Glacier</li>
+                <li>✅ <strong>50+ Choices</strong> - Your decisions matter</li>
+                <li>✅ <strong>Polly's Snark</strong> - Full sarcastic commentary</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h3>🎯 Game Features:</h3>
+            <p><strong>Collaboration System:</strong> Your choices determine if you're a collaborative mage or solo practitioner</p>
+            <p><strong>Relationships:</strong> Build bonds with Izack, Aria, Zara, and Polly</p>
+            <p><strong>Multiple Paths:</strong> Desert truth-testing, forest consciousness-merging, or glacier rune-mastery</p>
+        </div>
+
+        <div class="polly-quote">
+            "The ChoiceScript version is fancier, but honestly? The HTML version works just fine. Stop fussing with folders and just play!"
+        </div>
+
+        <div class="info">
+            <h3>📚 Other Useful Links:</h3>
+            <p class="path-link">📖 <a href="QUICK_START.md" style="color: #5e84e2;">Quick Start Guide</a> - Full instructions</p>
+            <p class="path-link">🗺️ <a href="docs/PROJECT_ROADMAP.md" style="color: #5e84e2;">Project Roadmap</a> - Development plan</p>
+            <p class="path-link">🤖 <a href="docs/AUTOMATION_GUIDE.md" style="color: #5e84e2;">Automation Guide</a> - For future workflows</p>
+        </div>
+
+        <hr style="border: 1px solid rgba(94, 132, 226, 0.3); margin: 30px 0;">
+
+        <div class="info">
+            <h3>💡 Still Want ChoiceScript?</h3>
+            <p>If you really want the professional version, here's what needs to happen:</p>
+            <ol style="margin-left: 30px;">
+                <li>Extract <code>choicescript-main.zip</code></li>
+                <li>Go to <code>choicescript-main/web/mygame/</code></li>
+                <li>Delete everything in <code>mygame</code> folder</li>
+                <li>Copy everything from <code>Avalon/choicescript_game/</code></li>
+                <li>Paste into <code>mygame</code></li>
+                <li>Open <code>choicescript-main/web/index.html</code></li>
+            </ol>
+            <p style="margin-top: 15px;"><strong>But seriously - just click the big button above and play the HTML version!</strong></p>
+        </div>
+
+        <div class="polly-quote">
+            "The spiral awaits. Stop procrastinating with file management and start making choices!"
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,350 @@
+*comment ================================================
+*comment ROMANCE SCENES
+*comment Optional romantic paths with Izack, Aria, or Zara
+*comment Triggers from character_bonds if romance_enabled
+*comment ================================================
+
+*label start
+
+*comment This scene is called from character_bonds when romance flags are set
+
+*if romantic_interest = "izack"
+  *goto izack_romance
+
+*if romantic_interest = "aria"
+  *goto aria_romance
+
+*if romantic_interest = "zara"
+  *goto zara_romance
+
+*comment If no romance selected, return to main flow
+*goto_scene final_trial
+
+*comment ================================================
+*comment IZACK ROMANCE PATH
+*comment ================================================
+
+*label izack_romance
+
+*if izack_romance = false
+  *comment First romance scene - establishing mutual interest
+  *goto izack_first_moment
+*else
+  *comment Deepening romance
+  *goto izack_deepening
+
+*label izack_first_moment
+
+You find Izack in the Ley line Gazebo late at night, studying dimensional currents.
+
+He looks up when you approach, and something shifts in his expression—warmth beyond mere mentorship.
+
+*page_break
+
+[b]"${name}. I was hoping you'd come."[/b]
+
+*line_break
+
+He gestures to the leylines flowing around you both, visible as streams of light.
+
+[b]"I wanted to show you something. Watch."[/b]
+
+*page_break
+
+He raises a hand, and the ley lines respond—not commanded, but [i]invited[/i]. They dance around you both, creating patterns of light and magic.
+
+[b]"This is what magic can be when we stop trying to control it. When we just... [i]listen[/i]."[/b]
+
+*page_break
+
+*choice
+  #"It's beautiful. Like you."
+    *set izack_romance true
+    *set romantic_interest "izack"
+    *set izack_relationship +20
+    *set romance_depth +1
+
+    His eyes widen.
+
+    For a moment, the legendary dimensional mage looks utterly vulnerable.
+
+    [b]"I... ${name}, I shouldn't. You're my student. But..."[/b]
+
+    *page_break
+
+    [b]"But I can't stop thinking about you."[/b]
+
+    *goto izack_kiss_choice
+
+  #"Thank you for sharing this with me."
+    *set izack_relationship +10
+
+    He smiles warmly.
+
+    [b]"Always. You're special, ${name}. I hope you know that."[/b]
+
+    *goto return_to_main
+
+*label izack_kiss_choice
+
+The leylines swirl around you both, private and perfect.
+
+*choice
+  #Kiss him
+    *set first_kiss_scene "izack_leyline"
+    *set romance_depth +2
+
+    You close the distance.
+
+    When your lips meet, the leylines [i]sing[/i]—responding to the connection between you, amplifying it, celebrating it.
+
+    *page_break
+
+    When you pull back, Izack is smiling.
+
+    [b]"That was... incredible."[/b]
+
+    *goto return_to_main
+
+  #"We should wait. Until after I graduate."
+    *set izack_romance "patient"
+    *set honesty_vs_deception +15
+
+    He nods, clearly both disappointed and respectful.
+
+    [b]"You're right. And wise. After you graduate, we can... explore this. If you still want to."[/b]
+
+    *goto return_to_main
+
+*label izack_deepening
+
+*comment Subsequent romance scene - deepening relationship
+
+You and Izack have been growing closer.
+
+The other students have noticed. Some whisper. Some approve. All are intrigued.
+
+*page_break
+
+Tonight, he takes you to the Dream Gardens, where flora blooms in response to emotion.
+
+Around you, flowers open in patterns of silver and gold—reflecting the connection between you.
+
+*page_break
+
+[b]"${name},"[/b] he says softly, [b]"I've lived for over a century. I've created pocket dimensions and founded academies. But this—what I feel for you—this is new."[/b]
+
+*set izack_relationship +15
+*set romance_depth +1
+*set empathy +10
+
+*goto return_to_main
+
+*comment ================================================
+*comment ARIA ROMANCE PATH
+*comment ================================================
+
+*label aria_romance
+
+*if aria_romance = false
+  *goto aria_first_moment
+*else
+  *goto aria_deepening
+
+*label aria_first_moment
+
+You find Aria in the restricted library section, surrounded by ancient texts.
+
+She looks up, and for once, her usual sharp expression softens.
+
+*page_break
+
+[b]"${name}. You've been on my mind."[/b]
+
+*line_break
+
+She sets down her book.
+
+[b]"That's... unusual for me. I don't usually get distracted. But you're different."[/b]
+
+*page_break
+
+*choice
+  #"You're on my mind too, Aria."
+    *set aria_romance true
+    *set romantic_interest "aria"
+    *set aria_relationship +20
+    *set romance_depth +1
+
+    She stands, crossing to you with unexpected grace.
+
+    [b]"Good. Because I've been fighting this feeling, and I'm tired of fighting."[/b]
+
+    *goto aria_kiss_choice
+
+  #"I'm flattered, but I see you as a mentor."
+    *set aria_relationship +5
+
+    She nods, masking any disappointment.
+
+    [b]"Of course. Professional boundaries. Wise."[/b]
+
+    *goto return_to_main
+
+*label aria_kiss_choice
+
+She's close now, close enough that you can see the silver flecks in her eyes.
+
+*choice
+  #Kiss her
+    *set first_kiss_scene "aria_library"
+    *set romance_depth +2
+
+    When your lips meet, it's like a perfectly executed spell—precise, powerful, transformative.
+
+    *page_break
+
+    She pulls back slightly, smiling.
+
+    [b]"Well. That was... enlightening."[/b]
+
+    *goto return_to_main
+
+  #"After I graduate. Then we can be equals."
+    *set aria_romance "patient"
+    *set honesty_vs_deception +15
+
+    She respects that.
+
+    [b]"Intellectual honesty. I appreciate that about you. After you graduate, then."[/b]
+
+    *goto return_to_main
+
+*label aria_deepening
+
+Your relationship with Aria has grown into something profound.
+
+She shares secrets from ancient texts, teaches you things no other student learns, looks at you like you're the most fascinating discovery she's ever made.
+
+*page_break
+
+Tonight, she takes you to the boundary of Avalon itself, where you can see the dimensional threads holding the entire realm together.
+
+[b]"This is what I study,"[/b] she says. [b]"Boundaries. Thresholds. The spaces between. And you, ${name}, you've crossed the boundary into my heart."[/b]
+
+*set aria_relationship +15
+*set romance_depth +1
+*set knowledge +10
+
+*goto return_to_main
+
+*comment ================================================
+*comment ZARA ROMANCE PATH
+*comment ================================================
+
+*label zara_romance
+
+*if zara_romance = false
+  *goto zara_first_moment
+*else
+  *goto zara_deepening
+
+*label zara_first_moment
+
+You find Zara in the gardens, tending to magical plants.
+
+She looks up and smiles—that warm, genuine smile that makes flowers bloom brighter.
+
+*page_break
+
+[b]"${name}. I was hoping to see you."[/b]
+
+*line_break
+
+She approaches, hands still dirty from the garden, utterly unself-conscious.
+
+[b]"I need to tell you something. I... I think I'm falling for you."[/b]
+
+*page_break
+
+*choice
+  #"I'm falling for you too, Zara."
+    *set zara_romance true
+    *set romantic_interest "zara"
+    *set zara_relationship +20
+    *set romance_depth +1
+
+    Her smile could light the entire academy.
+
+    [b]"Really? Oh, ${name}, I was so nervous!"[/b]
+
+    *goto zara_kiss_choice
+
+  #"I care about you, but as a friend."
+    *set zara_relationship +5
+
+    She nods, trying to hide disappointment.
+
+    [b]"I understand. Friends is good. Friends is important."[/b]
+
+    *goto return_to_main
+
+*label zara_kiss_choice
+
+She takes your hand, gentle despite her draconic strength.
+
+*choice
+  #Kiss her
+    *set first_kiss_scene "zara_garden"
+    *set romance_depth +2
+
+    When you kiss, the plants around you [i]respond[/i]—flowers blooming, vines reaching toward the light, everything celebrating your connection.
+
+    *page_break
+
+    Zara laughs with pure joy.
+
+    [b]"The forest approves!"[/b]
+
+    *goto return_to_main
+
+  #"Let's take it slow."
+    *set zara_romance "patient"
+    *set empathy +15
+
+    She squeezes your hand gently.
+
+    [b]"Slow is good. I want to do this right."[/b]
+
+    *goto return_to_main
+
+*label zara_deepening
+
+Your bond with Zara has deepened into something beautiful.
+
+She shows you secret groves, shares songs her mother taught her, looks at you like you're the most precious thing in her world.
+
+*page_break
+
+Tonight, you sit together under the World Tree, its branches reaching toward infinite realms.
+
+[b]"${name},"[/b] she whispers, [b]"with you, I feel like I'm home. Wherever you are, that's where I belong."[/b]
+
+*set zara_relationship +15
+*set romance_depth +1
+*set empathy +10
+
+*goto return_to_main
+
+*comment ================================================
+*comment RETURN TO MAIN FLOW
+*comment ================================================
+
+*label return_to_main
+
+*page_break
+
+*if romance_depth > 0
+  Your heart feels full. Whatever happens next, this connection matters.
+
+*goto_scene final_trial

@@ -1,0 +1,19 @@
+You pause at the threshold of a balcony overlooking the Spiral. Choices made today ripple outward.
+
+*if resonance_mark
+  The Spiral thrums in time with your pulse, marking you as one who listens.
+*elseif oathbound
+  The badge of the wardens gleams. Duty anchors your steps.
+*else
+  The council watches, curious which oath you will claim.
+
+*comment Offer a small wrap-up and replay hook.
+*choice
+  #Reflect on what you learned.
+    Honor: ${honor}
+    Attunement: ${attunement}
+    Council trust: ${council_trust}
+    *finish
+  #Step forward into the Spiral once more.
+    The path shifts with every decision.
+    *ending

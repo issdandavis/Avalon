@@ -1,0 +1,20 @@
+The skybridge to the Aerie arches above clouds. Banners from distant houses ripple in the wind. Below, the Spiral resonates with each step you take.
+
+*choice
+  #Pause to read the banners.
+    The sigils speak of alliances and old debts. The wardens note your patience.
+    *set honor +5
+    *set council_trust +5
+    *goto next
+  #Listen for echoes in the Spiral.
+    A rhythm of distant bells answers you. Your attunement sharpens.
+    *set attunement +5
+    *goto next
+  #Move quickly; the council is waiting.
+    You stride forward. ${mentor} jogs to keep up.
+    *set council_trust -5
+    *goto next
+
+*label next
+You reach the council chambers. A portal shimmers, leading deeper into Avalon.
+*finish

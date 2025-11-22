@@ -1,0 +1,37 @@
+═══════════════════════════════════════════════════════
+  WHERE EVERYTHING IS - QUICK REFERENCE
+═══════════════════════════════════════════════════════
+
+🎮 TO PLAY THE GAME:
+   game/index.html ← OPEN THIS FILE
+
+📚 DOCUMENTATION:
+   START_HERE.md ← Simplest instructions
+   README.md ← Full project overview
+   QUICK_START.md ← Detailed play instructions
+
+📖 GAME FILES:
+   game/ ← HTML version (complete)
+   choicescript_game/ ← Professional version
+
+📚 LORE & WORLDBUILDING:
+   lore/ ← All worldbuilding documents
+
+📝 WRITING:
+   writing_drafts/ ← Novel manuscripts
+
+📋 PROJECT DOCS:
+   docs/AUTOMATION_GUIDE.md ← Zapier workflows
+   docs/PROJECT_ROADMAP.md ← Development plan
+
+📦 OLD FILES:
+   archive/ ← Chat logs and old versions
+
+═══════════════════════════════════════════════════════
+
+MOST IMPORTANT:
+• To play: game/index.html
+• To understand structure: README.md
+• To learn how to play: START_HERE.md
+
+═══════════════════════════════════════════════════════

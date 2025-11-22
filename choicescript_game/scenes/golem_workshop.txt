@@ -1,0 +1,174 @@
+*comment ================================================
+*comment GOLEM WORKSHOP - Create Your Golem Companion
+*comment Based on lore: Grey and Clayborn
+*comment Optional scene - can be accessed from academy_life
+*comment ================================================
+
+*label start
+
+*if has_golem
+  You already have ${golem_name} as your golem companion.
+  *goto_scene academy_life
+
+*page_break
+
+During a free afternoon, you discover a workshop beneath the Academy—Grey's domain.
+
+Grey is a massive golem commander, built of stone and bronze, with eyes that glow with ancient intelligence.
+
+*page_break
+
+[b]"A student,"[/b] Grey rumbles. [b]"Come to learn golem-craft, have you?"[/b]
+
+${He_She} gestures to workbenches covered with clay, crystals, and arcane tools.
+
+[b]"I can teach you to create a golem companion. Not a servant—a partner. Like Clayborn."[/b]
+
+*page_break
+
+A smaller golem appears—Clayborn, made of living clay that shifts and morphs. When music plays nearby, Clayborn dances.
+
+*choice
+  #"Yes, I want to create a golem companion."
+    *goto golem_creation
+
+  #"Maybe later. I'm not ready yet."
+    *goto_scene academy_life
+
+*label golem_creation
+
+Grey nods.
+
+[b]"First: choose your golem's element. This defines their nature."[/b]
+
+*choice
+  #Earth - Sturdy, loyal, protective
+    *set golem_element "earth"
+    *goto golem_personality_choice
+
+  #Fire - Passionate, energetic, fierce
+    *set golem_element "fire"
+    *goto golem_personality_choice
+
+  #Water - Adaptive, flowing, empathetic
+    *set golem_element "water"
+    *goto golem_personality_choice
+
+  #Air - Swift, curious, clever
+    *set golem_element "air"
+    *goto golem_personality_choice
+
+  #Crystal - Precise, magical, attuned to leylines
+    *set golem_element "crystal"
+    *goto golem_personality_choice
+
+*label golem_personality_choice
+
+*page_break
+
+Grey hands you clay infused with ${golem_element} essence.
+
+[b]"Now shape it. As you work, think about who your golem will be. Their personality will form from your intentions."[/b]
+
+*page_break
+
+What kind of personality do you envision?
+
+*choice
+  #Protective guardian - loyal and brave
+    *set golem_personality "guardian"
+    *goto golem_naming
+
+  #Curious scholar - seeking knowledge
+    *set golem_personality "scholar"
+    *goto golem_naming
+
+  #Playful companion - joyful and mischievous
+    *set golem_personality "playful"
+    *goto golem_naming
+
+  #Silent watcher - observant and calm
+    *set golem_personality "watcher"
+    *goto golem_naming
+
+*label golem_naming
+
+*page_break
+
+What will you name your golem?
+
+*input_text golem_name
+
+*page_break
+
+You shape the clay, infusing it with ${golem_element} essence and your intentions.
+
+The golem begins to form—at first just a rough shape, then details emerge. Eyes that glow with inner light. Limbs that move with purpose.
+
+*page_break
+
+Grey places a hand on your creation.
+
+[b]"The final step: awakening. Give ${golem_name} a piece of yourself—a memory, an emotion, a truth. This makes them truly alive."[/b]
+
+*choice
+  #Share a happy memory
+    *set golem_personality "${golem_personality}_joyful"
+    *set empathy +10
+    You think of your happiest moment and pour it into ${golem_name}.
+
+  #Share your determination to learn
+    *set golem_personality "${golem_personality}_determined"
+    *set knowledge +10
+    You think of your drive to master magic and pour it into ${golem_name}.
+
+  #Share your hope for the future
+    *set golem_personality "${golem_personality}_hopeful"
+    *set collaboration +10
+    You think of the future you want to build and pour it into ${golem_name}.
+
+*page_break
+
+${golem_name}'s eyes flare with light.
+
+The golem stands, looks at you, and—
+
+*if golem_personality = "playful"
+  —immediately starts dancing like Clayborn.
+
+*if golem_personality = "guardian"
+  —moves to stand protectively beside you.
+
+*if golem_personality = "scholar"
+  —reaches for a nearby book with curious intent.
+
+*if golem_personality = "watcher"
+  —simply observes everything with calm, glowing eyes.
+
+*page_break
+
+Grey nods with satisfaction.
+
+[b]"Well done. ${golem_name} is alive, aware, and bonded to you. Treat ${him_her} well."[/b]
+
+*set has_golem true
+*set grey_relationship +20
+*set power +10
+*set individual_vs_collective +10
+
+*page_break
+
+*if polly_is_familiar
+  Polly eyes ${golem_name} critically.
+
+  [i]"Great. Now you have two companions. This is going to get crowded."[/i]
+
+  *page_break
+
+You now have ${golem_name}, your ${golem_element} golem companion.
+
+Together with ${familiar_name}, you're building quite the magical entourage.
+
+*page_break
+
+*goto_scene academy_life

@@ -1,4 +1,6 @@
 // Game State
+// Tracing helper (defined in tracing.js). If absent, provide no-op.
+const traceEvent = window.traceEvent || function(){};
 const gameState = {
     currentNode: 'start',
     collaborationScore: 0,
@@ -1278,6 +1280,12 @@ function displayNode(nodeId) {
 
     gameState.currentNode = nodeId;
 
+    traceEvent('node_displayed', {
+        node: nodeId,
+        collaborationScore: gameState.collaborationScore,
+        relationships: { ...gameState.relationships }
+    });
+
     // Display story text
     document.getElementById('story-text').innerHTML = node.text;
 
@@ -1288,6 +1296,12 @@ function displayNode(nodeId) {
     if (node.choices.length === 0) {
         // This is an ending
         document.getElementById('restart-btn').style.display = 'block';
+        traceEvent('ending_reached', {
+            ending: nodeId,
+            collaborationScore: gameState.collaborationScore,
+            relationships: { ...gameState.relationships },
+            path: gameState.choices.slice()
+        });
     } else {
         node.choices.forEach((choice, index) => {
             const button = document.createElement('button');
@@ -1325,6 +1339,14 @@ function makeChoice(choice) {
         choice: choice.text
     });
 
+    traceEvent('choice_made', {
+        fromNode: gameState.currentNode,
+        choiceText: choice.text,
+        effects: choice.effects || {},
+        updatedCollaboration: gameState.collaborationScore,
+        relationships: { ...gameState.relationships }
+    });
+
     // Update stats
     updateStats();
 
@@ -1345,6 +1367,7 @@ function restartGame() {
     document.getElementById('restart-btn').style.display = 'none';
     updateStats();
     displayNode('start');
+    traceEvent('game_restarted', {});
 }
 
 // Initialize game
@@ -1352,4 +1375,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('restart-btn').onclick = restartGame;
     updateStats();
     displayNode('start');
+    traceEvent('init', {
+        sessionId: window.gameTrace && window.gameTrace.sessionId,
+        startNode: gameState.currentNode
+    });
 });

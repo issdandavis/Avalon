@@ -1,12 +1,1118 @@
 *comment ================================================
-*comment ENDINGS
+*comment ENDINGS - All 14 Unique Endings
+*comment Based on collaboration score, artifacts, and choices
 *comment ================================================
 
-*comment TODO: All 14 endings to be added
-*comment This is a placeholder for testing
+*label start
 
-Your story concludes...
+You return through the portal to Avalon Academy.
 
-[i]Endings coming soon...[/i]
+The Spiral Spire gleams above you, its impossible geometry catching the afternoon light. The World Tree's branches sway in a breeze that smells of magic and possibility.
+
+*page_break
+
+*comment ================================================
+*comment DETERMINE ENDING BASED ON STATS AND CHOICES
+*comment ================================================
+
+*comment Highest tier endings - Partnership and Mastery
+*if (artifact_earned = "Glacier Partnership") and (collaboration > 80)
+  *goto collaborative_master
+
+*if (artifact_earned = "Glacier Partnership")
+  *goto glacier_partner_ending
+
+*if (artifact_earned = "Heartwood Guardian - Ancient Wisdom")
+  *goto heartwood_guardian_ending
+
+*if (artifact_earned = "Truth-Sworn Sand") and (collaboration > 70)
+  *goto truthbound_mage_ending
+
+*if (artifact_earned = "Runeweaver's Mark")
+  *goto runeweaver_ending
+
+*comment Medium-high tier endings
+*if (collaboration > 75)
+  *goto collaborative_scholar_ending
+
+*if (artifact_earned = "Dreamwillow Vision") or (artifact_earned = "Thoughtvine Bond")
+  *goto forestbound_guardian_ending
+
+*if (artifact_earned = "Harmony Bracelet")
+  *goto balanced_mage_ending
+
+*if (artifact_earned = "Rune of Mystery")
+  *goto humble_seeker_ending
+
+*comment Medium tier endings
+*if (collaboration >= 50) and (collaboration <= 74)
+  *goto boundary_specialist_ending
+
+*if (collaboration >= 40) and (collaboration < 50)
+  *goto second_chance_ending
+
+*comment Lower tier endings
+*if (collaboration >= 25) and (collaboration < 40)
+  *goto humbled_student_ending
+
+*if (collaboration < 25)
+  *goto expelled_ending
+
+*comment Default ending if somehow nothing else triggered
+*goto standard_path_ending
+
+*comment ================================================
+*comment ENDING 1: COLLABORATIVE MASTER
+*comment Highest achievement - Partnership + Very High Collaboration
+*comment ================================================
+
+*label collaborative_master
+
+*achievement collaborative_master
+
+Izack Thorne himself is waiting in the courtyard.
+
+When he sees you, his eyes widen. He can [i]see[/i] what you've become—the way the glacier's power flows through you, the living runes dancing beneath your skin, the fundamental change in how you interact with dimensional magic.
+
+*line_break
+
+[b]"Impossible,"[/b] he whispers. [b]"You achieved partnership. True, equal partnership with one of the ancient forces. In your first expedition."[/b]
+
+*page_break
+
+He places a hand on your shoulder, and you feel his dimensional awareness brush against yours. For a moment, you sense the vast web of magic he maintains—Avalon itself, alive and growing under his guidance.
+
+[b]"${name}, what you've done... it took me twenty years to achieve. You did it in weeks."[/b]
+
+*line_break
+
+Aria Ravencrest emerges from the library tower, her expression unreadable. She studies you for a long moment.
+
+*page_break
+
+[b]"A Collaborative Master,"[/b] she says quietly. [b]"I've only read about them in the oldest texts. Mages who don't just use magic—they [i]partner[/i] with it. Who treat power as a conversation rather than a tool."[/b]
+
+*line_break
+
+She inclines her head—a gesture of respect from someone who rarely shows it.
+
+[b]"You will surpass us all, ${name}. I am certain of it."[/b]
+
+*page_break
+
+Polly lands on your shoulder, unusually quiet.
+
+After a moment, she speaks—and for once, there's no sarcasm in her voice:
+
+[i]"I've watched Avalon Academy for three hundred years. I've seen thousands of students come and go. And I can count on one wing the number who achieved what you just did."[/i]
+
+*line_break
+
+[i]"You're going to be legendary, ${name}. Truly legendary. Your name will be remembered alongside Izack's, alongside the First Mages who created dimensional magic itself."[/i]
+
+*page_break
+
+*line_break
+
+[b]== SIX MONTHS LATER ==[/b]
+
+*line_break
+
+You stand in the Hall of Threads—a chamber at the heart of the Spiral Spire where dimensional boundaries are visible as shimmering strands of light.
+
+Today is your graduation.
+
+*page_break
+
+But it's not a normal graduation.
+
+Izack has created a new title for you: [b]Collaborative Master[/b]—the first in generations.
+
+*line_break
+
+You don't just graduate from Avalon Academy. You [i]join[/i] it, becoming one of the legendary mages whose name will be spoken for centuries.
+
+*page_break
+
+The glacier's power flows through you, responding to your thoughts as naturally as breathing. When you gesture, runes write themselves in the air. When you speak, dimensional boundaries [i]listen[/i].
+
+And everywhere you go, you feel it—the living presence of magic itself, partnering with you in ways that make power feel less like control and more like [i]collaboration[/i].
+
+*page_break
+
+Polly perches on the podium as Izack places the silver medallion around your neck.
+
+[i]"Well,"[/i] she says, her eyes bright with pride, [i]"I did say I knew how this story would end. But I'll admit—you surprised even me, ${name}."[/i]
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You revolutionize dimensional magic theory with your partnership approach
+• Students study your methods for generations
+• The Glacier Partnership becomes a symbol of what true collaboration can achieve
+• Your collaboration score: ${collaboration}
+• Your path: The Collaborative Master
+
+*line_break
+
+[i]You achieved the highest possible ending. You are a legend of Avalon.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 2: GLACIER PARTNER
+*comment Partnership without highest collaboration
+*comment ================================================
+
+*label glacier_partner_ending
+
+Izack Thorne is waiting in the courtyard, his expression thoughtful.
+
+[b]"You achieved partnership with the glacier,"[/b] he says. [b]"That alone is extraordinary. But I sense... you haven't fully embraced what that means yet."[/b]
+
+*line_break
+
+He's right. You can feel the glacier's power, its presence in your mind—but you're still learning what it means to truly [i]partner[/i] with such an ancient force.
+
+*page_break
+
+[b]"You have time,"[/b] Izack continues. [b]"Partnership is not a destination—it's a journey. You've taken the first step. Now you must learn to walk the path."[/b]
+
+*page_break
+
+Over the next months, you study intensively with Izack.
+
+He teaches you how to deepen your connection with the glacier, how to hear its voice more clearly, how to merge your intentions with its ancient wisdom.
+
+*line_break
+
+Slowly, you begin to understand what you've been given.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate with highest honors, bearing the title [b]Partner of the Glacier[/b].
+
+While you haven't yet achieved full Collaborative Mastery, you've accomplished something most mages never even attempt—true partnership with a magical force.
+
+*page_break
+
+The glacier's presence hums in the back of your mind, constant and reassuring.
+
+You know that in time, as you grow and learn, this partnership will become something extraordinary.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You become known as one of the rare Partnership Mages
+• Your work with the glacier opens new avenues of magical research
+• Future students seek you out to learn about collaboration
+• Your collaboration score: ${collaboration}
+• Your artifact: ${artifact_earned}
+
+*line_break
+
+[i]You achieved a legendary ending. The glacier chose you, and you chose it in return.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 3: HEARTWOOD GUARDIAN
+*comment Bonded with the ancient tree
+*comment ================================================
+
+*label heartwood_guardian_ending
+
+When you return to Avalon Academy, everything feels [i]different[/i].
+
+You can sense every living thing around you—the grass beneath your feet, the trees in the courtyard, even the tiny insects crawling through the soil. All of it connected, all of it alive, all of it part of you now.
+
+*page_break
+
+Zara is waiting for you, her expression shifting to wonder when she sees you.
+
+[b]"You... you bonded with the Heartwood Tree. I can feel it."[/b]
+
+*line_break
+
+She reaches out, her hand hovering near yours, and you feel her life force like a warm flame.
+
+[b]"You're connected to everything now. Every living thing in Avalon, all at once."[/b]
+
+*page_break
+
+She's right. The golden fruit from the Heartwood Tree didn't just give you power—it made you part of the forest's eternal network.
+
+You are a [b]Guardian[/b] now, bonded to the living world in ways that transcend normal magic.
+
+*page_break
+
+*line_break
+
+[b]== YOUR NEW ROLE ==[/b]
+
+*line_break
+
+You don't simply graduate from Avalon Academy.
+
+Instead, you become its first [b]Heartwood Guardian[/b]—a protector of the living magic that flows through the realm.
+
+*page_break
+
+You can feel when anything in Avalon is hurt or threatened. The trees speak to you in whispers of growth and memory. The animals recognize you as kin.
+
+And when you use magic, it's not just dimensional manipulation—it's [i]life itself[/i] responding to your intentions.
+
+*page_break
+
+Izack creates a new position for you: Guardian of the Living Realm.
+
+You will protect Avalon's ecosystems, maintain the balance between magical and natural growth, and serve as a bridge between dimensional magic and the living world.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• The Heartwood Tree's wisdom flows through you
+• You can communicate with all living things in Avalon
+• Future generations know you as the First Guardian
+• Your collaboration score: ${collaboration}
+• Your bond: Ancient Heartwood
+
+*line_break
+
+[i]You achieved a rare and beautiful ending. The forest claimed you, and you claimed it in return.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 4: TRUTHBOUND MAGE
+*comment Truth-Sworn Sand + High Collaboration
+*comment ================================================
+
+*label truthbound_mage_ending
+
+When you return to Avalon Academy, every lie sounds like discord.
+
+Every truth rings like a bell.
+
+The Truth-Sworn Sand has changed how you perceive reality itself. You can no longer be deceived—not by others, and not by yourself.
+
+*page_break
+
+Aria Ravencrest is waiting for you in the library.
+
+[b]"I heard what happened in the Singing Dunes,"[/b] she says. [b]"The desert tested you, and you answered with honesty. Rare."[/b]
+
+*line_break
+
+She gestures to a shelf of ancient texts.
+
+[b]"These books are filled with truths that most mages refuse to acknowledge. You, ${name}, are one of the few who might be able to bear them."[/b]
+
+*page_break
+
+She begins your true education.
+
+Over the next months, Aria teaches you secrets that would shatter lesser mages—truths about the nature of dimensional magic, about the costs of power, about the lies the magical community tells itself to sleep at night.
+
+*line_break
+
+And you listen. You learn. You [i]understand[/i].
+
+Because you are Truthbound now. Lies hold no power over you.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate with the title [b]Truthbound Mage[/b]—one who sees through all deception, including their own.
+
+Aria presents you with a golden medallion inscribed with a single word: [i]Veritas[/i].
+
+*line_break
+
+[b]"Truth is the sharpest blade,"[/b] she says, [b]"and the strongest shield. Wield it wisely."[/b]
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You become known as the Truthbound Mage
+• Leaders seek your counsel, knowing you cannot be deceived
+• You can sense lies and illusions instantly
+• Your collaboration score: ${collaboration}
+• Your artifact: Truth-Sworn Sand
+
+*line_break
+
+[i]You achieved an honorable ending. The desert marked you, and truth is now your greatest power.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 5: RUNEWEAVER
+*comment Earned the Runeweaver's Mark
+*comment ================================================
+
+*label runeweaver_ending
+
+When you return to Avalon Academy, the living runes beneath your skin shimmer with every movement.
+
+You speak a word in the First Tongue, and the air itself [i]responds[/i], reshaping according to the grammar of creation.
+
+*page_break
+
+Izack stares at the runes dancing across your arms.
+
+[b]"The First Tongue,"[/b] he breathes. [b]"Written on your body. You're a Runeweaver, ${name}. Do you understand what that means?"[/b]
+
+*line_break
+
+You nod slowly.
+
+The runes aren't just markings—they're living language, the words that reality speaks to itself.
+
+*page_break
+
+Izack becomes your mentor.
+
+He teaches you how to pronounce the First Tongue correctly, how to combine runes into sentences of power, how to speak creation into being.
+
+*line_break
+
+It's difficult. Dangerous. One mispronounced syllable could shatter dimensional boundaries or collapse pocket realities.
+
+But you learn. Slowly, carefully, you master the language written on your skin.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate with the title [b]Runeweaver[/b]—one who speaks the First Tongue.
+
+Only a handful of mages in history have earned this title. Now you join their ranks.
+
+*page_break
+
+When you speak, reality [i]listens[/i].
+
+When you write runes in the air, they hang there like frozen commands, waiting to reshape the world.
+
+*line_break
+
+You are powerful. Dangerous. And disciplined enough to wield that power wisely.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You speak the First Tongue fluently
+• Other mages seek you out to learn runic magic
+• The living runes continue to evolve on your skin
+• Your collaboration score: ${collaboration}
+• Your artifact: Runeweaver's Mark
+
+*line_break
+
+[i]You achieved a powerful ending. The First Tongue is yours to speak.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 6: FORESTBOUND GUARDIAN
+*comment Verdant Tithe artifacts (Dreamwillow/Thoughtvine)
+*comment ================================================
+
+*label forestbound_guardian_ending
+
+When you return to Avalon Academy, you bring the forest with you.
+
+*if artifact_earned = "Dreamwillow Vision"
+  The visions from the Dreamwillow still flicker at the edges of your perception—glimpses of possible futures, warnings of what might come.
+
+*if artifact_earned = "Thoughtvine Bond"
+  The Thoughtvine's consciousness still brushes against yours, offering wisdom from the forest's collective memory.
+
+*page_break
+
+Zara greets you with a knowing smile.
+
+[b]"The Verdant Tithe marked you,"[/b] she says. [b]"I can see it in your eyes. The forest lives in you now."[/b]
+
+*line_break
+
+She's right. You're not the same person who left.
+
+*page_break
+
+Over the next months, Zara teaches you how to use your forest connection.
+
+*if artifact_earned = "Dreamwillow Vision"
+  You learn to interpret the Dreamwillow's visions, to see the branching paths of possibility and choose wisely among them.
+
+*if artifact_earned = "Thoughtvine Bond"
+  You learn to access the forest's memories, drawing on ancient wisdom whenever you need guidance.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate with the title [b]Forestbound Guardian[/b]—one who carries the wisdom of the Verdant Tithe.
+
+*if artifact_earned = "Dreamwillow Vision"
+  You can glimpse the future, not with certainty, but with enough clarity to guide others away from danger and toward hope.
+
+*if artifact_earned = "Thoughtvine Bond"
+  You can access the forest's memories, drawing on the collective consciousness of every plant that has ever grown in the magical realm.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• The forest's wisdom guides your decisions
+• You become known as a prophet or sage
+• Plants grow more vibrantly in your presence
+• Your collaboration score: ${collaboration}
+• Your artifact: ${artifact_earned}
+
+*line_break
+
+[i]You achieved a wise ending. The forest chose you as its voice.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 7: COLLABORATIVE SCHOLAR
+*comment High collaboration without special artifact
+*comment ================================================
+
+*label collaborative_scholar_ending
+
+When you return to Avalon Academy, Izack is waiting.
+
+[b]"I've been watching your progress,"[/b] he says. [b]"Your expedition reports, your collaboration scores, your approach to magic. ${name}, you have a gift for collaborative magic that goes beyond simple talent."[/b]
+
+*page_break
+
+He offers you a position: [b]Research Scholar[/b] in collaborative dimensional theory.
+
+Instead of simply graduating, you'll stay at Avalon Academy to help advance the understanding of collaborative magic itself.
+
+*line_break
+
+You accept.
+
+*page_break
+
+Over the next months, you work alongside Izack and Aria, researching new applications of collaborative magic.
+
+You discover ways to share magical workload across multiple mages, techniques for harmonizing opposing magical styles, methods for teaching collaboration to stubborn individualists.
+
+*line_break
+
+Your research papers begin to circulate through the magical community. Your name becomes associated with excellence in collaborative practice.
+
+*page_break
+
+*line_break
+
+[b]== ONE YEAR LATER ==[/b]
+
+*line_break
+
+You don't just graduate—you [i]ascend[/i].
+
+Izack offers you a permanent position as [b]Collaborative Scholar[/b], one of Avalon Academy's youngest professors.
+
+*line_break
+
+You teach new students the principles of collaborative magic. You continue your research. And slowly, you help shift the entire magical community toward more collaborative practices.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You advance the theory of collaborative magic
+• Future generations study your research
+• The Academy thrives under your influence
+• Your collaboration score: ${collaboration}
+• Your path: The Scholar
+
+*line_break
+
+[i]You achieved an excellent ending. Your ideas will shape the future of magic.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 8: BALANCED MAGE
+*comment Harmony Bracelet or balanced stats
+*comment ================================================
+
+*label balanced_mage_ending
+
+When you return to Avalon Academy, you feel [i]centered[/i].
+
+*if artifact_earned = "Harmony Bracelet"
+  The Harmony Bracelet pulses gently on your wrist, helping you sense the rhythm of magic around you.
+
+*line_break
+
+You didn't achieve legendary partnership or master the First Tongue. But you found something equally valuable—[i]balance[/i].
+
+*page_break
+
+Izack recognizes this immediately.
+
+[b]"You walk the middle path,"[/b] he says. [b]"Not forcing control, not surrendering to harmony, but finding the balance between them. That's wisdom, ${name}."[/b]
+
+*page_break
+
+You continue your studies, but without the pressure to achieve legendary status.
+
+Instead, you focus on becoming a [i]complete[/i] mage—skilled in multiple disciplines, comfortable with different magical approaches, able to adapt to any situation.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate with honors, bearing the title [b]Balanced Mage[/b].
+
+It's not the flashiest title. But it's one that earns respect from those who understand that true mastery isn't about spectacular achievements—it's about consistent, reliable excellence.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You become a reliable, skilled practitioner
+• Other mages trust you to handle complex situations
+• You find harmony in all aspects of magic
+• Your collaboration score: ${collaboration}
+• Your path: Balance
+
+*line_break
+
+[i]You achieved a solid, honorable ending. Balance is its own form of mastery.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 9: HUMBLE SEEKER
+*comment Rune of Mystery or humble choices
+*comment ================================================
+
+*label humble_seeker_ending
+
+When you return to Avalon Academy, you carry the [b]Rune of Mystery[/b] in your chest—a gift from the glacier's deepest heart.
+
+*page_break
+
+The rune doesn't grant you overwhelming power. Instead, it gives you something subtler: the ability to recognize mystery itself.
+
+When others see obstacles, you see [i]doorways[/i].
+
+When others see the unknown, you see [i]possibility[/i].
+
+*line_break
+
+Aria Ravencrest takes notice.
+
+*page_break
+
+[b]"You chose mystery over certainty,"[/b] she says. [b]"Most mages fear what they don't understand. But you... you embrace it. That's rare wisdom."[/b]
+
+*line_break
+
+She takes you as her apprentice.
+
+*page_break
+
+Over the next months, Aria teaches you to explore the unknown without fear.
+
+You study ancient texts whose meanings remain unclear. You investigate magical phenomena that defy explanation. You learn to be comfortable with [i]not knowing[/i]—and to find discovery in that discomfort.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate with the title [b]Seeker of Mysteries[/b].
+
+It's a humble title, but it carries weight among scholars. Seekers are the ones who push the boundaries of magical knowledge, who venture into the unknown and return with new understanding.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You discover magical phenomena others overlook
+• The unknown welcomes you as a friend
+• Your humble approach opens doors that force cannot
+• Your collaboration score: ${collaboration}
+• Your artifact: ${artifact_earned}
+
+*line_break
+
+[i]You achieved a wise ending. Mystery is no longer your enemy—it is your guide.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 10: BOUNDARY SPECIALIST
+*comment Medium collaboration, completed training
+*comment ================================================
+
+*label boundary_specialist_ending
+
+When you return to Avalon Academy, you realize something important:
+
+You're not destined to be a legendary mage. And that's okay.
+
+*page_break
+
+You're [i]good[/i] at dimensional magic. You understand collaborative principles. You completed your expedition successfully.
+
+You're exactly what Avalon Academy is designed to produce: a competent, skilled boundary specialist.
+
+*line_break
+
+And there's honor in that.
+
+*page_break
+
+Izack seems pleased with your progress.
+
+[b]"You've learned well,"[/b] he says. [b]"You may not have achieved partnership or mastery, but you've become exactly what we need—a reliable mage who understands their own limits and works within them."[/b]
+
+*page_break
+
+You continue your studies, focusing on practical applications of dimensional magic.
+
+You learn to maintain stable portals, create pocket dimensions for storage, repair damaged boundary threads, and assist more powerful mages with complex workings.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate with the title [b]Boundary Specialist[/b].
+
+It's not legendary. But it's [i]needed[/i]. The magical world requires thousands of competent specialists for every legendary master.
+
+*line_break
+
+You find work easily—boundary specialists are always in demand.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You become a reliable, competent professional
+• You maintain important magical infrastructure
+• You live a stable, successful life
+• Your collaboration score: ${collaboration}
+• Your artifact: ${artifact_earned}
+
+*line_break
+
+[i]You achieved a good ending. Not every story needs to be legendary to be worthwhile.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 11: SECOND CHANCE
+*comment Low-medium collaboration, room for growth
+*comment ================================================
+
+*label second_chance_ending
+
+When you return to Avalon Academy, Izack is waiting—and his expression is serious.
+
+[b]"${name}, we need to talk about your progress."[/b]
+
+*page_break
+
+He leads you to his office.
+
+[b]"Your collaboration scores are... concerning. You completed your expedition, but you struggled with the collaborative aspects of magic. You have potential, but you're not ready to graduate."[/b]
+
+*line_break
+
+Your heart sinks.
+
+*page_break
+
+But then Izack smiles—kind, understanding.
+
+[b]"However, I'm not giving up on you. I'm offering you a second chance."[/b]
+
+*line_break
+
+He proposes an extended study program. You'll stay at Avalon Academy for an additional year, focusing specifically on collaborative practices.
+
+You'll work with mentors who can help you overcome your resistance to partnership. You'll practice collaborative casting until it becomes natural instead of forced.
+
+*page_break
+
+It's humbling. But you accept.
+
+*page_break
+
+*line_break
+
+[b]== ONE YEAR LATER ==[/b]
+
+*line_break
+
+The extra year makes all the difference.
+
+With patient instruction and dedicated practice, you learn to truly collaborate. The resistance that held you back begins to fade.
+
+*line_break
+
+When you finally graduate, it's with a deep understanding that power is not diminished by sharing—it's [i]multiplied[/i].
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You learned that asking for help is strength, not weakness
+• Your second attempt was more successful than many first attempts
+• You graduated with hard-won wisdom
+• Your collaboration score: ${collaboration}
+• Your path: Second Chance
+
+*line_break
+
+[i]You achieved a redemptive ending. Growth matters more than initial success.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 12: HUMBLED STUDENT
+*comment Low collaboration, struggled but completed
+*comment ================================================
+
+*label humbled_student_ending
+
+When you return to Avalon Academy, you're exhausted.
+
+Your expedition was... difficult. You completed it, technically. But you know you didn't excel.
+
+*page_break
+
+Izack meets you in the courtyard, his expression gentle but firm.
+
+[b]"You struggled,"[/b] he says quietly. [b]"I can see it. The expedition challenged you in ways you weren't prepared for."[/b]
+
+*line_break
+
+You nod, unable to meet his eyes.
+
+*page_break
+
+[b]"But you [i]completed[/i] it,"[/b] Izack continues. [b]"You didn't give up. You didn't flee back through the portal. You saw it through to the end, even when it was hard. That counts for something."[/b]
+
+*line_break
+
+He places a hand on your shoulder.
+
+[b]"You're not ready to be a great mage yet, ${name}. But you have the determination to become one, if you're willing to do the work."[/b]
+
+*page_break
+
+You spend extra months at the Academy, working on your weak points.
+
+Collaboration doesn't come naturally to you. You resist it. But slowly, with patient instruction, you begin to understand why it matters.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate—barely. Your scores are low, your collaboration skills are still developing, and you know you have a long way to go.
+
+But you [i]graduate[/i].
+
+*line_break
+
+And sometimes, that's enough.
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You learned that magic requires humility
+• Your struggles taught you empathy for other struggling students
+• You may yet grow into something greater
+• Your collaboration score: ${collaboration}
+• Your path: Humbled but Determined
+
+*line_break
+
+[i]You achieved a difficult ending. Sometimes surviving is its own victory.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 13: EXPELLED
+*comment Very low collaboration, failure
+*comment ================================================
+
+*label expelled_ending
+
+When you return to Avalon Academy, Izack is waiting—along with Aria and the Academy Council.
+
+Their expressions tell you everything you need to know.
+
+*page_break
+
+[b]"${name},"[/b] Izack begins, his voice heavy with disappointment, [b]"your performance during the expedition was... unacceptable."[/b]
+
+*line_break
+
+Aria steps forward, her expression cold.
+
+[b]"You demonstrated no understanding of collaborative magic. You fought against every principle we tried to teach you. You treated power as something to dominate rather than partner with."[/b]
+
+*page_break
+
+The Council votes.
+
+It's unanimous.
+
+*line_break
+
+You are [b]expelled[/b] from Avalon Academy.
+
+*page_break
+
+Polly lands on your shoulder as you pack your belongings.
+
+For once, she has no sarcastic quip. She just looks sad.
+
+[i]"I tried to warn you,"[/i] she says quietly. [i]"Avalon requires collaboration. You can't force your way through dimensional magic. I'm sorry, ${name}."[/i]
+
+*page_break
+
+You leave through the main gates, your magical education incomplete.
+
+The Spiral Spire twists above you, beautiful and impossible—a dream you couldn't achieve.
+
+*page_break
+
+*line_break
+
+[b]== AFTERWARD ==[/b]
+
+*line_break
+
+You try to continue your magical studies elsewhere, but without Avalon's training, progress is slow.
+
+Some expelled students eventually find their way. Others abandon magic entirely.
+
+*line_break
+
+You wonder which path you'll take.
+
+*page_break
+
+*line_break
+
+[b]== YOUR OUTCOME ==[/b]
+
+*line_break
+
+• You were expelled from Avalon Academy
+• Your collaboration score was critically low: ${collaboration}
+• You failed to understand the core principles of dimensional magic
+• Your artifact: ${artifact_earned}
+
+*line_break
+
+[i]You achieved the failure ending. Sometimes, we are not ready for the paths we choose.[/i]
+
+*page_break
+
+*finish
+
+*comment ================================================
+*comment ENDING 14: STANDARD PATH
+*comment Default/neutral ending
+*comment ================================================
+
+*label standard_path_ending
+
+When you return to Avalon Academy, you realize something:
+
+Your journey was... normal.
+
+*page_break
+
+You didn't achieve legendary partnership. You didn't master the First Tongue. You didn't become a Guardian or a Truthbound Mage.
+
+But you [i]did[/i] complete your training. You learned dimensional magic. You passed your expedition.
+
+*line_break
+
+You're an average Avalon graduate. And that's okay.
+
+*page_break
+
+Izack congratulates you with a warm smile.
+
+[b]"Well done, ${name}. You've completed the standard curriculum successfully. You're ready to begin your career as a dimensional mage."[/b]
+
+*line_break
+
+It's not dramatic. There are no speeches about your legendary potential.
+
+But there's satisfaction in knowing you [i]finished[/i] what you started.
+
+*page_break
+
+*line_break
+
+[b]== GRADUATION DAY ==[/b]
+
+*line_break
+
+You graduate alongside dozens of other students.
+
+You receive your certificate, your dimensional focus, and your official license to practice boundary magic.
+
+*line_break
+
+It's a good life ahead of you—not legendary, but solid. Worthwhile.
+
+*page_break
+
+Polly lands on your shoulder as you leave the graduation ceremony.
+
+[i]"So,"[/i] she says, [i]"not a legendary ending. But not a bad one either. You did okay, ${name}. You really did."[/i]
+
+*page_break
+
+*line_break
+
+[b]== YOUR LEGACY ==[/b]
+
+*line_break
+
+• You graduated successfully from Avalon Academy
+• You found work as a dimensional mage
+• You lived a good, stable life
+• Your collaboration score: ${collaboration}
+• Your artifact: ${artifact_earned}
+
+*line_break
+
+[i]You achieved the standard ending. Not every story is legendary—and that's perfectly fine.[/i]
+
+*page_break
 
 *finish

@@ -1,0 +1,16 @@
+Beyond the council doors, a triad of portals rotates in perfect alignment. Each promises a different future.
+
+*comment Branch into dedicated scenes to show *goto_scene usage and stat checks.
+*choice
+  #Step through the resonant portal tuned to the Spiral.
+    *if attunement >= 60
+      The portal sings in harmony with you. Knowledge floods your mind, and the Spiral welcomes you as a student.
+      *goto_scene archives
+    Your attunement falters, and the portal resists. You retreat to study more.
+    *finish
+  #Enter the martial hall marked by silver spears.
+    The wardens salute as you pass. Honor carries you forward into service.
+    *goto_scene wardens
+  #Seek ${mentor} for guidance before you decide.
+    ${mentor} meets your eyes. "The Spiral shifts for those who listen. Remember what you want to protect."
+    *goto_scene council

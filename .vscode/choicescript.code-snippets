@@ -1,0 +1,57 @@
+{
+  "Choice block": {
+    "scope": "plaintext,markdown",
+    "prefix": [
+      "choice",
+      "*choice"
+    ],
+    "body": [
+      "*choice",
+      "  # ${1:Option one}",
+      "    *goto ${2:label_one}",
+      "  # ${3:Option two}",
+      "    *goto ${4:label_two}",
+      "",
+      "${0}"
+    ],
+    "description": "Start a ChoiceScript-style choice with two options."
+  },
+  "Label": {
+    "scope": "plaintext,markdown",
+    "prefix": [
+      "label",
+      "*label"
+    ],
+    "body": [
+      "*label ${1:chapter_label}",
+      "",
+      "${0}"
+    ],
+    "description": "Create a labeled section for jump targets."
+  },
+  "Conditional": {
+    "scope": "plaintext,markdown",
+    "prefix": [
+      "if",
+      "*if"
+    ],
+    "body": [
+      "*if ${1:condition}",
+      "  ${2:outcome when true}",
+      "*else",
+      "  ${0:outcome when false}"
+    ],
+    "description": "ChoiceScript-style conditional branch."
+  },
+  "Page break": {
+    "scope": "plaintext,markdown",
+    "prefix": [
+      "pagebreak",
+      "*page_break"
+    ],
+    "body": [
+      "*page_break ${1:optional text}"
+    ],
+    "description": "Insert a ChoiceScript page break."
+  }
+}

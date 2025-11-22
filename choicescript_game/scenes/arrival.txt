@@ -226,8 +226,6 @@ She guides you toward the academy proper.
 *page_break
 *stat_chart
 
-*achievement visible collaboration_10 Collaboration 10+ achieved
-
 Your journey at Avalon Academy has truly begun.
 
-*goto_scene first_lesson
+*goto_scene familiar_selection

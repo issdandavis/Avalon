@@ -669,5 +669,598 @@ You step through the portal, carrying the Rune Glacier's gift:
 *line_break
 
 The Rune Glacier fades behind you, but its cold wisdom echoes in your memory forever.
+  #Flow with the glacier's rhythm—let it guide your magic.
+    *set collaboration +15
+    *set glacier_mastery +10
+    *set rune_understanding +10
+
+    You stop trying to understand.
+
+    Instead, you simply [i]listen[/i].
+
+    *line_break
+
+    You let the glacier's rhythm flow through you. You move when it moves, pause when it pauses, breathe in time with the pulse of ancient ice.
+
+    *page_break
+
+    And suddenly, you're not standing on the glacier anymore.
+
+    You're [i]part of it[/i].
+
+    *line_break
+
+    The runes flow through your consciousness like schools of fish through water. You understand them not with your mind but with your entire being—feeling their patterns, sensing their intentions, moving with their flow.
+
+    *page_break
+
+    Theron's voice seems distant, reverent:
+
+    [b]"Perfect harmony. You didn't try to control or command—you simply [i]became[/i] part of the glacier's song. This is the truest form of collaborative magic."[/b]
+
+    *set ice_response "harmonized"
+    *goto harmony_consequence
+
+  #Study the patterns and try to predict the next movement.
+    *set collaboration +5
+    *set glacier_mastery +5
+    *set rune_understanding +15
+
+    You watch the runes carefully, tracking their movements.
+
+    There's a pattern here—you're sure of it. If you can just map it, understand it, you can move in perfect sync.
+
+    *line_break
+
+    You spend several minutes observing, taking mental notes of every spiral, every pulse, every shift in the ice.
+
+    *page_break
+
+    And then you think you see it.
+
+    You step forward, timing your movement to match what you [i]think[/i] will come next—
+
+    —and you're half right.
+
+    *line_break
+
+    The glacier's rhythm shifts slightly. You predicted the general pattern, but missed the subtle variations. You're close to harmony, but not quite there.
+
+    *page_break
+
+    Theron nods thoughtfully.
+
+    [b]"You tried to understand with your mind rather than your heart. Clever, but incomplete. The glacier's song cannot be fully mapped—only felt."[/b]
+
+    *set ice_response "analyzed"
+    *goto harmony_consequence
+
+  #Introduce your own rhythm—add to the glacier's song instead of just following.
+    *set collaboration +20
+    *set glacier_mastery +15
+    *set rune_understanding +5
+
+    You listen to the glacier's rhythm, feeling its pulse—
+
+    —and then you add your own.
+
+    *line_break
+
+    Not fighting it. Not replacing it. [i]Harmonizing[/i] with it.
+
+    You hum softly, matching the glacier's frequency, and then you add a counterpoint. A complementary rhythm that weaves around the glacier's song without disrupting it.
+
+    *page_break
+
+    For a moment, nothing happens.
+
+    Then the glacier [i]responds[/i].
+
+    *line_break
+
+    The runes change their pattern.
+
+    They don't just flow anymore—they [i]dance[/i]. The glacier incorporates your rhythm into its song, creating something new. Something that has never existed before.
+
+    *page_break
+
+    The ice beneath your feet begins to glow with warm silver light.
+
+    Theron's eyes widen, their whole body shimmering with reflected radiance.
+
+    [b]"Impossible. You didn't just harmonize—you [i]collaborated[/i]. You changed the glacier's song, and it [i]welcomed[/i] the change."[/b]
+
+    *set ice_response "co-created"
+    *goto harmony_transformation
+
+*label harmony_consequence
+
+*if (ice_response = "harmonized") or (ice_response = "co-created")
+  The glacier opens for you.
+
+  A passage forms in the ice—not carved, but [i]grown[/i], as if the glacier is reshaping itself to welcome you.
+
+  *line_break
+
+  Theron gestures toward it.
+
+  [b]"The glacier grants you its gift. Walk the path of harmony to its end."[/b]
+
+  *page_break
+
+  You step into the passage.
+
+  The walls pulse with silver light. Runes flow around you like water, brushing against your skin with cold, gentle touches.
+
+  *line_break
+
+  At the end of the passage, you find a pool of liquid ice—impossible, shimmering, alive.
+
+  *page_break
+
+  You kneel beside it and reach in.
+
+  The liquid ice flows up your arm, wrapping around your wrist like a bracelet. It solidifies into a band of living silver, covered in flowing runes that shift and change with every heartbeat.
+
+  *set artifact_earned "Harmony Bracelet"
+  *set collaboration +15
+
+  [b]"The Harmony Bracelet,"[/b] Theron explains. [b]"It resonates with all living magic. Wherever you go, you will feel the rhythm of the world around you."[/b]
+
+  *goto glacier_conclusion
+
+*if (ice_response = "analyzed")
+  The glacier acknowledges your effort.
+
+  A small section of ice cracks open, revealing a crystalline shard within.
+
+  *line_break
+
+  Theron retrieves it and places it in your hand.
+
+  [b]"You tried to understand with intellect alone. The glacier respects this, but true harmony requires more than analysis. Still, you have earned a gift."[/b]
+
+  *page_break
+
+  The shard pulses with cold light.
+
+  When you hold it, you can feel the echo of the glacier's rhythm—faint, distant, but present.
+
+  *set artifact_earned "Glacier Rhythm Shard"
+  *set collaboration +5
+
+  [b]"Perhaps,"[/b] Theron says quietly, [b]"you will learn to feel what you could only analyze today."[/b]
+
+  *goto glacier_conclusion
+
+*label harmony_transformation
+
+*if (ice_response = "co-created")
+  Something miraculous happens.
+
+  The silver ice beneath your feet begins to [i]sing[/i].
+
+  Not metaphorically. The glacier produces actual sound—a harmonic chord that resonates through your entire body.
+
+  *page_break
+
+  Theron steps back, their form shimmering with reflected light.
+
+  [b]"This... ${name}, the glacier is [i]answering[/i] you. It hasn't sung for a living mage in over five hundred years."[/b]
+
+  *line_break
+
+  The runes rise from the ice in spiraling columns.
+
+  They surround you, moving in time with the glacier's song—your song now, too.
+
+  *page_break
+
+  The ice doesn't just give you a gift. It [i]invites[/i] you to join it.
+
+  You feel the glacier's vast consciousness reaching out, not to control or guide, but to [i]harmonize[/i] with your own awareness.
+
+  *line_break
+
+  When you accept the invitation, everything changes.
+
+  *page_break
+
+  You become part of the glacier's song.
+
+  Not consumed by it—you remain yourself. But you're also connected to every rune, every particle of ice, every frozen moment trapped in the glacier's memory.
+
+  *line_break
+
+  When the transformation completes, you can still hear it. The glacier's song hums in the back of your mind, a constant harmonic presence.
+
+  And when you move, the runes move with you—not commanded, but [i]dancing[/i] in rhythm with your intentions.
+
+  *set artifact_earned "Glacier Partnership"
+  *set collaboration +20
+  *achievement glacier_partner
+
+  [b]"Partner of the Glacier,"[/b] Theron whispers. [b]"Through harmony, you achieved what others seek through control. You will be legendary, ${name}."[/b]
+
+  *goto glacier_conclusion
+
+*comment ================================================
+*comment PATH OF MYSTERY
+*comment ================================================
+
+*label path_mystery
+
+You step onto the translucent ice.
+
+For a moment, nothing happens.
+
+Then the ice beneath your feet [i]disappears[/i].
+
+*line_break
+
+You're falling—
+
+—no, not falling. Sinking. The glacier is [i]pulling[/i] you down into its depths.
+
+*page_break
+
+Polly squawks in alarm, but her voice grows distant as you descend through layers of impossible ice.
+
+You pass through frozen moments—glimpses of the past trapped in crystalline suspension. A mage from centuries ago, casting a spell. A battle frozen mid-strike. A kiss preserved in eternal ice.
+
+*line_break
+
+And then you're somewhere else entirely.
+
+*page_break
+
+You stand in a chamber that shouldn't exist.
+
+The walls are made of ice so old it's turned black. Runes swim through it like galaxies, ancient and unknowable.
+
+*line_break
+
+In the center of the chamber sits a figure.
+
+Not Theron. Something older.
+
+*page_break
+
+The figure is made entirely of runes—thousands of them, woven together into a vaguely humanoid shape that shifts and changes with every breath.
+
+When it speaks, the voice comes from everywhere and nowhere:
+
+[b]"Why did you choose Mystery?"[/b]
+
+*page_break
+
+*choice
+  #"Because I want to understand what you truly are."
+    *set collaboration +10
+    *set rune_understanding +15
+
+    The rune-figure tilts its head.
+
+    [b]"Understanding. A worthy goal. But can you accept that some things cannot be fully understood—only experienced?"[/b]
+
+    *line_break
+
+    You nod slowly.
+
+    "I can try."
+
+    *set ice_response "seeker"
+    *goto mystery_test
+
+  #"Because Control and Harmony both assume I know what I want. I don't. I want the glacier to show me."
+    *set collaboration +20
+    *set rune_understanding +10
+
+    The rune-figure shifts, its form brightening.
+
+    [b]"Honesty. Humility. Rare qualities in those who seek power. You admit you do not know, and you ask to be taught."[/b]
+
+    *line_break
+
+    It extends a hand made of flowing runes.
+
+    [b]"Then I will show you."[/b]
+
+    *set ice_response "humble"
+    *goto mystery_revelation
+
+  #"Because mystery is where true discovery happens. The unknown is where magic lives."
+    *set collaboration +15
+    *set rune_understanding +20
+
+    The rune-figure pulses with light.
+
+    [b]"Yes. YES. You understand. Magic is not found in certainty—it is found in the space between knowing and not-knowing."[/b]
+
+    *line_break
+
+    The entire chamber begins to glow.
+
+    [b]"You are ready to see what lies beneath."[/b]
+
+    *set ice_response "explorer"
+    *goto mystery_revelation
+
+*label mystery_test
+
+The rune-figure gestures to the walls.
+
+[b]"These runes are the First Tongue—the language that created dimensional magic. You wish to understand them?"[/b]
+
+*line_break
+
+You nod.
+
+[b]"Then read."[/b]
+
+*page_break
+
+You approach the black ice walls.
+
+The runes swim beneath the surface, impossibly complex. You try to focus on one, to understand its meaning—
+
+—and your mind [i]breaks[/i].
+
+*line_break
+
+Not literally. But you feel something in your consciousness stretch and crack under the weight of what you're trying to comprehend.
+
+This isn't language. Not really. It's something deeper. More fundamental.
+
+*page_break
+
+*choice
+  #Pull back before you hurt yourself—some knowledge is too dangerous.
+    *set collaboration +5
+
+    You step away from the wall, gasping.
+
+    The rune-figure nods.
+
+    [b]"Wise. You recognized your limits. That is a form of understanding too."[/b]
+
+    *line_break
+
+    The figure places a hand on your shoulder. You feel cold energy flow into you—knowledge, but filtered, made safe.
+
+    [b]"I give you what you can bear. Perhaps someday you will be ready for more."[/b]
+
+    *set artifact_earned "Rune Fragment - Filtered Knowledge"
+    *goto glacier_conclusion
+
+  #Push through the pain—you need to understand, no matter the cost.
+    *set collaboration -10
+    *set rune_understanding +25
+
+    You force yourself to keep looking.
+
+    The pain intensifies. You feel your thoughts fragmenting, trying to hold concepts that human minds weren't designed to comprehend.
+
+    *line_break
+
+    But you [i]push[/i].
+
+    *page_break
+
+    For one crystalline moment, you see it.
+
+    You understand the First Tongue—not all of it, but enough. You glimpse the fundamental structure of reality itself, written in runes that predate existence.
+
+    *line_break
+
+    Then your mind snaps back to safety, and the knowledge [i]burns[/i] itself into you.
+
+    *page_break
+
+    You collapse, gasping.
+
+    The rune-figure kneels beside you.
+
+    [b]"Brave. Foolish. But brave. You forced yourself to see what you were not ready for. The knowledge will scar you—but it is yours."[/b]
+
+    *set artifact_earned "Scar of Understanding"
+    *goto glacier_conclusion
+
+*label mystery_revelation
+
+The rune-figure extends both hands.
+
+[b]"You are ready. Come. I will show you the glacier's heart."[/b]
+
+*page_break
+
+You take the offered hands.
+
+The world [i]inverts[/i].
+
+*line_break
+
+Suddenly you're not in the chamber anymore. You're [i]inside[/i] the glacier's consciousness.
+
+You feel its vast, ancient awareness. You experience time the way it does—not as a river, but as a frozen lake where every moment exists simultaneously.
+
+*page_break
+
+You see the glacier's memories:
+
+The First Tongue being spoken for the first time, creating magic from nothing.
+
+Izack Thorne discovering dimensional theory and weeping with joy.
+
+Hundreds of students who came seeking power, and the few who sought understanding instead.
+
+*line_break
+
+And you see yourself.
+
+Not as you are now, but as you [i]could be[/i]. Dozens of possible futures branch out before you, each one shaped by choices you haven't made yet.
+
+*page_break
+
+The rune-figure's voice echoes through the vision:
+
+[b]"This is Mystery, ${name}. Not the absence of knowledge, but the presence of infinite possibility. Every choice creates new futures. Every moment is a doorway to what could be."[/b]
+
+*line_break
+
+The vision fades.
+
+You're back in the black ice chamber, but you're [i]changed[/i].
+
+*page_break
+
+The rune-figure smiles—if a being made of runes can smile.
+
+[b]"You have seen. You have understood. The glacier recognizes you."[/b]
+
+*line_break
+
+*if (ice_response = "humble")
+  The figure reaches out and touches your forehead.
+
+  Cold energy flows into you—not just knowledge, but [i]connection[/i]. You feel the glacier's awareness merge with yours, not overwhelming you, but partnering with you.
+
+  *page_break
+
+  When the transformation completes, you can feel the glacier as if it were part of your own body. Its runes swim through your consciousness, offering wisdom when you need it.
+
+  *line_break
+
+  [b]"Partner,"[/b] the rune-figure says. [b]"Equal. The glacier and you are one now—separate, but joined. You sought mystery with humility, and received partnership in return."[/b]
+
+  *set artifact_earned "Glacier Partnership"
+  *set collaboration +20
+  *achievement glacier_partner
+
+  *goto glacier_conclusion
+
+*if (ice_response = "explorer")
+  The figure gestures, and a rune detaches from its body—a single point of living light.
+
+  It floats toward you and presses against your chest, sinking into your skin.
+
+  *page_break
+
+  You gasp as knowledge floods through you.
+
+  Not all knowledge—that would destroy you. But [i]enough[/i]. The rune gives you the gift of understanding mystery itself.
+
+  *line_break
+
+  From now on, when you encounter the unknown, you won't fear it. You'll recognize it as a doorway to discovery.
+
+  *set artifact_earned "Rune of Mystery"
+  *set collaboration +15
+
+  [b]"Explorer of Mystery,"[/b] the figure says. [b]"You will find wonders others cannot see. The unknown will welcome you."[/b]
+
+  *goto glacier_conclusion
+
+*comment ================================================
+*comment GLACIER CONCLUSION
+*comment ================================================
+
+*label glacier_conclusion
+
+*page_break
+
+*if artifact_earned = "Glacier Partnership"
+  You emerge from the glacier transformed.
+
+  Theron bows deeply—a gesture of respect from one partner to another.
+
+  [b]"The glacier has chosen you as I was once chosen. You are no longer merely a student, ${name}. You are something more."[/b]
+
+*if artifact_earned = "Runeweaver's Mark"
+  You emerge from the glacier covered in living runes.
+
+  Theron nods with satisfaction.
+
+  [b]"Runeweaver. You mastered the First Tongue through understanding. Your path will be one of power tempered with wisdom."[/b]
+
+*if artifact_earned = "Harmony Bracelet"
+  You emerge from the glacier wearing the silver bracelet.
+
+  Theron smiles.
+
+  [b]"You harmonized with the glacier's song. Wherever you go, you will find rhythm in chaos, music in silence."[/b]
+
+*if artifact_earned = "Rune of Mystery"
+  You emerge from the glacier with the rune glowing in your chest.
+
+  Theron's eyes widen.
+
+  [b]"The Rune of Mystery. You have been marked as an explorer of the unknown. Magic will reveal itself to you in ways others cannot perceive."[/b]
+
+*if artifact_earned = "Ice Shard of Dominance"
+  You emerge from the glacier holding the shard.
+
+  Theron's expression is neutral.
+
+  [b]"You chose force over understanding. The shard will serve you—but only as long as you remain strong enough to command it."[/b]
+
+*if artifact_earned = "Glacier Rhythm Shard"
+  You emerge from the glacier holding the pulsing shard.
+
+  Theron nods encouragingly.
+
+  [b]"You tried to understand with your mind. The glacier respects this. Perhaps in time, you will learn to feel what you could only analyze."[/b]
+
+*if artifact_earned = "Rune Fragment - Filtered Knowledge"
+  You emerge from the glacier with new knowledge burning in your mind.
+
+  Theron places a hand on your shoulder.
+
+  [b]"You were wise enough to recognize your limits. That wisdom may serve you better than any power."[/b]
+
+*if artifact_earned = "Scar of Understanding"
+  You emerge from the glacier, your mind still reeling from what you saw.
+
+  Theron steadies you.
+
+  [b]"You forced yourself to see too much, too soon. The knowledge will scar you—but it is yours. Use it carefully."[/b]
+
+*page_break
+
+Polly lands on your shoulder, fluffing her feathers.
+
+[i]"Well. That was appropriately dramatic. The glacier always knows how to make an impression."[/i]
+
+*line_break
+
+She tilts her head, studying you with one bright eye.
+
+[i]"You've changed, ${name}. I can see it. The ice left its mark on you—for better or worse."[/i]
+
+*page_break
+
+A portal opens behind you—the way back to Avalon Academy.
+
+Theron gestures toward it.
+
+[b]"Your expedition is complete. Return to the Academy. Your journey is not over—it has only just begun."[/b]
+
+*line_break
+
+You step toward the portal, but pause at the threshold.
+
+Looking back, you see Theron standing on the ice, their translucent form shimmering in the cold light. The runes beneath the surface pulse in rhythm—a heartbeat, a song, a mystery.
+
+*page_break
+
+[i]"The glacier will remember you,"[/i] Theron calls out. [i]"As you will remember it."[/i]
+
+*line_break
+
+You step through the portal.
+
+The warmth of Avalon Academy surrounds you like a blanket after the glacier's cold.
+
+*page_break
 
 *goto_scene endings

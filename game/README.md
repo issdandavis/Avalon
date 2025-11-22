@@ -1,59 +1,43 @@
-# Polly's Wingscroll: The First Thread
+# ChoiceScript integration guide
 
-A choice-based narrative game set in the Avalon Academy universe.
+This repository now includes a small ChoiceScript-friendly scaffolding to help you get a runnable prototype working quickly. The actual ChoiceScript engine is **not** vendored here; use the helper script below to download it locally and sync the included sample scenes.
 
-## How to Play
+## Prerequisites
+- Node.js (recommended LTS version)
+- Git (for cloning the ChoiceScript engine)
 
-1. **Open the game:**
-   - Double-click `index.html` in this folder
-   - OR right-click `index.html` → "Open With" → Your web browser
+## Bootstrap the ChoiceScript engine locally
+1. From the repository root, run `./game/bootstrap_choicescript.sh`.
+   - This clones the official ChoiceScript repository into `game/choicescript/`.
+   - If the folder already exists, the script will skip the clone.
+2. (Optional) To update later, run `cd game/choicescript && git pull`.
 
-2. **That's it!** The game runs entirely in your browser - no installation needed.
+## Load the sample Avalon demo scenes
+1. Ensure `game/choicescript/` exists (see bootstrap step above).
+2. Run `./game/sync_scenes.sh` to copy the sample scenes from `game/scenes/` into `game/choicescript/web/mygame/`.
+3. Launch the ChoiceScript local server from inside `game/choicescript/`:
+   - Windows: double-click `run-server.bat` (may show as `run-server`).
+   - macOS: double-click `serve.command` (you may need to allow it under System Settings > Gatekeeper the first time).
+   - Linux/WSL: run `bash serve.sh`.
+4. Your browser should open to the demo. If it doesn’t, open `http://localhost:4200/` manually while the server is running.
 
-## About the Game
+### Included demo content
+- `startup`, `prologue`, and `crossroads` introduce stat creation and *goto_scene branching.
+- `archives`, `wardens`, and `council` showcase stat checks, gated options, and different narrative tones.
+- `epilogue` wraps up the path with a replay hook.
+- `choicescript_stats.txt` enables the “Show Stats” button with meters for Honor, Attunement, mentor name, and council trust, plus a blurb that reacts to your flags.
 
-- **Story:** You're a new student at Avalon Academy, guided by Polly the sarcastic raven
-- **Choices Matter:** Your decisions affect your collaboration score and relationships
-- **Multiple Paths:** Explore three magical realms (Singing Dunes, Verdant Tithe, Rune Glacier)
-- **14 Unique Endings:** Based on your choices throughout the game
-- **Playtime:** 15-30 minutes per playthrough
+## Editing and extending scenes
+- The sample scenes live in `game/scenes/`. Edit them directly there.
+- Run `./game/sync_scenes.sh` after changes to push updates into the engine’s `web/mygame/` folder.
+- Scene order and available files are controlled by `*scene_list` at the top of `startup.txt`.
+- To add stats, edit `choicescript_stats.txt`; you can use `*stat_chart` to display new variables.
 
-## Game Features
+## Linking to existing narrative materials
+- Reference lore and narrative drafts live under `docs/avalon_materials/` and `docs/reference/`.
+- You can paste text from those sources into ChoiceScript scenes. Be mindful of indentation and convert smart quotes to straight quotes when necessary to avoid syntax errors.
 
-### Three Realm Expeditions:
-- **🏜️ Singing Dunes** - A truth-testing desert where sand judges honesty
-- **🌳 Verdant Tithe** - A sentient forest with Thoughtvines and the ancient Heartwood
-- **❄️ Rune Glacier** - Living ice inscribed with adaptive magical runes
-
-### Stats Tracking:
-- **Collaboration Score** - Reflects your approach to magic
-- **Relationships** - Track bonds with Izack, Aria, and Zara
-
-### Endings Include:
-- Collaborative Master
-- Truthbound Mage
-- Forestbound Guardian
-- Heartwood Guardian (most powerful)
-- Runeweaver
-- Glacier Partner
-- And 8 more!
-
-## Tips
-
-- Play multiple times to explore different paths
-- Different choices lead to completely different realms
-- Your first lesson choice determines which expeditions you can access
-- Honesty and collaboration are usually rewarded, but control has its place too
-
-## Technical Details
-
-- **No internet required** - Runs offline
-- **No installation** - Pure HTML/CSS/JavaScript
-- **Mobile friendly** - Responsive design
-- **Save/Load** - Use "Start a New Thread" button to replay
-
----
-
-**Created for the Spiral of Pollyoneth universe**
-
-*"In a land where even flowers hum with magic, tread wisely – the ivy has ears and the crows have tales to tell."*
+## Next steps
+- Expand the `*scene_list` in `startup.txt` with new chapters.
+- Use ChoiceScript stats to track player choices (see the inline comments in the sample scenes for examples).
+- When ready to distribute, follow ChoiceScript’s packaging guidelines from the official repository.

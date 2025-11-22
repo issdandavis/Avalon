@@ -1,0 +1,27 @@
+The martial hall thrums with sparring and shouted cadence. Racks of spears line the walls beneath banners of past victories.
+
+*choice
+  #Pledge yourself to the wardens' code.
+    You kneel, reciting the vows. Steel rings as you receive a badge.
+    *set honor +15
+    *set oathbound true
+    *set council_trust +10
+    *goto after_wardens
+  #Test the wardens' tactics with a new formation.
+    Your suggestion closes gaps in their defense. The captain nods approvingly.
+    *if honor >= 60
+      Your reputation precedes you. The squad drills your idea into doctrine.
+      *set council_trust +15
+      *goto after_wardens
+    *else
+      The captain asks you to prove yourself first.
+      *set honor +5
+      *goto after_wardens
+  #Ask the wardens what they fear most.
+    "Complacency," one whispers. "And portals that sing off-key."
+    *set attunement +5
+    *goto after_wardens
+
+*label after_wardens
+The captain clasps your forearm. "When the council calls, remember this hall."
+*goto_scene epilogue

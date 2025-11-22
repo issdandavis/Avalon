@@ -1,0 +1,434 @@
+*comment ================================================
+*comment ACADEMY LIFE - Daily life between major events
+*comment Classes, training, character interactions
+*comment ================================================
+
+*temp class_focus ""
+*temp training_partner ""
+*temp free_time_activity ""
+
+*label start
+
+*comment This scene occurs after first_lesson but before expedition_prep
+
+*line_break
+
+[b]== TWO WEEKS LATER ==[/b]
+
+*line_break
+
+You've settled into the rhythm of Avalon Academy.
+
+*page_break
+
+Mornings are dimensional theory with Aria Ravencrest. She's brilliant, demanding, and doesn't tolerate sloppy thinking. You've learned more in two weeks than you thought possible.
+
+Afternoons are practical magic with Izack Thorne. He's patient, enthusiastic, and genuinely delighted when students have breakthroughs.
+
+Evenings are collaborative exercises with Zara, who somehow makes grueling magical workouts feel like friendly conversations.
+
+*page_break
+
+*if dorm_style = "sanctuary"
+  Every night, you return to your cozy room and collapse into the soft cushions, exhausted but satisfied.
+
+*if dorm_style = "study"
+  Every night, you return to your study and spend hours poring over texts, building your understanding.
+
+*if dorm_style = "workshop"
+  Every night, you return to your workshop and experiment with what you learned, testing limits.
+
+*if dorm_style = "zen"
+  Every night, you return to your minimalist space and meditate, integrating the day's lessons.
+
+*line_break
+
+Polly watches your progress with sarcastic running commentary.
+
+*page_break
+
+[i]"You're improving,"[/i] she admits one evening. [i]"Not bad for someone who arrived two weeks ago looking like a lost duckling."[/i]
+
+*line_break
+
+You're learning. Growing. But today is different.
+
+Today, Izack announced something important:
+
+[b]"It's time for specialized training. Choose your focus carefully—this will shape your approach to magic for years to come."[/b]
+
+*page_break
+
+*label class_selection
+
+You stand in the Hall of Threads, where the three master mages wait.
+
+Each of them offers a different path of study for the next month before your first expedition.
+
+*page_break
+
+[b]Aria Ravencrest[/b] stands by shelves of ancient texts.
+
+[b]"Theoretical dimensional magic,"[/b] she says. [b]"Understanding the [i]why[/i] behind the [i]how[/i]. Perfect for those who seek knowledge."[/b]
+
+*line_break
+
+[b]Izack Thorne[/b] gestures to a practice space filled with shimmering boundaries.
+
+[b]"Practical application,"[/b] he explains. [b]"Learning by doing, by feeling, by collaborating with magic itself."[/b]
+
+*line_break
+
+[b]Zara[/b] indicates a door leading to the gardens.
+
+[b]"Living magic,"[/b] she says softly. [b]"Working with nature, alchemy, the intersection of life and dimensional power."[/b]
+
+*page_break
+
+*choice
+  #Study theory with Aria—understand the fundamental principles of dimensional magic.
+    *set class_focus "theory"
+    *set aria_relationship +15
+    *set collaboration +5
+
+    You approach Aria.
+
+    "I want to understand the theory. The foundations."
+
+    *line_break
+
+    She nods, something like approval in her eyes.
+
+    [b]"Good. Too many students rush to practice before understanding principles. Come."[/b]
+
+    *page_break
+
+    The next month is intense.
+
+    Aria teaches you the mathematics of dimensional boundaries, the physics of pocket realities, the philosophy of collaborative magic versus individual power.
+
+    *line_break
+
+    You learn why Izack's Avalon works—not just [i]that[/i] it works, but the theoretical framework that makes a living, growing dimension possible.
+
+    *page_break
+
+    One evening, Aria looks up from a particularly complex diagram.
+
+    [b]"You have a good mind for this,"[/b] she says quietly. [b]"Many students can [i]do[/i] magic. Few truly [i]understand[/i] it."[/b]
+
+    *line_break
+
+    It's the closest thing to praise you've heard from her.
+
+    *set collaboration +5
+    *goto training_partner_selection
+
+  #Practice application with Izack—learn by doing, by feeling magic directly.
+    *set class_focus "practical"
+    *set izack_relationship +15
+    *set collaboration +10
+
+    You approach Izack.
+
+    "I want to practice. To feel how magic actually works."
+
+    *line_break
+
+    His face lights up.
+
+    [b]"Perfect! Theory is important, but there's nothing like [i]experiencing[/i] magic directly. Let's begin."[/b]
+
+    *page_break
+
+    The next month is exhilarating.
+
+    Izack teaches you by demonstration. You create your first pocket dimension—tiny, unstable, but [i]yours[/i]. You learn to sense dimensional boundaries by touch, by instinct, by collaboration.
+
+    *line_break
+
+    You make mistakes. Lots of them. But Izack treats each failure as a learning opportunity.
+
+    *page_break
+
+    One afternoon, you successfully stabilize a dimensional thread without conscious effort—pure instinct.
+
+    Izack grins.
+
+    [b]"That's it! You felt it, didn't you? The magic [i]wants[/i] to work with you. You just have to listen."[/b]
+
+    *line_break
+
+    You're not just learning magic. You're learning to [i]partner[/i] with it.
+
+    *set collaboration +10
+    *goto training_partner_selection
+
+  #Work with living magic with Zara—explore the intersection of life and dimensional power.
+    *set class_focus "living_magic"
+    *set zara_relationship +15
+    *set collaboration +10
+
+    You approach Zara.
+
+    "I want to work with living magic. Nature and dimensional power together."
+
+    *line_break
+
+    She smiles warmly.
+
+    [b]"Wonderful. Most students forget that magic isn't separate from life—it [i]is[/i] life, in another form. Come, I'll show you."[/b]
+
+    *page_break
+
+    The next month is transformative.
+
+    Zara teaches you to sense the life force in plants, to feel how dimensional energy and biological energy interweave. You learn alchemy not as mixing ingredients, but as [i]conversing[/i] with living things.
+
+    *line_break
+
+    You grow your first magical plant—a small Thoughtvine cutting that responds to your emotions.
+
+    *page_break
+
+    *if magical_feature = "garden_pocket"
+      You plant it in your room's growth pocket, and watch it thrive in the accelerated time.
+
+      Zara is delighted.
+
+      [b]"You have the gift for this. Your garden pocket is already flourishing."[/b]
+
+    *if magical_feature != "garden_pocket"
+      You keep it in a pot on your windowsill, tending it carefully.
+
+      Zara checks on it regularly, pleased with your care.
+
+      [b]"You're a natural at this. The plant trusts you already."[/b]
+
+    *line_break
+
+    You're learning that power isn't just about control—it's about relationship.
+
+    *set collaboration +10
+    *goto training_partner_selection
+
+*label training_partner_selection
+
+*page_break
+
+Beyond formal classes, students are encouraged to practice together.
+
+Collaborative magic requires partners, and you've been assigned to small study groups for evening practice sessions.
+
+*page_break
+
+Tonight's session focuses on paired dimensional sensing—two mages working together to detect and map boundary threads.
+
+You can choose your practice partner:
+
+*page_break
+
+*choice
+  #Partner with Lyra, a quiet student who excels at precision work.
+    *set training_partner "lyra"
+    *set collaboration +10
+
+    You approach Lyra, who's already setting up the practice space with meticulous care.
+
+    "Want to partner up?"
+
+    *line_break
+
+    She nods, adjusting her glasses.
+
+    [b]"Sure. I work best with people who take this seriously."[/b]
+
+    *page_break
+
+    You spend the next hour mapping dimensional threads together.
+
+    Lyra is incredibly precise—she catches details you miss, and you provide the broader pattern recognition she sometimes overlooks.
+
+    *line_break
+
+    It's... satisfying. Working with someone whose skills complement your own.
+
+    *page_break
+
+    When you successfully map a particularly complex boundary together, Lyra actually smiles.
+
+    [b]"Good work. We should practice together more often."[/b]
+
+    *line_break
+
+    *if class_focus = "theory"
+      [b]"You understand the theory well. That helps."[/b]
+
+    *if class_focus = "practical"
+      [b]"Your instincts are strong. That compensates for my overthinking."[/b]
+
+    *if class_focus = "living_magic"
+      [b]"You sense things differently than I do. It's useful."[/b]
+
+    *goto evening_reflection
+
+  #Partner with Kade, an enthusiastic student who sometimes bites off more than he can chew.
+    *set training_partner "kade"
+    *set collaboration +15
+
+    You approach Kade, who's bouncing with energy.
+
+    "Partners?"
+
+    *line_break
+
+    He grins.
+
+    [b]"Absolutely! Let's try something ambitious!"[/b]
+
+    *page_break
+
+    Kade's enthusiasm is infectious but sometimes overwhelming.
+
+    He suggests mapping a dimensional cascade—a complex, multi-layered boundary that's well above first-year level.
+
+    *line_break
+
+    You try it anyway.
+
+    *page_break
+
+    It's... chaotic. You catch Kade when his magical reach exceeds his grasp. He pushes you to attempt things you wouldn't try alone.
+
+    You don't succeed at mapping the cascade, but you learn more from the attempt than you would have from a safe exercise.
+
+    *line_break
+
+    Kade laughs when you both collapse, magically exhausted.
+
+    [b]"Okay, that was too much. But wasn't it fun?"[/b]
+
+    *page_break
+
+    You have to admit—it was.
+
+    *if class_focus = "theory"
+      [b]"Your theory knowledge saved us from completely failing,"[/b] Kade says. [b]"Without you explaining what was happening, I'd have been lost."[/b]
+
+    *if class_focus = "practical"
+      [b]"Your instincts are sharp,"[/b] Kade says. [b]"You knew when to pull back before we hurt ourselves."[/b]
+
+    *if class_focus = "living_magic"
+      [b]"You work with magic so naturally,"[/b] Kade says. [b]"It's like you're having a conversation with it."[/b]
+
+    *goto evening_reflection
+
+  #Partner with Selene, a talented but competitive student who's always trying to prove herself.
+    *set training_partner "selene"
+    *set collaboration +5
+
+    You approach Selene, who's practicing alone with intense focus.
+
+    "Want to work together?"
+
+    *line_break
+
+    She eyes you critically.
+
+    [b]"Fine. But I'm not slowing down for anyone."[/b]
+
+    *page_break
+
+    Working with Selene is... challenging.
+
+    She's genuinely talented, but she treats every exercise like a competition. When you're supposed to be collaborating, she's trying to do it faster, better, more impressively.
+
+    *line_break
+
+    It's frustrating. But it also pushes you.
+
+    *page_break
+
+    By the end of the session, you've both mapped more boundaries than anyone else in the class.
+
+    Selene looks satisfied.
+
+    [b]"Not bad. You kept up."[/b]
+
+    *line_break
+
+    It's not exactly praise, but coming from her, it might be the closest thing.
+
+    *page_break
+
+    *if class_focus = "theory"
+      [b]"Your theoretical knowledge is solid,"[/b] she admits grudgingly. [b]"Even if your practical application could use work."[/b]
+
+    *if class_focus = "practical"
+      [b]"You have good instincts,"[/b] she says. [b]"Raw, but good."[/b]
+
+    *if class_focus = "living_magic"
+      [b]"Interesting approach,"[/b] she says. [b]"Unconventional, but effective."[/b]
+
+    *goto evening_reflection
+
+*label evening_reflection
+
+*page_break
+
+Later that night, you return to your dorm room.
+
+*if has_familiar_perch
+  Polly is waiting on her perch, preening her feathers.
+
+*if dorm_style = "sanctuary"
+  Polly is nested in the cushions by the dimensional fireplace.
+
+*if dorm_style = "study"
+  Polly is perched on one of your bookshelves, examining your notes.
+
+*if dorm_style = "workshop"
+  Polly is carefully avoiding the alchemy corner while eyeing your experiments suspiciously.
+
+*page_break
+
+[i]"Productive day?"[/i] she asks.
+
+*line_break
+
+You collapse into a chair and tell her about the training.
+
+*if training_partner = "lyra"
+  [i]"Ah, Lyra. Precise, methodical, slightly obsessive. You two will either work perfectly together or drive each other mad. Could go either way."[/i]
+
+*if training_partner = "kade"
+  [i]"Kade. Enthusiastic, overambitious, terrible at knowing his limits. He'll either help you grow or get you both in trouble. Possibly both."[/i]
+
+*if training_partner = "selene"
+  [i]"Selene. Competitive, talented, desperate to prove something. She'll push you to improve, but don't expect warmth. Competition isn't the same as collaboration, but sometimes it helps anyway."[/i]
+
+*page_break
+
+She tilts her head, studying you.
+
+[i]"You're learning more than just magic here, ${name}. You're learning who you are as a mage. Who you are as a person."[/i]
+
+*line_break
+
+[i]"The expedition is coming soon. Your first real test. But I think... I think you might be ready."[/i]
+
+*page_break
+
+*if window_view = "multi_realm"
+  You look out your multi-realm window, shifting the view to the Singing Dunes.
+
+*if window_view = "courtyard"
+  You look out your window at the Spiral Spire gleaming in the moonlight.
+
+*line_break
+
+Ready or not, the expedition is only days away.
+
+*page_break
+
+*goto_scene expedition_prep
