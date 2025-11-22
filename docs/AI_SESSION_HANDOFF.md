@@ -67,10 +67,10 @@ Avalon/
 - [x] Opening sequence
 - [x] Three arrival paths
 - [x] First lesson
-- [ ] **Singing Dunes expedition** <-- NEXT PRIORITY
-- [ ] Verdant Tithe expedition
-- [ ] Rune Glacier expedition
-- [ ] All 14 endings
+- [x] **Singing Dunes expedition**
+- [x] Verdant Tithe expedition
+- [x] Rune Glacier expedition
+- [ ] All 14 endings <-- NEXT PRIORITY
 
 ### Phase 3-5: Polish, Beta, Publish - PLANNED
 - See PROJECT_ROADMAP.md for full details
