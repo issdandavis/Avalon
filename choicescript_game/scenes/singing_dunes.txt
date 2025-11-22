@@ -1,12 +1,675 @@
 *comment ================================================
-*comment SINGING DUNES EXPEDITION
+*comment SINGING DUNES EXPEDITION - FULL EXPANSION
+*comment A truth-testing desert where sand judges honesty
+*comment Target: 15-20 scenes with meaningful branching
 *comment ================================================
 
-*comment TODO: Full expedition content to be added
-*comment This is a placeholder for testing
+*temp truth_level 0
+*temp kael_trust 0
+*temp sand_blessing false
+*temp oath_learned false
+*temp spirit_encountered false
 
-The portal deposits your expedition group onto golden sand that gleams with crystalline fragments.
+*label dunes_arrival
 
-[i]More content coming soon...[/i]
+The portal tears open reality with a sound like singing glass, and you step through into another world.
 
-*finish
+*line_break
+
+Golden sand stretches to every horizon, each grain catching the light differently—amber, honey, burnished copper. The dunes rise like frozen waves, their crests sharp against a sky the color of molten bronze.
+
+But it's the [i]sound[/i] that stops you mid-step.
+
+The desert is humming.
+
+*line_break
+
+A low, haunting chorus rises from the sand itself—thousands of voices singing just below the threshold of words. The melody shifts with each breath of wind, creating harmonies that seem to carry meaning just beyond understanding.
+
+[i]"Welcome to Sul'dessar. Specifically, the Sunscarred Dunes. Before you ask: yes, the sand is literally singing. Yes, it's judging you. And yes, it absolutely remembers that lie you told your mentor about finishing your homework."[/i]
+
+*page_break
+
+Your expedition guide steps forward from the shimmering heat. Kael is weathered in the way of people who've spent decades under unforgiving suns—skin like leather, eyes like chips of amber, robes the color of sunset sand.
+
+"Welcome, students of Avalon." His voice carries the dry rasp of wind over stone. "The Singing Dunes test all who enter. They seek not facts, but truth—the truth of who you are, who you want to be, and who you're afraid of becoming."
+
+*line_break
+
+He produces small crystal vials, one for each student in your group.
+
+"These will be your witnesses. Fill them with sand while speaking a truth about yourself. The desert will judge."
+
+[i]"Pro tip: the desert has been doing this for about ten thousand years. It's [b]very[/b] good at spotting lies. Even the ones you tell yourself. Especially those, actually."[/i]
+
+*choice
+    #"What happens if the sand doesn't like what we say?"
+        Kael's expression remains neutral, but something flickers in his amber eyes.
+
+        "Minor deceptions bring minor consequences. A burned palm. Troubled dreams. The feeling of being watched by something vast and disappointed."
+
+        He gestures to a patch of sand twenty feet away, still glowing angry crimson.
+
+        "Major lies bring major consequences. That sand has been hot for three days. The student who caused it... chose not to continue the expedition."
+
+        [i]"Translation: he screamed, ran back through the portal, and hasn't stopped apologizing to empty rooms since. The desert gets inside your head when you lie to it."[/i]
+
+        *set kael_trust +5
+        *goto dunes_preparation
+
+    #"I'm ready. I have nothing to hide."
+        Kael's weathered face cracks into something almost like a smile.
+
+        "Bold. The desert appreciates directness." A pause. "Even if it later proves... optimistic."
+
+        [i]"Confidence is good. Overconfidence in a truth-testing desert is how you end up as a cautionary tale. But sure, let's see how this goes."[/i]
+
+        *set truth_level +5
+        *goto dunes_preparation
+
+    #Examine the singing sand more closely before committing to anything.
+        You kneel and scoop a handful of sand, letting it run through your fingers. Each grain seems to vibrate with a different note, and together they create a harmony that resonates somewhere behind your thoughts.
+
+        The sand feels... aware. Like it's studying you back.
+
+        Kael watches approvingly. "Wise. Understanding what you face before you act. The desert respects caution as much as courage."
+
+        [i]"A student who actually thinks before acting? In [b]my[/b] desert expedition? It's more likely than you'd think. Barely."[/i]
+
+        *set truth_level +3
+        *set kael_trust +5
+        *goto dunes_preparation
+
+*label dunes_preparation
+
+The other students spread out along the dune's base, each finding a private spot for their truth-telling. Some look confident. Most look terrified.
+
+Kael approaches you specifically, his amber eyes assessing.
+
+*line_break
+
+"You carry something heavy," he says quietly. "I can see it in how you hold yourself. The desert will find it, whatever it is. Better you speak it willingly than have it dragged out."
+
+[i]"He's not wrong. The Sunscarred Dunes have this delightful habit of surfacing your deepest insecurities whether you want them surfaced or not. Might as well get ahead of it."[/i]
+
+*choice
+    #"How do you know what I'm carrying?"
+        "Sixty years in this desert," Kael says simply. "You learn to read the weight people carry. Yours sits on your shoulders like a physical thing."
+
+        He doesn't push further, just waits.
+
+        *goto dunes_first_truth
+
+    #"Does everyone have to share their deepest truth? That seems... invasive."
+        "The desert takes only what you offer. But it rewards depth with depth. Surface truths earn surface knowledge. The students who leave here transformed are the ones who dared to be truly seen."
+
+        [i]"It's like therapy, except the therapist is several million tons of sentient sand and the couch is very, very hot."[/i]
+
+        *goto dunes_first_truth
+
+    #Nod silently and prepare yourself.
+        Kael seems to appreciate your composure. He claps a hand on your shoulder—brief, warm, fatherly.
+
+        "You'll do well here. I can tell."
+
+        *set kael_trust +10
+        *goto dunes_first_truth
+
+*label dunes_first_truth
+
+You kneel before the dune, crystal vial in hand. The sand hums louder here, as if leaning in to listen.
+
+*line_break
+
+Around you, other students are speaking their truths. Some vials glow gold. A few flare crimson. One student's sand turns a gentle amber—accepted but not blessed.
+
+[i]"The moment of truth. Literally. Whatever you say next, the desert will remember forever. No pressure."[/i]
+
+*line_break
+
+You scoop sand into your vial and prepare to speak. What truth do you offer the Singing Dunes?
+
+*choice
+    #Speak a vulnerable truth: "I'm afraid I'm not strong enough to make a difference—that I'll go through all of this and still end up ordinary."
+        *set truth_level +20
+        *set collaboration +10
+        *goto dunes_honest_path
+
+    #Share a real but guarded truth: "I want to learn everything Avalon can teach me, and I'm willing to work for it."
+        *set truth_level +10
+        *set collaboration +5
+        *goto dunes_safe_path
+
+    #Test the desert's limits: "I'm destined for greatness. I can feel it."
+        *set truth_level -10
+        *set collaboration -5
+        *goto dunes_rejected_path
+
+    *if kael_trust >= 10
+        #Share the specific fear Kael sensed: "I'm afraid that the people I care about will eventually see through me and find nothing worth keeping."
+            *set truth_level +30
+            *set collaboration +15
+            *set kael_trust +15
+            *goto dunes_deep_truth_path
+
+*label dunes_honest_path
+
+The moment your words leave your lips, something shifts.
+
+The sand in your vial doesn't just accept your truth—it [i]embraces[/i] it. Golden light blooms from within, warm and steady as sunrise. The grains seem to rearrange themselves into patterns, spiraling like tiny galaxies.
+
+*line_break
+
+The humming of the dunes around you changes. Where before it was ancient and distant, now it feels... welcoming. Like a grandmother's voice, amused and proud.
+
+Kael approaches, his weathered face showing genuine surprise.
+
+"Truth-sworn sand," he breathes. "In all my years, perhaps a dozen students have earned this. The desert has chosen to trust you."
+
+*page_break
+
+[i]"Well, well, well. You actually did it. You stood in front of an ancient magical desert and admitted you're scared of being ordinary, and instead of being eaten by sand, you got a magical lie detector. The universe has a sense of humor, I'll give it that."[/i]
+
+*line_break
+
+The golden sand in your vial continues to glow softly. You can feel it now—a gentle awareness, like a cat that's decided to nap in your lap. The desert is watching over you.
+
+*set sand_blessing true
+
+*choice
+    #"What does truth-sworn sand actually do?"
+        Kael holds up his own vial—sand that glows with years of accumulated trust.
+
+        "It will warm in the presence of deception. Not just spoken lies—any falsehood, any pretense, any manipulation. You carry a piece of the desert's judgment with you now."
+
+        [i]"Great for poker games. Terrible for surprise parties. The sand doesn't understand the concept of 'good lies.'"[/i]
+
+        *goto dunes_oasis_journey
+
+    #"Why does the desert care about truth so much?"
+        "The Singing Dunes were born from broken oaths," Kael explains, his voice dropping to a storyteller's cadence. "Millennia ago, two great kingdoms made a pact of eternal peace. When one betrayed the other, the land itself... remembered. The sand became a living record of every promise made and broken."
+
+        [i]"And now it's very invested in making sure nobody else pulls that particular trick. Generational trauma, but make it geographical."[/i]
+
+        *goto dunes_oasis_journey
+
+    #Simply clutch the warm vial and follow the group silently, processing.
+        Some truths don't need words. You hold the golden sand close and feel its warmth against your palm—a small sun you earned through vulnerability.
+
+        *goto dunes_oasis_journey
+
+*label dunes_safe_path
+
+The sand in your vial doesn't glow, but it doesn't burn either. It settles into a steady amber color—acceptable. Acknowledged. But not blessed.
+
+Kael nods as he passes. "A fair truth. The desert accepts it."
+
+*line_break
+
+But you notice the students whose sand glows gold. They seem to hear something you don't—their heads tilting toward the dunes' song like they're catching specific words. The desert is speaking to them in ways it isn't speaking to you.
+
+[i]"You played it safe. Nothing wrong with that, objectively. But magic—real magic—doesn't live in the safe places. You got exactly what you offered: something real but shallow. The desert gives what it gets."[/i]
+
+*choice
+    #Accept that you chose caution and focus on learning what you can.
+        There's wisdom in boundaries. Not everyone needs to bare their soul to a pile of sand to learn something valuable.
+
+        *goto dunes_oasis_journey
+
+    #Feel a pang of regret and consider trying again with a deeper truth.
+        You look at the golden glow in other students' vials. That could have been you, if you'd just...
+
+        But the moment has passed. The desert heard your truth, and it was the truth—just not all of it.
+
+        [i]"You can't un-ring a bell or un-tell a truth. The desert knows what you offered. Next time, maybe you'll dig deeper. Or maybe you won't. That's a truth too."[/i]
+
+        *goto dunes_oasis_journey
+
+*label dunes_rejected_path
+
+The instant your claim of destiny leaves your lips, the sand in your vial flares [b]crimson[/b].
+
+Not warm. [i]Hot.[/i]
+
+You drop the vial with a yelp as it sears your palm. The glass doesn't break, but the sand inside writhes like something alive and angry.
+
+*line_break
+
+Around you, the entire dune begins to glow red. The humming shifts into something discordant—thousands of voices screaming in frequencies that scrape against your skull. Other students scramble backward.
+
+[i]"AND THERE IT IS! The desert does NOT appreciate arrogance masquerading as truth. 'Destined for greatness'? Really? You couldn't feel how the sand was going to react to that?"[/i]
+
+*page_break
+
+Kael moves fast for his age. A circle of protection drawn in the sand, ancient words that make the red glow retreat. The screaming fades to an angry hum.
+
+"The Sunscarred Dunes punish those who lie to themselves most of all," he says, not unkindly. "Claiming destinies you haven't earned is the deepest kind of falsehood. The desert forgives many things. Arrogance is not among them."
+
+*line_break
+
+Your palm is burned. The sand in your dropped vial still glows crimson, and when you try to pick it up, it's too hot to touch.
+
+*set collaboration -10
+
+*choice
+    #"I... I didn't mean it as a lie. I really believe I could be great."
+        Kael sighs. "Belief is not truth. Potential is not destiny. You [i]might[/i] become great—but claiming it as fact when you haven't earned it? The desert sees the difference."
+
+        [i]"Here's a fun desert rule: hope is true. Aspiration is true. But stating something as fact when it's actually just wishful thinking? That's the kind of lie that makes sand scream."[/i]
+
+        *goto dunes_humbled_journey
+
+    #Accept the rebuke silently and resolve to learn from this.
+        Sometimes the most powerful thing you can do is stop talking. You nod to Kael, cradle your burned hand, and follow the group.
+
+        The desert is still watching. Still judging. But at least you're not making it worse.
+
+        *set truth_level +5
+        *goto dunes_humbled_journey
+
+    #Feel a surge of anger—how dare sand judge you?
+        The crimson glow flares brighter in response to your resentment. Even your emotions are being read here.
+
+        [i]"Pro tip: getting angry at the truth-testing desert for correctly identifying that you lied? Not a great strategy. The sand can feel your emotions. Right now it's feeling 'petulant child who got caught.'"[/i]
+
+        Kael places a firm hand on your shoulder. "Anger is honest, at least. But it won't undo what you said. The desert remembers."
+
+        *goto dunes_humbled_journey
+
+*label dunes_deep_truth_path
+
+The words leave you like a wound opening.
+
+[i]I'm afraid that the people I care about will eventually see through me and find nothing worth keeping.[/i]
+
+*line_break
+
+For a moment, everything goes silent. The humming stops. The wind dies. Even Polly goes quiet.
+
+Then the sand in your vial doesn't just glow—it [b]blazes[/b]. Not gold like the others, but white-gold, pure as starlight. The grains rise slightly, hovering, arranging themselves into a pattern you somehow recognize as your own heartbeat.
+
+*line_break
+
+And the desert... [i]speaks[/i].
+
+Not in words. In feeling. In knowing. The song of the Singing Dunes wraps around you, and suddenly you understand what it's been singing all along:
+
+[i]You are seen. You are known. You are enough.[/i]
+
+*page_break
+
+Kael has fallen to one knee. The other students stare. Even Polly's usual sarcasm seems to have abandoned her.
+
+"The desert's blessing," Kael whispers. "The [i]true[/i] blessing. I've heard of this. In sixty years, I've never seen it."
+
+*line_break
+
+[i]"...Okay. I'll admit it. That was impressive. You just out-truthed a desert that's been testing people for ten thousand years. I don't... I don't actually have a joke for this."[/i]
+
+*set sand_blessing true
+*set truth_level +40
+*set kael_trust +20
+
+*goto dunes_blessed_journey
+
+*label dunes_oasis_journey
+
+The Ironwood Oasis rises from the dunes like a miracle—trees with bark harder than steel, their leaves catching light and fracturing it into rainbows. A spring of clear water bubbles from rocks that glow faintly blue.
+
+*line_break
+
+Your expedition makes camp as the sun descends, painting the sand in shades of copper and flame. The singing of the dunes shifts to something softer, almost a lullaby.
+
+Kael gathers the students around a fire that burns without fuel—a gift from the desert for truthful travelers.
+
+*page_break
+
+"Tonight I'll tell you of the oath-spirits," he says. "But first, we eat."
+
+The food is simple—dried fruit, flatbread, water from the spring—but after hours of walking through singing sand, it tastes like a feast.
+
+[i]"The Ironwood Oasis is one of three safe places in the Sunscarred Dunes. The trees are literally impossible to burn or break, which makes this the one spot where the desert agrees to leave people alone. Enjoy it. Tomorrow we go deeper."[/i]
+
+*choice
+    #Ask Kael about the oath-spirits.
+        *goto dunes_spirit_story
+
+    #Wander to the edge of camp and listen to the dunes' night song.
+        *goto dunes_night_song
+
+    #Try to rest—tomorrow will be demanding.
+        You find a spot among the Ironwood roots and close your eyes. The desert's song becomes your lullaby.
+
+        *goto dunes_morning
+
+*label dunes_spirit_story
+
+Kael's eyes reflect the strange fire as he speaks.
+
+"The oath-spirits are the desert's children. When someone makes a promise here—a true promise, bound to the sand—a piece of their intention remains. These fragments... accumulate. After enough millennia, they gained awareness."
+
+*line_break
+
+As if summoned, something stirs at the edge of the firelight. A shape made of sand, roughly humanoid but shifting, flowing. It watches with eyes like amber gems.
+
+[i]"And there's one now. They're not dangerous unless you break an oath in their presence. Then they get... enthusiastic about enforcement."[/i]
+
+*line_break
+
+The spirit doesn't approach, but it doesn't leave either. It simply watches, humming a single note that harmonizes with the dunes.
+
+*set spirit_encountered true
+
+*choice
+    #Approach the oath-spirit slowly, curiously.
+        *goto dunes_spirit_contact
+
+    #Stay by the fire and observe from a distance.
+        The spirit watches you watching it. After a long moment, it nods—sand shifting into something like acknowledgment—and dissolves back into the dunes.
+
+        Kael exhales. "Wise. They respect boundaries."
+
+        *goto dunes_morning
+
+    *if sand_blessing
+        #Show the spirit your truth-sworn sand.
+            *goto dunes_spirit_recognition
+
+*label dunes_spirit_contact
+
+You rise slowly, hands open and visible. The oath-spirit's amber eyes track your movement but don't show alarm.
+
+Step by step, you approach until you're close enough to feel the heat radiating from its sand-form body. Up close, you can see patterns in the grains—swirling like fingerprints, each one unique.
+
+*line_break
+
+The spirit reaches out with one hand, and you find yourself mirroring the gesture. When your fingers meet its palm, the world [i]shifts[/i].
+
+*page_break
+
+You see flashes of every oath this spirit has witnessed. A soldier swearing to protect their homeland. A mother promising to return for her child. A mage binding themselves to truth at the cost of comfortable lies.
+
+Each promise left an imprint. Each one became part of the spirit.
+
+*line_break
+
+The vision ends, and you stumble back. The spirit inclines its head—approval? acknowledgment?—and dissolves into the sand.
+
+[i]"You just touched a living memory made of ancient promises. How do you feel?"[/i]
+
+*set truth_level +10
+*set oath_learned true
+
+*choice
+    #"I feel... honored. That was sacred."
+        *goto dunes_morning
+
+    #"I feel overwhelmed. That was a lot."
+        [i]"Yeah, the oath-spirits don't really do 'gentle introduction.' It's straight to the existential download of accumulated promises. Welcome to desert magic."[/i]
+
+        *goto dunes_morning
+
+*label dunes_spirit_recognition
+
+You hold up your vial of truth-sworn sand, and it blazes brighter in the spirit's presence.
+
+The oath-spirit makes a sound like wind through crystal chimes. It bows—actually [i]bows[/i]—the gesture strange and ancient and unmistakably respectful.
+
+*line_break
+
+Then it speaks. Not in words, but in pure meaning that blooms behind your thoughts:
+
+[i]Truth-keeper. Desert-blessed. Welcome, sibling.[/i]
+
+*page_break
+
+The spirit reaches out, and when you take its hand, there's no overwhelming vision. Instead, there's warmth. Recognition. A sense of belonging to something older than civilizations.
+
+[i]"Did that oath-spirit just call you 'sibling'? I've been watching this desert for three thousand years and I have [b]never[/b] seen that. You might be in trouble. The good kind of trouble, but still."[/i]
+
+*set oath_learned true
+*set kael_trust +10
+
+*goto dunes_morning
+
+*label dunes_night_song
+
+You walk to the edge of camp, where firelight gives way to moonlight and the dunes stretch endless under stars.
+
+The singing is different at night. Softer. More intimate. Like the desert is sharing secrets it only tells in darkness.
+
+*line_break
+
+You sit on warm sand and listen. Slowly, the song resolves into something almost comprehensible—not words, but emotions. The desert singing of patience. Of memory. Of truths that outlast the people who spoke them.
+
+[i]"The night song is the desert dreaming. All those oaths and truths and memories, playing back while the sun sleeps. If you listen long enough, sometimes you hear specific ones. Promises from people dead a thousand years, still echoing."[/i]
+
+*line_break
+
+And then you do hear one. A young voice, ancient but clear:
+
+[i]I will protect them. Whatever it costs.[/i]
+
+The oath hangs in the air, still resonant after untold centuries. Whoever spoke it meant every word. The desert kept it.
+
+*set truth_level +5
+
+*choice
+    #Let the desert's song carry you to sleep.
+        *goto dunes_morning
+
+    #Whisper your own truth to the night—something you've never told anyone.
+        The words leave you before you can stop them. Something small. Something real. The sand beneath you warms slightly—accepting.
+
+        [i]"The desert heard. It'll keep that one too. Congratulations, you just became part of the song."[/i]
+
+        *set truth_level +10
+        *goto dunes_morning
+
+*label dunes_humbled_journey
+
+The rest of the expedition is different for you.
+
+The other students whose sand glows gold hear secrets in the dunes' song. They receive small blessings—cooler water, shade that follows them, mirages that show beautiful things instead of nightmares.
+
+You get none of that. The desert tolerates your presence, but it doesn't welcome you.
+
+*line_break
+
+[i]"This is what rejection feels like from a landmass. It's not cruel—the desert isn't punishing you beyond that initial burn. It's just... uninterested. You showed up claiming greatness and delivered mediocrity. Why should it invest in you?"[/i]
+
+*page_break
+
+But even rejection teaches something.
+
+Watching Kael work with the truth-sworn students, you begin to understand what you missed. The magic here isn't about power or destiny. It's about honesty with yourself. About being willing to be seen as you are, not as you wish you were.
+
+By the end of the three-day expedition, your burned hand has healed, but the lesson remains raw.
+
+*choice
+    #Accept the humbling and resolve to be more honest with yourself.
+        *set truth_level +10
+        *set collaboration +5
+        *goto_scene endings
+
+    #Resent the desert's judgment—one test doesn't define you.
+        *set collaboration -5
+        *goto_scene endings
+
+*label dunes_blessed_journey
+
+The next three days are unlike anything you've experienced.
+
+The desert doesn't just accept you—it [i]guides[/i] you. The sand shifts under your feet to show you the easiest paths. Mirages resolve into actual visions of the dunes' history. Oath-spirits appear at the edges of your vision, nodding in acknowledgment.
+
+*line_break
+
+Kael stays close, his usual reserve replaced by something like awe.
+
+"In sixty years," he keeps saying, "I've never seen the desert embrace someone so completely."
+
+[i]"You broke the desert. Not in a bad way—in a 'the ancient magical entity saw the truth in your heart and decided to adopt you' way. This is either the best thing that's ever happened to you or you're about to discover what it means when a desert claims you as its own."[/i]
+
+*page_break
+
+On the second night, the desert shows you something.
+
+A vision rises from the sand—the two kingdoms whose broken oath created the Sunscarred Dunes. You see the betrayal. Feel the rage of the land itself as it transformed into a living testament to broken promises.
+
+And you understand why the desert values truth so much. It was [i]born[/i] from a lie. It will never let another one go unwitnessed.
+
+*set truth_level +20
+
+*goto dunes_oath_teaching
+
+*label dunes_morning
+
+You wake to gold-pink light and the smell of desert sage.
+
+The expedition's final day. Kael has promised to teach oath-magic—the art of binding promises to the land itself.
+
+*page_break
+
+The students gather at the edge of the oasis, looking out over dunes that glow in the morning sun. The singing has shifted to something expectant.
+
+[i]"Last day. Time to learn the desert's deepest secret: how to make promises that actually [b]mean[/b] something. You know, unlike most promises."[/i]
+
+*goto dunes_oath_teaching
+
+*label dunes_oath_teaching
+
+Kael draws a circle in the sand, ancient symbols flowing from his fingertips like water.
+
+"Oath-magic is not like other spells," he explains. "You cannot take it back. Cannot modify it. Cannot escape it if your circumstances change. That's why the desert teaches it—to make absolutely certain you understand what binding a promise means."
+
+*line_break
+
+He demonstrates with a small oath: "I promise to speak truth to my students today."
+
+The sand glows briefly gold, accepting. You feel something settle into place—not visible, but undeniably real.
+
+"Now if I lie to any of you before sunset, the desert will know. And it will... remind me."
+
+[i]"Last teacher who broke an oath here spent three days with sand in places sand should never be. The desert's 'reminders' are creative and deeply unpleasant."[/i]
+
+*page_break
+
+"Now you will try. Small oaths only—promises you know you can keep. The desert is lenient with students, but not infinitely so."
+
+*choice
+    #Swear a small oath: "I promise to be more honest with myself."
+        You speak the words, and the sand beneath you shivers. For a moment, nothing happens.
+
+        Then warmth spreads through your chest. The desert accepted. The oath is bound.
+
+        [i]"Simple but meaningful. The best kind of first oath. Now you'll feel a little twinge every time you try to lie to yourself. You're welcome."[/i]
+
+        *set oath_learned true
+        *set truth_level +10
+        *goto dunes_final
+
+    #Swear a larger oath: "I promise to always choose truth over comfort."
+        Kael's eyebrows rise. "That is... ambitious for a first oath."
+
+        But you've committed. The words hang in the air.
+
+        The sand considers. And considers. And [i]considers[/i].
+
+        Finally, gold light. Acceptance. But there's weight to it—the desert taking your promise seriously.
+
+        [i]"You just swore to choose truth over comfort. Forever. Do you have any idea how uncomfortable truth can be? I hope you don't like sleeping well, because your conscience is about to become [b]very[/b] active."[/i]
+
+        *set oath_learned true
+        *set truth_level +20
+        *set collaboration +5
+        *goto dunes_final
+
+    *if sand_blessing
+        #Swear a binding oath: "I promise to carry the desert's lesson wherever I go—to be a keeper of truth."
+            *goto dunes_keeper_oath
+
+    #Decide you're not ready for oath-magic yet.
+        "I think I need more time," you say.
+
+        Kael nods, unsurprised. "Wisdom. Many students rush into oaths they later regret. There is no shame in waiting."
+
+        [i]"Actually refreshing. A student who knows their limits. The desert will be here when you're ready."[/i]
+
+        *goto dunes_final
+
+*label dunes_keeper_oath
+
+The words flow from you with a certainty you've never felt before.
+
+"I promise to carry the desert's lesson wherever I go. To be a keeper of truth. To honor the song of the Singing Dunes in all my dealings."
+
+*line_break
+
+The sand doesn't just accept. It [b]exults[/b].
+
+Every dune in sight blazes gold. The singing crescendos into something like a choir of angels and thunderstorms. The oath-spirits rise from the sand—dozens of them—and they're [i]singing[/i].
+
+Kael drops to both knees.
+
+*page_break
+
+When the light fades, something is different. You can feel the desert now, always, like a warm presence at the back of your mind. The Singing Dunes have claimed you as their own.
+
+[i]"...I don't know what to say. You just became a Truth-Keeper. The desert's own champion. The last one was about four thousand years ago. This is either going to be incredible or catastrophic, and honestly I'm not sure which I'm hoping for."[/i]
+
+*set truth_level +50
+*set oath_learned true
+*set artifact_earned "truth_keeper_bond"
+
+*goto dunes_final
+
+*label dunes_final
+
+The portal back to Avalon shimmers at the edge of the oasis, waiting.
+
+Three days in the Singing Dunes. A lifetime of lessons about truth, vulnerability, and the weight of promises.
+
+*line_break
+
+*if sand_blessing
+    Your truth-sworn sand glows softly in its vial—a permanent connection to this place. You'll never forget what the desert taught you.
+*else
+    The desert's song fades behind you, but its lessons remain. Truth matters. Vulnerability is strength. And arrogance is the deepest kind of lie.
+
+*page_break
+
+Kael clasps your shoulder as you prepare to step through the portal.
+
+*if truth_level >= 50
+    "Truth-Keeper," he says solemnly. "The desert will be watching. We all will."
+*elseif sand_blessing
+    "The desert blessed you. Remember what that means. Remember why."
+*elseif truth_level >= 10
+    "You learned something here. May it serve you well."
+*else
+    "Failure is a teacher too. What you do with the lesson is up to you."
+
+*line_break
+
+[i]"Time to go home. Well, back to Avalon anyway. Home is wherever people tolerate your nonsense, and Avalon's got pretty high tolerance levels. Thanks for not getting eaten by sand, by the way. It's always awkward when I have to explain that to the headmaster."[/i]
+
+*page_break
+
+You step through the portal, carrying the Singing Dunes' gift:
+
+*if truth_level >= 50
+    The eternal bond of a Truth-Keeper, champion of the desert's ancient purpose.
+*elseif sand_blessing
+    Truth-sworn sand that will glow in the presence of deception—and a soul more honest than it was before.
+*elseif oath_learned
+    The weight of an oath bound to the land, and the understanding of what promises really mean.
+*elseif truth_level >= 10
+    Knowledge of the desert's ways, and a new respect for the power of honesty.
+*else
+    A burned hand and a humbling memory—but sometimes that's the most valuable lesson of all.
+
+*line_break
+
+The Singing Dunes fade behind you, but their song echoes in your memory forever.
+
+*goto_scene endings

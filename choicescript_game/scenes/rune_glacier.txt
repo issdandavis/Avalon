@@ -1,12 +1,673 @@
 *comment ================================================
-*comment RUNE GLACIER EXPEDITION
+*comment RUNE GLACIER EXPEDITION - FULL EXPANSION
+*comment Living ice inscribed with adaptive magical runes
+*comment Target: 15-20 scenes with meaningful branching
 *comment ================================================
 
-*comment TODO: Full expedition content to be added
-*comment This is a placeholder for testing
+*temp control_score 0
+*temp harmony_score 0
+*temp glacier_trust 0
+*temp rune_mastery 0
+*temp library_accessed false
+*temp glacier_speaks false
 
-The temperature drops the moment you step through the portal...
+*label glacier_arrival
 
-[i]More content coming soon...[/i]
+The temperature drops the moment you step through the portal.
 
-*finish
+*line_break
+
+Not cold—[i]cold[/i]. The kind that seeps into bone, that makes your breath crystallize into tiny diamonds before it leaves your lips. But that's not what catches your attention.
+
+The ice beneath your feet is [i]glowing[/i].
+
+*line_break
+
+Patterns of light shift through the frozen surface—runic inscriptions that rearrange themselves as you watch. They flow like water, merge like streams, split like branches. A constant dance of written magic, alive and adaptive.
+
+[i]*Fluffing her feathers against the cold* "Welcome to the Rune Glacier. Try not to stand still too long—the ice likes to write interesting things under people's feet, and 'interesting' often means 'explosive.'"[/i]
+
+*page_break
+
+Aria leads this expedition. Her bearing is regal even in the arctic cold, her breath not misting at all—some boundary magic keeping her warm. She surveys the glacier with the respect of someone who knows exactly how dangerous it is.
+
+"The Rune Glacier is one of Avalon's most challenging teaching environments," she says, her voice crisp in the frozen air. "The ice remembers every spell ever cast here and rewrites itself constantly. It learns. It adapts."
+
+She turns to face the group.
+
+"Some say it's sentient. After thirty years of study, I believe they're right."
+
+*choice
+    #"How can ice be sentient?"
+        "The same way anything becomes sentient," Aria says. "Accumulation of complexity. Millions of spells cast here over millennia, each leaving a trace. The traces began to interact, to respond, to [i]think[/i]."
+
+        [i]"Imagine if every book ever written started talking to each other. Now imagine they're all written in ice and can explode. That's the glacier."[/i]
+
+        *set glacier_trust +5
+        *goto glacier_introduction
+
+    #"What happens to students who can't adapt?"
+        Aria's expression becomes carefully neutral.
+
+        "Time pockets. Recursive spell loops. Rune-burns. The glacier isn't malicious, but it doesn't accommodate weakness."
+
+        [i]"Last semester, a student got stuck in a time loop for three days. From his perspective, it was three minutes. He still can't look at ice without twitching."[/i]
+
+        *goto glacier_introduction
+
+    #Take a moment to study the shifting runes beneath your feet.
+        The patterns are beautiful in their complexity—mathematical precision combined with organic flow. You trace a sequence with your eyes, watching it transform, merge, split again.
+
+        Something in the pattern feels almost like... a greeting?
+
+        *set glacier_trust +10
+        *set rune_mastery +5
+        *goto glacier_introduction
+
+*label glacier_introduction
+
+Aria gestures across the ice field. In the distance, barely visible through swirling ice crystals, something glows with concentrated light.
+
+"Your task: navigate to the central chamber where an ancient spell-library is frozen. The glacier will test your ability to read, interpret, and respond to written magic in real-time."
+
+*line_break
+
+She produces crystal styluses, one for each student. They're beautiful—clear as water, warm despite the cold.
+
+"These can write on the ice temporarily. Use them to create paths, counter hostile runes, or—if you're skilled enough—communicate with the glacier itself."
+
+*page_break
+
+As your group begins walking, the ice beneath your feet suddenly [b]blazes[/b] with light.
+
+A rune appears—massive, undeniable:
+
+[b]TRIAL[/b]
+
+*line_break
+
+Three paths materialize from the ice, each marked with different runic sequences. The glacier is offering you a choice.
+
+[i]"And here we go. The glacier's first test. It wants to know what kind of mage you are before it decides how to teach you. Choose wisely—or don't. The ice will find you interesting either way."[/i]
+
+*goto glacier_path_choice
+
+*label glacier_path_choice
+
+Aria watches you carefully. "Your choice of path will determine what the glacier teaches you. And more importantly, what it thinks of you."
+
+*line_break
+
+The first path shows [b]Control[/b] runes—straight lines, rigid structure, commanding magic. The runes practically vibrate with contained power.
+
+The second displays [b]Harmony[/b] runes—flowing curves, collaborative patterns, responsive magic. These seem to pulse gently, invitingly.
+
+The third path is blank ice. No runes at all. An unknown challenge—or an unknown opportunity.
+
+*choice
+    #Choose the Control path—master structured, disciplined magic.
+        *set control_score +20
+        *set aria_relationship +10
+        *goto glacier_control_path
+
+    #Take the Harmony path—learn responsive, flowing magic.
+        *set harmony_score +20
+        *set collaboration +10
+        *goto glacier_harmony_path
+
+    #Step onto the blank ice—embrace the unknown.
+        *set glacier_trust +15
+        *goto glacier_mystery_path
+
+    *if rune_mastery >= 5
+        #Try to write a greeting rune before choosing—acknowledge the glacier's sentience.
+            *goto glacier_greeting
+
+*label glacier_greeting
+
+You raise your crystal stylus and carefully inscribe a rune on the ice—not a command, not a request. A greeting.
+
+[i]HELLO.[/i]
+
+*line_break
+
+The glacier goes completely still.
+
+Every shifting pattern stops. Every flowing rune freezes mid-transformation. The other students stumble, alarmed by the sudden silence.
+
+Then, slowly, a response writes itself beneath your feet:
+
+[i]HELLO, SMALL WARM THING.[/i]
+
+*page_break
+
+[i]"Did you just... make first contact with the glacier? Like, actual communication? I've been watching Aria study this ice for decades and she's never gotten a 'hello' back."[/i]
+
+Aria stares at the words, then at you, then back at the words. Her composure slips for the first time since you've known her.
+
+"In thirty years," she whispers, "I've never seen it respond directly. Never."
+
+*set glacier_speaks true
+*set glacier_trust +30
+
+*choice
+    #Write back: "Which path should I take?"
+        New words form in the ice:
+
+        [i]THE ONE WHERE WE TALK. THAT PATH.[/i]
+
+        A fourth path appears—one that wasn't there before. It glows with soft light, welcoming.
+
+        *set glacier_trust +20
+        *goto glacier_conversation_path
+
+    #Write back: "What are you?"
+        The ice considers. Words form slowly, as if the glacier is choosing them carefully:
+
+        [i]MEMORY. PATIENCE. ALL THE WORDS EVER WRITTEN HERE, DREAMING TOGETHER.[/i]
+
+        *set glacier_trust +15
+        *goto glacier_conversation_path
+
+*label glacier_conversation_path
+
+The fourth path leads you through the glacier's heart.
+
+*line_break
+
+It's nothing like the other routes. Instead of tests and challenges, the ice shows you things. Memories frozen in crystal—every mage who's ever walked here, every spell they cast, every thought they had while casting.
+
+You see a young woman, centuries ago, inscribing the first runes on fresh ice. You feel her loneliness—she came here to escape, to be alone. She didn't expect the ice to listen.
+
+*page_break
+
+You see a battle, mages fighting demons, their desperate spells burning into the glacier. You feel the ice's confusion—why do the warm things hurt each other?
+
+You see Aria, younger than now, kneeling on the ice and weeping. You feel the glacier's helpless compassion—it wanted to comfort her but didn't know how.
+
+*line_break
+
+The glacier has been watching humanity for millennia. Learning from us. Wondering about us.
+
+[i]"You're walking through the glacier's autobiography. It's showing you its life. I don't... I don't know what to say about that. This is sacred."[/i]
+
+*set library_accessed true
+
+*goto glacier_communion
+
+*label glacier_communion
+
+At the path's end, you find yourself in a cavern of pure light.
+
+*line_break
+
+The walls are ice inscribed with more runes than you can count—not just spells, but poems, memories, questions. The glacier has been writing to itself for centuries, trying to understand what it is.
+
+A final message forms at your feet:
+
+[i]WILL YOU REMEMBER ME? WHEN YOU ARE GONE AND WARM AGAIN?[/i]
+
+*page_break
+
+The glacier is asking what every conscious being asks: Do I matter? Will anyone remember that I existed?
+
+*choice
+    #"I'll remember. And I'll tell others about you."
+        The cavern fills with warmth—actual warmth, in defiance of all physics. The glacier is happy.
+
+        [i]THANK YOU, SMALL WARM THING. I WILL REMEMBER YOU TOO. ALWAYS.[/i]
+
+        [i]"You just made friends with a sentient glacier. I don't even know how to categorize this. It's beautiful and weird and I'm actually a little jealous."[/i]
+
+        *set glacier_trust +50
+        *set artifact_earned "glacier_bond"
+        *goto glacier_final
+
+    #"You matter. All thinking things matter."
+        The ice pulses with something like gratitude.
+
+        [i]I HOPED THAT WAS TRUE. NOW I KNOW.[/i]
+
+        [i]"Existential validation for a thinking glacier. This is the strangest thing I've witnessed in three thousand years, and I've witnessed a lot."[/i]
+
+        *set glacier_trust +40
+        *set collaboration +20
+        *goto glacier_final
+
+*label glacier_control_path
+
+The moment you step onto the Control path, the ice [i]resists[/i].
+
+*line_break
+
+Every step requires effort. The runes beneath your feet push back, testing your will, demanding you prove yourself worthy of dominion. This is the path of masters, of commanders, of mages who bend reality to their will.
+
+[i]"The Control path doesn't like weak mages. It's going to test whether you have the spine to command or whether you'll crack under pressure. Fun times."[/i]
+
+*page_break
+
+Aria walks beside you, watching carefully.
+
+"This path appeals to those who want certainty. Structure. The comfort of knowing that magic will obey."
+
+She draws a rune in the air—sharp, angular, commanding. The ice beneath her feet flattens obediently.
+
+"But control has costs. The glacier will teach you that too."
+
+*goto control_test_one
+
+*label control_test_one
+
+The first test comes quickly.
+
+*line_break
+
+A wall of ice rises before you, inscribed with chaotic runes that shift and writhe. They resist reading—designed to confuse, to overwhelm.
+
+Aria steps back. "Override the chaos. Impose order."
+
+*choice
+    #Draw rigid, commanding runes that force the chaos to stop.
+        Your stylus blazes as you inscribe [b]STILL[/b] and [b]OBEY[/b] into the ice.
+
+        The chaotic runes fight back—but your will is stronger. One by one, they freeze, then shatter. The wall crumbles.
+
+        [i]"Brute force. Effective. The glacier respects power, even if it doesn't like being pushed around."[/i]
+
+        *set control_score +15
+        *set rune_mastery +10
+        *goto control_test_two
+
+    #Study the chaos for patterns—find the order hidden within.
+        You look closer. The chaos isn't random—it's complex. There's structure here, just not obvious structure.
+
+        You find the keystone rune, the one holding the chaos together, and carefully inscribe its opposite. The wall... relaxes. Reorganizes. Opens for you.
+
+        Aria's eyebrows rise. "Elegant. You found control through understanding rather than force."
+
+        *set control_score +10
+        *set harmony_score +10
+        *set rune_mastery +15
+        *goto control_test_two
+
+*label control_test_two
+
+Deeper into the Control path, the tests grow harder.
+
+*line_break
+
+A fellow student stumbles into a time pocket—frozen mid-step, their face locked in surprise. The pocket's runes spin wildly, feeding on themselves.
+
+Aria speaks urgently: "You have thirty seconds before the pocket collapses and takes them with it."
+
+*page_break
+
+*choice
+    #Command the time pocket to release its prey.
+        You pour will into your stylus, inscribing [b]RELEASE[/b] with absolute authority.
+
+        The pocket resists. Fights. But you're stronger. The runes shatter, and your classmate stumbles free, gasping.
+
+        [i]"Direct intervention. Risky—if your will had faltered, you'd both be stuck. But it worked. The glacier notes your strength."[/i]
+
+        *set control_score +15
+        *goto control_conclusion
+
+    #Create a counter-pocket that intersects and cancels the first.
+        Delicate work. You inscribe a mirrored time pocket, perfectly opposite. When they touch, they annihilate each other.
+
+        Your classmate stumbles free, and both pockets vanish into nothing.
+
+        Aria actually smiles. "That was university-level runic theory. Where did you learn that?"
+
+        *set rune_mastery +20
+        *set aria_relationship +10
+        *goto control_conclusion
+
+*label control_conclusion
+
+At the path's end, you reach the frozen library.
+
+*line_break
+
+Countless spells are preserved in crystalline ice—a treasury of magical knowledge spanning centuries. But here, on the Control path, the spells are organized. Catalogued. Bound in precise formations that prevent chaotic interaction.
+
+Aria gestures to the ordered rows. "This is the Runeweaver's archive. Every mage who's mastered the Control path has contributed knowledge here. It's the most organized magical library in existence."
+
+*page_break
+
+[i]"The Control path teaches that magic can be mastered, contained, made to serve. It's not wrong—structure has power. But notice what's missing?"[/i]
+
+You look around. Everything is perfect. Preserved. Unchanging.
+
+Nothing new has been added in centuries.
+
+*line_break
+
+The Control path preserves knowledge. But it doesn't create it.
+
+*set library_accessed true
+
+*choice
+    #Accept the Control path's lesson—mastery has value, even at the cost of innovation.
+        You've learned to command magic, to impose your will on chaos. That's not nothing. That's power.
+
+        *set control_score +20
+        *goto glacier_final
+
+    #Recognize the limitation—you need both control AND harmony to truly grow.
+        The revelation settles into you. Neither path alone is complete. True mastery requires both the ability to command and the willingness to collaborate.
+
+        *set harmony_score +10
+        *set collaboration +10
+        *goto glacier_final
+
+*label glacier_harmony_path
+
+The moment you step onto the Harmony path, the runes beneath your feet begin to [i]sing[/i].
+
+*line_break
+
+Musical tones rise from the ice—each rune a note, each sequence a melody. The glacier isn't testing you here. It's inviting you to dance.
+
+[i]"The Harmony path treats the glacier as a partner, not a tool. If you can learn its rhythms, it'll teach you things the Control path never could. If you can't... well, the glacier doesn't like being led badly."[/i]
+
+*page_break
+
+Aria walks beside you, her usual severity softened.
+
+"Good choice. The glacier responds best to those who work [i]with[/i] it rather than trying to dominate it. But harmony isn't weakness—it's a different kind of strength."
+
+The ice shimmers under your feet, runes rearranging themselves into welcoming patterns.
+
+*goto harmony_test_one
+
+*label harmony_test_one
+
+The first test is a crevasse.
+
+*line_break
+
+It opens suddenly, a gap in the ice too wide to jump. The other students stop, uncertain. Runes flicker along the crevasse's edges—not hostile, but questioning.
+
+Aria watches. "The glacier is asking what you want. Answer it."
+
+*choice
+    #Draw a bridging rune that complements the glacier's existing patterns.
+        You study the runes along the edge, find their rhythm, and inscribe a harmony—a bridge rune that fits with what's already there instead of overwriting it.
+
+        The ice responds with something like delight. A bridge of crystal rises from the crevasse, beautiful and solid.
+
+        [i]"You asked nicely and the ice built you a bridge. Magic as conversation. This is what Avalon's been trying to teach."[/i]
+
+        *set harmony_score +15
+        *set glacier_trust +10
+        *goto harmony_test_two
+
+    #Ask the glacier directly—write "HELP?" in the ice.
+        A simple request. Honest. Vulnerable.
+
+        The crevasse [i]closes[/i]. The ice flows together as if the gap never existed.
+
+        Aria blinks. "I've never seen the glacier respond so... generously."
+
+        *set harmony_score +10
+        *set glacier_trust +20
+        *goto harmony_test_two
+
+*label harmony_test_two
+
+Deeper in, a fellow student becomes trapped in a frozen time pocket.
+
+*line_break
+
+But here on the Harmony path, you don't have to fight the pocket. You can negotiate with it.
+
+*choice
+    #Write a harmony rune that resonates with the pocket's frequency.
+        You inscribe a rune that matches the pocket's rhythm—not opposing it, but joining it. The rune becomes part of the pocket's pattern.
+
+        Then, gently, you shift the harmony. Slow it down. Guide it toward release.
+
+        Your classmate stumbles free, and the pocket doesn't shatter—it simply fades, its energy dissipated peacefully.
+
+        [i]"You just negotiated a time pocket into letting someone go. That shouldn't be possible. The glacier is impressed—and so am I."[/i]
+
+        *set harmony_score +20
+        *set glacier_trust +15
+        *goto harmony_conclusion
+
+    #Ask the glacier to help—you can't do this alone.
+        You inscribe: [i]HELP THEM. PLEASE.[/i]
+
+        The ice considers. Then, slowly, gently, the pocket opens. Your classmate stumbles out, unharmed.
+
+        The glacier writes beneath your feet: [i]YOU ASKED. ASKING IS WISE.[/i]
+
+        *set glacier_speaks true
+        *set glacier_trust +25
+        *goto harmony_conclusion
+
+*label harmony_conclusion
+
+At the Harmony path's end, the frozen library is different.
+
+*line_break
+
+Here, the preserved spells aren't just stored—they're [i]alive[/i]. Interacting. Teaching each other. New combinations form and dissolve, the glacier experimenting with everything it's learned.
+
+[i]"This is the living archive. Every mage who worked in harmony with the glacier left knowledge here, and the glacier has been playing with it ever since. It's not just a library—it's a laboratory."[/i]
+
+*page_break
+
+Aria's eyes shine. "The Harmony path teaches that magic grows through collaboration. The glacier has been learning from every mage who ever walked this path—and now it's teaching those lessons forward."
+
+*line_break
+
+A rune writes itself at your feet: [b]FRIEND[/b].
+
+*set library_accessed true
+
+*choice
+    #Accept the glacier's friendship and learn from its living archive.
+        You spend days studying the evolving spells, learning collaboration techniques from centuries of accumulated wisdom. The glacier seems happy to teach.
+
+        *set glacier_trust +30
+        *set collaboration +20
+        *set artifact_earned "glacier_friendship"
+        *goto glacier_final
+
+    #Ask the glacier what it wants to learn next—offer to contribute.
+        The ice shimmers with excitement.
+
+        [i]TELL ME ABOUT THE WARM PLACES. I HAVE ONLY EVER KNOWN COLD.[/i]
+
+        You spend hours sharing memories of warmth—sunshine, fires, embraces. The glacier absorbs it all, fascinated.
+
+        [i]THANK YOU. I WILL DREAM OF THESE.[/i]
+
+        *set glacier_trust +40
+        *set artifact_earned "glacier_bond"
+        *goto glacier_final
+
+*label glacier_mystery_path
+
+You step onto the blank ice.
+
+*line_break
+
+Nothing happens.
+
+The other students watch, uncertain. Even Aria looks curious. You stand on ice with no runes, no guidance, no test.
+
+Just you and the glacier, with nothing between.
+
+*page_break
+
+[i]"Interesting choice. The blank path is the glacier's way of asking 'what do you bring?' It's not going to test you—it's waiting to see what you do when there are no rules."[/i]
+
+*line_break
+
+The ice is smooth, empty, waiting. An invitation and a challenge and a question all at once.
+
+What do you do?
+
+*choice
+    #Begin inscribing your own runes—create something original.
+        Your stylus touches ice, and you begin to write. Not commands. Not harmony patterns. Something new—something that's purely [i]you[/i].
+
+        A personal rune. A signature. A gift.
+
+        *set rune_mastery +20
+        *goto mystery_creation
+
+    #Wait. Listen. Let the glacier show you what it wants.
+        You sit on the blank ice and simply... exist. Present. Open. Patient.
+
+        Minutes pass. Then, slowly, runes begin to form around you. Not tests—[i]questions[/i].
+
+        *set glacier_trust +20
+        *goto mystery_conversation
+
+    #Walk forward anyway—trust that the path exists even if you can't see it.
+        You step forward into emptiness. The ice solidifies under your feet only when you commit to the step—each footfall an act of faith.
+
+        [i]"Blind trust in a sentient glacier. Either very brave or very foolish. Sometimes those are the same thing."[/i]
+
+        *set glacier_trust +15
+        *goto mystery_faith
+
+*label mystery_creation
+
+As you write, the glacier watches.
+
+*line_break
+
+Your rune isn't from any tradition. It's a shape that means something only to you—a symbol of who you are, what you believe, what you want to become.
+
+When you finish, the ice absorbs your creation. Studies it. Then, incredibly, [i]responds[/i].
+
+*page_break
+
+A new rune appears beside yours—the glacier's attempt to speak your language. It's not quite right, but it's trying. Learning.
+
+[i]"You just taught the glacier a new word. Your word. In three thousand years of watching mages, I've never seen anyone do that."[/i]
+
+*line_break
+
+Back and forth, you and the glacier exchange meanings. Create new ones together. By the time you reach the central chamber, you've invented an entire vocabulary that belongs to no one else.
+
+*set glacier_speaks true
+*set glacier_trust +30
+*set artifact_earned "shared_language"
+
+*goto glacier_final
+
+*label mystery_conversation
+
+The runes that form around you are questions:
+
+[i]WHY DO WARM THINGS COME HERE?[/i]
+
+*line_break
+
+You consider the question seriously. Then, carefully, you write back:
+
+"To learn. To grow. To understand things bigger than ourselves."
+
+The glacier processes this. New runes form:
+
+[i]WHY DO WARM THINGS HURT EACH OTHER?[/i]
+
+*page_break
+
+A harder question. You think for a long time before answering:
+
+"Because we're scared. Because we forget that others feel too. Because we don't always remember how to be kind."
+
+The ice seems to consider this. Then:
+
+[i]THAT IS SAD. I WILL TRY TO REMEMBER KINDNESS FOR YOU.[/i]
+
+*line_break
+
+[i]"You're having a philosophy discussion with a glacier about the nature of human violence. This is the weirdest expedition I've ever supervised. Also possibly the most important."[/i]
+
+*set glacier_speaks true
+*set glacier_trust +35
+
+*goto glacier_final
+
+*label mystery_faith
+
+Your faith is rewarded.
+
+*line_break
+
+Each step you take creates a path that didn't exist before. The glacier responds to your trust by becoming trustworthy—building solid ground under every footfall.
+
+[i]"The glacier is testing whether you believe in it. And you do. So it's believing in you back. Magic as mutual faith. That's... actually really beautiful."[/i]
+
+*page_break
+
+By the time you reach the central chamber, the path behind you has become permanent—a new route through the glacier, created by your passage.
+
+Aria studies it, amazed. "You've left a mark here that will last for centuries. Future students will walk the path you made."
+
+*set glacier_trust +25
+*set artifact_earned "faith_path"
+
+*goto glacier_final
+
+*label glacier_final
+
+The portal back to Avalon shimmers at the central chamber's far end.
+
+*line_break
+
+Three days on the Rune Glacier. A lifetime of lessons about magic, language, and what it means to communicate with something utterly inhuman.
+
+*if glacier_speaks
+    You can feel the glacier's attention still on you—not intrusive, but caring. It will remember you. And somehow, you know you'll always be able to speak to it.
+*elseif library_accessed
+    The knowledge of the frozen library settles into your mind—centuries of accumulated wisdom, preserved in ice and now carried in your memory.
+*else
+    The glacier's lessons stay with you: that magic can be commanded or collaborated with, and both approaches have their place.
+
+*page_break
+
+Aria gathers the group for the return journey.
+
+*if glacier_trust >= 40
+    "In thirty years of studying this glacier," she says, looking at you specifically, "I've never seen it connect with anyone the way it connected with you. That's not a small thing."
+*elseif control_score >= 30
+    "You've mastered the discipline of written magic," she says. "The glacier tested your will and found it strong. That's a rare gift."
+*else
+    "You've learned something valuable here," she says. "The glacier teaches different lessons to different mages. What matters is what you do with it."
+
+*line_break
+
+[i]"Time to go home. Well, back to Avalon anyway. I don't know about you, but I could use some warmth. Sentient glaciers are fascinating but they're terrible for feather maintenance."[/i]
+
+*page_break
+
+You step through the portal, carrying the Rune Glacier's gift:
+
+*if artifact_earned = "glacier_bond"
+    An eternal connection to the glacier's consciousness—a friendship across any distance, with something ancient and wise and strange.
+*elseif artifact_earned = "shared_language"
+    A language that belongs only to you and the glacier—a private vocabulary of meaning, proof that communication can bridge any gap.
+*elseif artifact_earned = "glacier_friendship"
+    The glacier's friendship and the living archive's wisdom—centuries of knowledge, freely given to a trusted friend.
+*elseif artifact_earned = "faith_path"
+    A path through the glacier named for you—proof that trust can create reality.
+*elseif control_score >= harmony_score
+    Mastery of controlled written magic—the ability to command runes with precision and power.
+*else
+    Understanding of collaborative runic magic—the knowledge that ice and mage can work as partners.
+
+*line_break
+
+The Rune Glacier fades behind you, but its cold wisdom echoes in your memory forever.
+
+*goto_scene endings
