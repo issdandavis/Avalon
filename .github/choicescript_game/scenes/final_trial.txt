@@ -1,0 +1,622 @@
+*comment ================================================
+*comment FINAL TRIAL
+*comment The culminating test before graduation
+*comment ================================================
+
+*temp trial_approach ""
+*temp crisis_type ""
+*temp trial_outcome ""
+
+*label start
+
+[b]== THE FINAL TRIAL ==[/b]
+
+*line_break
+
+Three months have passed since you first arrived at Avalon Academy.
+
+You've completed your expedition. You've deepened your bonds with mentors and fellow students. You've learned theory, practiced application, and discovered what kind of mage you're becoming.
+
+*page_break
+
+Now comes the final test.
+
+*page_break
+
+All first-years gather in the Hall of Threads.
+
+Izack, Aria, and Zara stand before you, their expressions serious.
+
+*page_break
+
+[b]"The final trial,"[/b] Izack begins, [b]"is not like your expedition. This time, you won't face a carefully designed challenge in a controlled environment."[/b]
+
+*line_break
+
+Aria continues:
+
+[b]"This time, you'll face an actual crisis. Something real, immediate, and dangerous."[/b]
+
+*page_break
+
+Zara finishes:
+
+[b]"We've identified dimensional instabilities throughout Avalon—minor tears in the fabric of the pocket dimension. Normally, we'd handle these ourselves. But you're ready to try."[/b]
+
+*line_break
+
+A holographic map appears, showing dozens of flickering points of instability scattered across Avalon.
+
+*page_break
+
+Izack gestures to the map.
+
+[b]"You'll work in teams of three. Each team will be assigned an instability to repair. Success means you graduate. Failure means..."[/b]
+
+*line_break
+
+He doesn't finish, but the implication is clear.
+
+*page_break
+
+The teams are called out.
+
+You're assigned to work with two other students and given your target:
+
+*line_break
+
+A dimensional tear near the World Tree's roots—one of the most critical structures in all of Avalon.
+
+*page_break
+
+Polly lands on your shoulder as you prepare.
+
+[i]"Well. This is it. The final exam. No pressure—only the structural integrity of the dimension we're all living in depends on your success."[/i]
+
+*line_break
+
+[i]"Good luck with that."[/i]
+
+*page_break
+
+*label team_formation
+
+Your team consists of:
+
+*if training_partner = "lyra"
+  **Lyra**, your practice partner—precise, methodical, excellent with details.
+  *set collaboration +5
+
+*if training_partner = "kade"
+  **Kade**, your practice partner—enthusiastic, ambitious, sometimes reckless.
+  *set collaboration +5
+
+*if training_partner = "selene"
+  **Selene**, your practice partner—talented, competitive, but learning to collaborate.
+  *set collaboration +5
+
+And **Marcus**, the second-year student who helped you on your first day—experienced but still learning.
+
+*page_break
+
+Marcus looks nervous.
+
+[b]"Okay,"[/b] he says. [b]"I've done this once before. The key is to work together—no one can stabilize a major tear alone."[/b]
+
+*line_break
+
+*if training_partner = "lyra"
+  Lyra nods, already analyzing the data they've been given.
+
+  [b]"The tear is approximately three meters wide. Multiple boundary threads damaged. We'll need coordinated repair."[/b]
+
+*if training_partner = "kade"
+  Kade bounces with nervous energy.
+
+  [b]"So we all work together, right? Pool our magic, fix the tear, save the day?"[/b]
+
+*if training_partner = "selene"
+  Selene studies the holographic map critically.
+
+  [b]"Three meters wide. That's bigger than the practice tears we've worked with. This will be challenging."[/b]
+
+*page_break
+
+You arrive at the World Tree's roots.
+
+The dimensional tear is immediately visible—a ragged gap in reality itself, crackling with unstable energy. Through it, you can see the [i]nothing[/i] between dimensions—a void that shouldn't exist.
+
+*line_break
+
+It's growing.
+
+*page_break
+
+Marcus swears softly.
+
+[b]"It's worse than the reports said. If this tears completely, it could destabilize the entire Tree network."[/b]
+
+*line_break
+
+*if training_partner = "lyra"
+  Lyra's hands shake slightly, but her voice is steady.
+
+  [b]"Then we fix it. Now. Before it gets worse."[/b]
+
+*if training_partner = "kade"
+  Kade takes a deep breath.
+
+  [b]"Okay. Okay. We can do this. We [i]have[/i] to do this."[/b]
+
+*if training_partner = "selene"
+  Selene's competitive edge sharpens into determination.
+
+  [b]"Failure isn't an option. Let's work."[/b]
+
+*page_break
+
+*label crisis_response
+
+You need to make a decision about how to approach this:
+
+*page_break
+
+*choice
+  #Take charge and coordinate everyone—someone needs to lead.
+    *set trial_approach "leadership"
+    *set collaboration +5
+
+    "Listen," you say firmly. "We need coordination. Marcus, you're experienced—tell us what you know. Lyra, analyze the tear's structure. Kade, start channeling stabilization energy. I'll coordinate and fill gaps."
+
+    *if training_partner != "lyra"
+      "Lyra" should be your partner's name
+      *goto coordination_leadership
+
+    *goto coordination_leadership
+
+  #Suggest working as equals—pool knowledge and make decisions together.
+    *set trial_approach "collaborative"
+    *set collaboration +15
+
+    "We're all in this together," you say. "No leaders, no followers. Let's each contribute what we're good at and make decisions collectively."
+
+    *line_break
+
+    Everyone nods.
+
+    *if class_focus = "theory"
+      "I can analyze the theoretical structure."
+
+    *if class_focus = "practical"
+      "I can sense the dimensional currents and stabilize by feel."
+
+    *if class_focus = "living_magic"
+      "I can work with the World Tree's life force to support the repair."
+
+    *page_break
+
+    Marcus adds his experience. Your partner contributes their skills. Together, you form a complete picture.
+
+    *goto collaborative_approach
+
+  #Let Marcus lead since he's more experienced—support his decisions.
+    *set trial_approach "supportive"
+    *set collaboration +10
+
+    "Marcus," you say, "you've done this before. Tell us what to do."
+
+    *line_break
+
+    He looks surprised, then grateful.
+
+    [b]"Okay. Alright. Um..."[/b]
+
+    *page_break
+
+    He takes a breath, centering himself.
+
+    [b]"Right. We need three mages holding dimensional threads while the fourth weaves the repair. I'll coordinate. ${name}, you—"[/b]
+
+    *line_break
+
+    You follow his instructions, supporting his leadership.
+
+    *goto supportive_approach
+
+*comment ================================================
+*comment LEADERSHIP APPROACH
+*comment ================================================
+
+*label coordination_leadership
+
+You coordinate the effort, directing everyone's magical energy.
+
+Marcus stabilizes the left side of the tear.
+
+*if training_partner = "lyra"
+  Lyra handles the precise thread-weaving.
+
+*if training_partner = "kade"
+  Kade channels raw power into the repair.
+
+*if training_partner = "selene"
+  Selene tackles the complex right side independently.
+
+*line_break
+
+You manage the overall flow, sensing where energy is needed and redirecting it.
+
+*page_break
+
+It's working—
+
+—until the tear suddenly [i]spikes[/i], doubling in size.
+
+*line_break
+
+Everyone's magical connections strain dangerously.
+
+*page_break
+
+*choice
+  #Push everyone harder—we need more power NOW.
+    *set trial_outcome "forced"
+    *set collaboration -10
+
+    "More power!" you shout. "Everyone, push harder!"
+
+    *line_break
+
+    They do.
+
+    Marcus grits his teeth, channeling more than he should. Your partner pushes their limits.
+
+    *page_break
+
+    The tear starts to close—
+
+    —but the cost is high. Everyone is dangerously overextended. Marcus collapses, magical exhaustion taking him. Your partner barely stays conscious.
+
+    *line_break
+
+    The tear seals.
+
+    But you did it through force rather than finesse.
+
+    *goto trial_resolution
+
+  #Pull back and reassess—forcing it will hurt someone.
+    *set trial_outcome "adapted"
+    *set collaboration +15
+
+    "Stop!" you call. "Everyone pull back. This approach isn't working."
+
+    *line_break
+
+    They hesitate, then follow your lead.
+
+    The tear remains, but at least no one's hurt.
+
+    *page_break
+
+    "New plan," you say. "We're not strong enough to force this. We need to work [i]with[/i] the dimensional structure, not against it."
+
+    *line_break
+
+    *if class_focus = "theory"
+      Your theoretical knowledge kicks in. You see the pattern—the tear wants to heal itself; you just need to support its natural restoration.
+
+    *if class_focus = "practical"
+      Your instincts guide you. You sense how the dimension [i]wants[/i] to knit back together.
+
+    *if class_focus = "living_magic"
+      You feel the World Tree's life force. It's trying to help. You just need to listen to it.
+
+    *page_break
+
+    "Everyone, gently. Feel the natural currents and flow with them."
+
+    *line_break
+
+    This time, it works beautifully.
+
+    The tear heals smoothly, no one gets hurt, and the repair is stable.
+
+    *goto trial_resolution
+
+*comment ================================================
+*comment COLLABORATIVE APPROACH
+*comment ================================================
+
+*label collaborative_approach
+
+Working as equals, you pool your knowledge.
+
+Marcus contributes experience. Your partner contributes their unique skills. You contribute your training.
+
+*page_break
+
+"I see the problem," Marcus says. "The threads are tangled. We need to untangle before we can repair."
+
+*line_break
+
+*if training_partner = "lyra"
+  Lyra nods. "I can map the tangle. Give me thirty seconds."
+
+*if training_partner = "kade"
+  Kade says, "I can hold the tear stable while we work. I'm good at sustained power output."
+
+*if training_partner = "selene"
+  Selene adds, "I can handle the complex weaving on the right side if someone stabilizes the left."
+
+*page_break
+
+You add your contribution:
+
+*if class_focus = "theory"
+  "I can calculate the optimal repair sequence."
+
+*if class_focus = "practical"
+  "I can sense the flow and adjust in real-time."
+
+*if class_focus = "living_magic"
+  "I can channel the World Tree's energy to support the repair."
+
+*page_break
+
+Together, you work.
+
+It's not about individual brilliance—it's about perfect synchronization.
+
+*line_break
+
+When Marcus stumbles, your partner supports him. When your partner needs more power, you channel it. When you need information, Marcus provides it.
+
+*page_break
+
+The tear closes smoothly.
+
+Not through force, but through collaboration.
+
+*line_break
+
+Perfect teamwork.
+
+*set trial_outcome "collaboration"
+*set collaboration +20
+*goto trial_resolution
+
+*comment ================================================
+*comment SUPPORTIVE APPROACH
+*comment ================================================
+
+*label supportive_approach
+
+You follow Marcus's lead, supporting his decisions.
+
+He coordinates well, drawing on his experience. You and your partner provide the magical power while he manages the complex weaving.
+
+*page_break
+
+But then Marcus hesitates.
+
+[b]"Wait, this isn't... the pattern is different than last time. I don't..."[/b]
+
+*line_break
+
+He's doubting himself.
+
+*page_break
+
+*choice
+  #Encourage him—"You've got this. We trust you."
+    *set trial_outcome "supported"
+    *set collaboration +15
+
+    "Marcus," you say calmly, "you know more than we do. We trust you. What does your instinct say?"
+
+    *line_break
+
+    He takes a breath.
+
+    [b]"My instinct says... try the reverse weave pattern. It's risky, but—"[/b]
+
+    "Then we try it. We're with you."
+
+    *page_break
+
+    Bolstered by your confidence, Marcus commits to his decision.
+
+    It works.
+
+    *line_break
+
+    The reverse weave pattern addresses the unique structure of this tear perfectly. The repair holds strong.
+
+    Marcus looks amazed.
+
+    [b]"I... we did it. [b]We[/b] did it."[/b]
+
+    *goto trial_resolution
+
+  #Take over—he's lost confidence, someone needs to act.
+    *set trial_outcome "takeover"
+    *set collaboration +5
+
+    "Marcus, let me," you say, stepping forward.
+
+    *line_break
+
+    He looks relieved but also a little hurt.
+
+    You take over the coordination, applying what you've learned.
+
+    *page_break
+
+    It works, but Marcus seems diminished. You undermined his confidence when he needed support.
+
+    The tear closes, but the team dynamic is strained.
+
+    *goto trial_resolution
+
+*comment ================================================
+*comment TRIAL RESOLUTION
+*comment ================================================
+
+*label trial_resolution
+
+*page_break
+
+The dimensional tear seals completely.
+
+The unstable energy dissipates. The World Tree's roots stabilize. The crisis is over.
+
+*page_break
+
+*if trial_outcome = "collaboration"
+  Your team succeeded through perfect collaboration.
+
+  Izack appears through a portal, his face lit with genuine joy.
+
+  [b]"That was [i]beautiful[/i]. I was monitoring your approach. You worked as one unified entity, not four separate mages. That's [i]exactly[/i] what I'm trying to teach."[/b]
+
+*if trial_outcome = "adapted"
+  Your team succeeded by adapting when force didn't work.
+
+  Aria appears, nodding with approval.
+
+  [b]"You recognized when your first approach wasn't working and changed tactics. Intelligence in action. Well done."[/b]
+
+*if trial_outcome = "supported"
+  Your team succeeded by supporting strong leadership.
+
+  Zara appears, smiling warmly.
+
+  [b]"You empowered Marcus to lead by trusting him. That's a subtle but powerful form of collaboration."[/b]
+
+*if trial_outcome = "forced"
+  Your team succeeded, but at a cost.
+
+  Izack appears, his expression concerned.
+
+  [b]"You closed the tear, but you pushed too hard. Magic shouldn't require that much force. You need to learn to work [i]with[/i] dimensional energy, not dominate it."[/b]
+
+  *set collaboration -5
+
+*if trial_outcome = "takeover"
+  Your team succeeded, but you undermined someone's confidence.
+
+  Aria appears, her expression neutral.
+
+  [b]"Effective, but not collaborative. You took over when Marcus needed support. Sometimes leadership means empowering others, not replacing them."[/b]
+
+*page_break
+
+You return to the Hall of Threads exhausted but triumphant.
+
+*line_break
+
+Other teams are returning too. Most succeeded. A few needed faculty intervention. Everyone looks drained but proud.
+
+*page_break
+
+Izack addresses the assembled students:
+
+[b]"You all faced real danger today. Real dimensional instabilities that could have caused real harm. And you [i]succeeded[/i]."[/b]
+
+*line_break
+
+[b]"Not all of you worked perfectly. Some of you made mistakes. But you all demonstrated the core principle: [i]magic works better together[/i]."[/b]
+
+*page_break
+
+Aria steps forward:
+
+[b]"You are no longer first-year students. Tomorrow, you become full mages of Avalon Academy."[/b]
+
+*line_break
+
+Zara finishes:
+
+[b]"Rest tonight. Tomorrow, you graduate."[/b]
+
+*page_break
+
+*label final_evening
+
+You return to your dorm room one last time as a student.
+
+*if has_familiar_perch
+  Polly waits on her perch.
+
+*line_break
+
+[i]"So,"[/i] she says. [i]"You did it. You actually did it."[/i]
+
+*page_break
+
+She hops closer.
+
+[i]"I've watched hundreds of students go through the final trial. Yours was... well, it was something special."[/i]
+
+*line_break
+
+*if trial_outcome = "collaboration"
+  [i]"Perfect collaboration. I've seen it maybe a dozen times in three hundred years. You're one of the rare ones, ${name}."[/i]
+
+*if trial_outcome = "adapted"
+  [i]"You adapted when you needed to. That's wisdom. Many students just push harder when something isn't working. You thought."[/i]
+
+*if trial_outcome = "supported"
+  [i]"You empowered someone else to succeed. That's a rare gift—knowing when to lead and when to support."[/i]
+
+*if trial_outcome = "forced"
+  [i]"You succeeded through force. It worked, but... there's room to grow. To learn gentler methods."[/i]
+
+*if trial_outcome = "takeover"
+  [i]"You got the job done. But collaboration means empowering others, not just taking over when they falter."[/i]
+
+*page_break
+
+[i]"Tomorrow you graduate. Tomorrow you move from student to mage. Tomorrow, your real journey begins."[/i]
+
+*line_break
+
+[i]"Tonight... just be proud of how far you've come."[/i]
+
+*page_break
+
+You look around your room.
+
+*if dorm_style = "sanctuary"
+  The warm, cozy space that welcomed you home every night.
+
+*if dorm_style = "study"
+  The shelves now filled with books and notes from your studies.
+
+*if dorm_style = "workshop"
+  The workbenches covered with experiments and projects.
+
+*if dorm_style = "zen"
+  The minimalist space that helped you find peace and clarity.
+
+*page_break
+
+*if magical_feature = "memory_crystal"
+  You touch your memory crystal, recording this moment.
+
+  The exhaustion. The pride. The anticipation of what comes next.
+
+*line_break
+
+Tomorrow, everything changes.
+
+Tonight, you rest.
+
+*page_break
+
+*comment Final collaboration score calculation before endings
+*comment All player choices have led to this moment
+*comment The endings scene will determine final outcome
+
+*goto_scene endings

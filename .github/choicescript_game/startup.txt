@@ -1,0 +1,358 @@
+*comment ================================================
+*comment POLLY'S WINGSCROLL: THE FIRST THREAD
+*comment A Choice-Based Adventure in Avalon Academy
+*comment Based on The Spiral of Pollyoneth universe
+*comment ================================================
+
+*title Polly's Wingscroll: The First Thread
+*author The Spiral of Pollyoneth
+
+*scene_list
+  startup
+  arrival
+  familiar_selection
+  dorm_room
+  first_lesson
+  academy_life
+  golem_workshop
+  expedition_prep
+  singing_dunes
+  verdant_tithe
+  rune_glacier
+  character_bonds
+  romance_scenes
+  secret_paths
+  final_trial
+  endings
+
+*comment ================================================
+*comment ACHIEVEMENT DEFINITIONS
+*comment ================================================
+
+*achievement breakthrough visible 30 Breakthrough Collaboration
+  You achieved perfect dimensional harmony in your first lesson.
+  pre_stat text Collaboration above 60
+    You haven't yet experienced the true power of collaborative magic.
+  post_stat text Collaboration above 60
+    The dimensional boundaries sing at your touch.
+
+*achievement truthbound visible 25 Truthbound Mage
+  The Singing Dunes recognized your honesty and marked you as truthbound.
+  pre_stat text artifact_earned "Truth-Sworn Sand"
+    The desert has not yet tested you.
+  post_stat text artifact_earned "Truth-Sworn Sand"
+    The desert sands swirl in recognition when you pass.
+
+*achievement heartwood_guardian visible 25 Guardian of the Heartwood
+  You bonded with the ancient Heartwood Tree and became its guardian.
+  pre_stat text artifact_earned "Heartwood Guardian - Ancient Wisdom"
+    The forest has not yet chosen you.
+  post_stat text artifact_earned "Heartwood Guardian - Ancient Wisdom"
+    You can feel every living thing in Avalon as if they were part of you.
+
+*achievement glacier_partner visible 25 Partner of the Glacier
+  The Rune Glacier accepted you as an equal partner in magic.
+  pre_stat text artifact_earned "Glacier Partnership"
+    The ice has not yet recognized you.
+  post_stat text artifact_earned "Glacier Partnership"
+    Living runes dance across your skin in patterns of frost and power.
+
+*achievement collaborative_master visible 40 Collaborative Master
+  You mastered the art of dimensional collaboration and became a legendary mage.
+  pre_stat text collaboration above 85
+    You still work to understand true collaboration.
+  post_stat text collaboration above 85
+    Your name will be spoken alongside Izack Thorne's.
+
+*comment ================================================
+*comment STAT DEFINITIONS
+*comment ================================================
+
+*comment Character Identity
+*create name "Student"
+*create gender "nb"
+*create gender_full "nonbinary"
+*create he_she "they"
+*create him_her "them"
+*create his_her "their"
+*create His_Her "Their"
+*create himself_herself "themself"
+*create man_woman "person"
+*create boy_girl "student"
+*create mr_ms "Mx"
+
+*comment Primary Stats
+*create collaboration 50
+*create power 50
+*create knowledge 50
+*create empathy 50
+
+*comment Morality & Alignment Axes (opposed pairs)
+*create communication_vs_domination 50
+*create honesty_vs_deception 50
+*create tradition_vs_innovation 50
+*create individual_vs_collective 50
+
+*comment Relationship Stats
+*create izack_relationship 50
+*create izack_romance false
+*create aria_relationship 50
+*create aria_romance false
+*create zara_relationship 50
+*create zara_romance false
+*create polly_relationship 50
+*create grey_relationship 0
+
+*comment Familiar System
+*create familiar_type "none"
+*create familiar_name ""
+*create familiar_personality ""
+*create polly_is_familiar false
+
+*comment Golem Companion System
+*create has_golem false
+*create golem_name ""
+*create golem_element ""
+*create golem_personality ""
+
+*comment Path Tracking
+*create chosen_path "none"
+*create expedition_choice "none"
+*create artifact_earned "none"
+*create secret_paths_found 0
+*create hidden_lore_discovered 0
+
+*comment Failure & Consequence Tracking
+*create failures 0
+*create close_calls 0
+*create warnings_ignored 0
+*create reckless_actions 0
+
+*comment Ending Flags
+*create ending_type "none"
+
+*comment Story Choices (for tracking player history)
+*create intro_choice ""
+*create lesson_approach ""
+*create crisis_response ""
+*create biome_visited ""
+*create romantic_interest "none"
+
+*comment Romance Flags
+*create romance_enabled true
+*create first_kiss_scene ""
+*create romance_depth 0
+
+*comment ================================================
+*comment TITLE SCREEN
+*comment ================================================
+
+*image avalon_logo.png center
+
+*line_break
+Welcome to Avalon Academy, where the boundaries between realms blur and magic is a living conversation.
+
+*line_break
+In this choice-based narrative, you are a new student arriving at the legendary Avalon Academy, guided by Polly—a sarcastic, ancient raven familiar who has witnessed the rise of dimensional magic itself.
+
+*line_break
+Your choices will determine:
+[b]• Your mastery of collaborative magic[/b]
+[b]• Your relationships with legendary mages[/b]
+[b]• Which magical realm you explore[/b]
+[b]• Your ultimate destiny among the threads of magic[/b]
+
+*line_break
+[i]14 unique endings await, each shaped by your decisions.[/i]
+
+*page_break
+
+*comment ================================================
+*comment CHARACTER CREATION
+*comment ================================================
+
+Before we begin your journey at Avalon Academy, let's establish who you are.
+
+*page_break
+
+*comment GENDER SELECTION
+What is your gender?
+
+*choice
+  #Male
+    *set gender "m"
+    *set gender_full "male"
+    *set he_she "he"
+    *set him_her "him"
+    *set his_her "his"
+    *set His_Her "His"
+    *set himself_herself "himself"
+    *set man_woman "man"
+    *set boy_girl "boy"
+    *set mr_ms "Mr"
+    *goto name_input
+
+  #Female
+    *set gender "f"
+    *set gender_full "female"
+    *set he_she "she"
+    *set him_her "her"
+    *set his_her "her"
+    *set His_Her "Her"
+    *set himself_herself "herself"
+    *set man_woman "woman"
+    *set boy_girl "girl"
+    *set mr_ms "Ms"
+    *goto name_input
+
+  #Nonbinary
+    *set gender "nb"
+    *set gender_full "nonbinary"
+    *set he_she "they"
+    *set him_her "them"
+    *set his_her "their"
+    *set His_Her "Their"
+    *set himself_herself "themself"
+    *set man_woman "person"
+    *set boy_girl "student"
+    *set mr_ms "Mx"
+    *goto name_input
+
+  #I'd like to choose custom pronouns
+    *goto custom_pronouns
+
+*label custom_pronouns
+
+*page_break
+
+Choose your pronouns:
+
+*choice
+  #He/Him
+    *set he_she "he"
+    *set him_her "him"
+    *set his_her "his"
+    *set His_Her "His"
+    *set himself_herself "himself"
+    *set mr_ms "Mr"
+    *goto name_input
+
+  #She/Her
+    *set he_she "she"
+    *set him_her "her"
+    *set his_her "her"
+    *set His_Her "Her"
+    *set himself_herself "herself"
+    *set mr_ms "Ms"
+    *goto name_input
+
+  #They/Them
+    *set he_she "they"
+    *set him_her "them"
+    *set his_her "their"
+    *set His_Her "Their"
+    *set himself_herself "themself"
+    *set mr_ms "Mx"
+    *goto name_input
+
+*label name_input
+
+*page_break
+
+And what should we call you?
+
+*input_text name
+
+*page_break
+
+Excellent, ${name}.
+
+*if gender = "m"
+  A young man seeking to master dimensional magic.
+*if gender = "f"
+  A young woman seeking to master dimensional magic.
+*if gender = "nb"
+  A young mage seeking to master dimensional magic.
+
+*line_break
+
+*comment STATS PREVIEW
+*stat_chart
+  text name
+  text he_she Pronouns
+  percent collaboration Collaboration
+  opposed_pair Communication vs Domination
+    communication_vs_domination
+  opposed_pair Honesty vs Deception
+    honesty_vs_deception
+  percent power Power
+  percent knowledge Knowledge
+  percent empathy Empathy
+  opposed_pair Izack
+    izack_relationship
+  opposed_pair Aria
+    aria_relationship
+  opposed_pair Zara
+    zara_relationship
+
+*page_break
+
+*comment ================================================
+*comment PROLOGUE - POLLY'S INTRODUCTION
+*comment ================================================
+
+[i]*Caw!*[/i]
+
+Alright, ${name}. Let me guess—you're nervous, excited, and probably wondering if that portal sickness will ever wear off.
+
+Spoiler: it won't for another hour. You're welcome for that information.
+
+I'm Polymnia Aetheris, but everyone calls me Polly. Yes, like the bird. No, the irony is not lost on me. I'll be your narrator, occasional advisor, and the only honest voice you'll hear today.
+
+*line_break
+
+Fair warning: I know how this ends. I've seen every twist, every heartbreak, every triumph. But I'll try to let you experience it fresh, even though I'm terrible at keeping secrets.
+
+*page_break
+
+You stand at the edge of Avalon Academy, watching the impossible Spiral Spire twist upward into clouds that shimmer with leyline energy. The World Tree's branches arc overhead, and you can [i]feel[/i] the convergence of magical currents thrumming through the air.
+
+*line_break
+
+This realm—Avalon itself—is alive. Not metaphorically. Izack Thorne, the greatest dimensional mage of our age, literally [i]created[/i] a sentient pocket dimension that grows like a living thing.
+
+And you're about to become part of it.
+
+*page_break
+
+Through the crystalline gates ahead, you can see the courtyard. Izack himself is waiting to meet the new arrivals.
+
+[i]Fair warning: he's brilliant, kind, and will absolutely try to convince you that listening to magical currents is more important than controlling them. He's not wrong, but don't tell him I said that.[/i]
+
+*line_break
+
+So, ${name}. How do you want to make your entrance?
+
+*choice
+  #Approach respectfully and introduce yourself properly.
+    *set intro_choice "polite"
+    *set collaboration +10
+    *set izack_relationship +10
+
+    Smart. Politeness costs nothing and earns everything. Well, sometimes.
+    *goto_scene arrival polite_approach
+
+  #Ask Polly more questions about what to expect.
+    *set intro_choice "curious"
+    *set polly_relationship +10
+
+    [i]Smart. Ask the raven who's been here since the beginning. I like you already.[/i]
+    *goto_scene arrival ask_polly
+
+  #Walk past confidently—you've read about Avalon and know what you're doing.
+    *set intro_choice "confident"
+    *set aria_relationship +10
+    *set collaboration -5
+
+    [i]*Caw!* Oh, we have a confident one. This should be entertaining.[/i]
+    *goto_scene arrival confident_entrance

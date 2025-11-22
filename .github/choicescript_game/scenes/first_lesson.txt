@@ -1,0 +1,289 @@
+*comment ================================================
+*comment FIRST LESSON - DIMENSIONAL RESONANCE
+*comment ================================================
+
+*temp lesson_success 0
+
+The lesson chamber is breathtaking. Crystalline walls pulse with leyline energy, and dimensional boundaries shimmer visibly in the air like heat waves made of starlight.
+
+*line_break
+
+Izack stands at the center, surrounded by five other students. You recognize a few faces from the portal crossing—all nervous, all excited.
+
+"Welcome," Izack begins, his voice carrying to every corner without needing to be loud. "Today we're learning to [i]feel[/i] dimensional boundaries. Not to break them, but to understand their nature."
+
+*page_break
+
+He gestures, and the air ripples. Reality itself seems to bend, revealing the membrane between dimensions—a shimmering, almost musical barrier.
+
+"Reach out—not with your hands, but with your awareness. What does the boundary feel like?"
+
+*line_break
+
+You close your eyes and extend your senses. The boundary feels like... a membrane. Flexible. Almost musical. It has texture, temperature, even something like emotion.
+
+*line_break
+
+[i]"Good. Now here's the fun part—Izack wants you to work together to create a harmonic resonance. Multiple mages, one unified frequency."[/i]
+
+*page_break
+
+Izack nods. "Exactly. Zara, would you demonstrate with ${name}?"
+
+*if zara_relationship > 50
+  Zara practically beams as she takes your hand.
+  *set lesson_success +1
+*else
+  Zara takes your hand with a professional nod.
+
+"Just match my breathing," she says softly. "Let our intentions align."
+
+*choice
+  #Focus entirely on matching Zara's rhythm—trust the partnership.
+    *set collaboration +10
+    *set zara_relationship +10
+    *set lesson_success +2
+
+    You let go of control and simply follow Zara's lead. Your breathing synchronizes, your heartbeat aligns, and suddenly—
+
+    The boundary becomes [i]clear[/i]. You're seeing it through both your perspective and Zara's, and it's infinitely more detailed than before.
+
+    "Beautiful," Izack murmurs. "This is partnership magic."
+
+    *goto lesson_success
+
+  #Try to deepen the connection to include all the other students.
+    *set collaboration +15
+    *set izack_relationship +15
+    *set zara_relationship +10
+    *set lesson_success +3
+
+    An instinct tells you there's more. You reach out with your awareness, inviting the other students into the resonance.
+
+    One by one, they join. Five minds, five hearts, one unified frequency.
+
+    *goto breakthrough
+
+  #Pull back slightly—the merging feels overwhelming.
+    *set collaboration -5
+    *set lesson_success -1
+
+    The sensation of your consciousness blending with Zara's is too intense, too fast. You instinctively pull back.
+
+    And in that moment, the resonance destabilizes.
+
+    *goto crisis
+
+*comment ================================================
+
+*label breakthrough
+
+*achievement visible breakthrough Achieved Breakthrough Collaboration
+
+[i]*Even I'm speechless. And that never happens. Caw.*[/i]
+
+*line_break
+
+The dimensional boundary doesn't just become visible—it [i]sings[/i]. You can feel its nature, its preferences, the way it wants to flex and flow. Together, your group creates a perfect harmonic resonance.
+
+Izack's eyes shine with unshed tears. "This is exactly what Avalon was built for. You just demonstrated the Third Thread—collaborative magic that transcends individual limitations."
+
+*line_break
+
+Aria appears at the doorway, clearly moved despite her usual composure. "In my years of dimensional work, I've never seen students achieve this level of connection on their first day."
+
+Zara squeezes your hand, grinning. "We did it!"
+
+*set chosen_path "Third Thread"
+*set collaboration +20
+
+*page_break
+
+The lesson continues for another hour, but the breakthrough moment has set the tone. You've proven yourself capable of true collaboration.
+
+*goto lesson_conclusion
+
+*comment ================================================
+
+*label lesson_success
+
+You and Zara maintain the connection, refining it. The boundary becomes crystal clear between your merged awareness.
+
+Izack nods approvingly. "Beautiful work. This is partnership magic—two becoming greater than the sum of their parts."
+
+*line_break
+
+[i]"Solid performance. Not flashy, but that's not always bad. You're learning the right lessons."[/i]
+
+*goto lesson_conclusion
+
+*comment ================================================
+
+*label crisis
+
+*temp crisis_resolved false
+
+Zara gasps. "The harmonics are collapsing!"
+
+The collaborative resonance destabilizes, and the dimensional boundary you were examining begins to crack. A hairline fracture spreads across the shimmering membrane.
+
+Aria's voice cuts through the rising panic. "Everyone, step back. Izack—"
+
+Izack is already moving, reaching for the fracturing boundary, but you can see the strain on his face. The crack is spreading faster than he can repair it alone.
+
+*line_break
+
+[i]"Right. So this is a teachable moment about why we don't panic-quit collaborative spells. Your move, student."[/i]
+
+*choice
+  #Rejoin the collaborative effort to help stabilize it.
+    *set collaboration +15
+    *set izack_relationship +10
+    *set zara_relationship +10
+    *set crisis_resolved true
+
+    You push past your fear and reach out again—not just to Zara, but to everyone. "Together! Like before!"
+
+    Zara grabs your hand immediately. The other students join. Izack's eyes widen as he feels the collaborative resonance snap into place.
+
+    "That's it," he breathes. "Channel it through me—I'll direct the repair."
+
+    Six students and one master mage, working as one. The fractured boundary responds to your unified intention, the cracks sealing like wounds knitting together.
+
+    *goto crisis_resolved
+
+  #Stay back—you don't want to make it worse.
+    *set collaboration -10
+    *set izack_relationship -5
+
+    You step back, watching as Izack and Aria work together to seal the fracture. Their magic interweaves perfectly—his intuitive feel for dimensional currents, her precise boundary control.
+
+    The crack seals. Crisis averted.
+
+    But Izack turns to you with disappointment in his eyes.
+
+    "You had the ability to help. Instead, you chose to be a bystander."
+
+    *goto crisis_passive
+
+*comment ================================================
+
+*label crisis_resolved
+
+*achievement visible crisis_hero Crisis Resolution
+
+[i]"NOW THIS is what I'm talking about! Crisis brings out the best collaborative magic. Well done!"[/i]
+
+*line_break
+
+The boundary stabilizes, then settles into a perfect, shimmering membrane. The danger passes.
+
+Aria exhales. "Impressive crisis management. You recognized that individual strength wasn't enough and chose collaboration instead."
+
+Izack smiles, clearly proud. "This is exactly why Avalon exists."
+
+*set collaboration +10
+*goto lesson_conclusion
+
+*comment ================================================
+
+*label crisis_passive
+
+[i]"So... you just watched. That's a choice."[/i]
+
+*line_break
+
+Aria adds, "In collaborative environments, passive observation is a form of failure. Your classmates needed you."
+
+Zara looks hurt. "We're supposed to work together here."
+
+The lesson continues, but you can feel the weight of judgment.
+
+*goto lesson_conclusion
+
+*comment ================================================
+
+*label lesson_conclusion
+
+*page_break
+*stat_chart
+
+The first lesson ends. You've learned something about yourself—and about what kind of mage you want to become.
+
+*line_break
+
+*if collaboration >= 70
+  Izack approaches you afterward. "You have a gift for collaborative magic, ${name}. I'd like to offer you something special."
+  *goto expedition_offer
+
+*if collaboration >= 50
+  The lesson was successful. You're beginning to understand Avalon's way.
+  *goto expedition_offer
+
+*if collaboration < 50
+  You're learning, but the path ahead won't be easy.
+  *goto standard_path
+
+*comment ================================================
+
+*label expedition_offer
+
+*page_break
+
+Several days later, Izack gathers the class with exciting news.
+
+"Avalon has grown far beyond what I originally imagined," he says, eyes bright with wonder. "This realm now spans multiple biomes—forests that think, oceans that remember the past, deserts lit by eternal flame. We've arranged field expeditions for advanced students to explore these regions."
+
+*line_break
+
+[i]"Translation: he accidentally created a small planet and now needs students to go poke around and make sure nothing's trying to eat the academy. It's educational AND practical!"[/i]
+
+*line_break
+
+Aria steps forward with a crystalline map that shifts and glows.
+
+"We have three expeditions departing tomorrow. Each will teach different aspects of magic through direct environmental interaction."
+
+*page_break
+
+She points to three glowing regions on the map:
+
+[b]The Singing Dunes[/b] - A desert where the sand responds to truth and lies. You'll learn about honesty in magic and oath-binding.
+
+[b]The Verdant Tithe[/b] - An ancient forest where every thought has weight. Perfect for studying the connection between mind and nature.
+
+[b]The Rune Glacier[/b] - A constantly shifting ice field inscribed with living spells. Ideal for those who want to understand written magic at its most dynamic.
+
+*line_break
+
+[i]"Choose wisely. Each one will try to kill you in completely different ways. I'll be supervising the Dunes trip because watching students panic when the sand starts screaming never gets old."[/i]
+
+*choice
+  #Volunteer for the Singing Dunes expedition with Polly.
+    *set expedition_choice "Singing Dunes"
+    *set polly_relationship +10
+    *goto_scene singing_dunes
+
+  #Join the Verdant Tithe forest exploration.
+    *set expedition_choice "Verdant Tithe"
+    *set izack_relationship +10
+    *goto_scene verdant_tithe
+
+  #Request the Rune Glacier—you want to master written magic.
+    *set expedition_choice "Rune Glacier"
+    *set aria_relationship +10
+    *goto_scene rune_glacier
+
+*comment ================================================
+
+*label standard_path
+
+*page_break
+
+Your training at Avalon continues in the traditional manner.
+
+You've learned the fundamentals. Now it's time to deepen your understanding through daily practice.
+
+*line_break
+
+*goto_scene academy_life

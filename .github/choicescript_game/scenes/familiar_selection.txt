@@ -1,0 +1,396 @@
+*comment ================================================
+*comment FAMILIAR SELECTION
+*comment Choose your magical companion
+*comment Based on lore: Polly, various familiar types
+*comment ================================================
+
+*temp familiar_choice ""
+*temp familiar_bond_strength 0
+
+*label start
+
+After settling into Avalon Academy, you're called to the Familiar Bonding Chamber—a circular room where leylines converge in shimmering patterns.
+
+*page_break
+
+Izack stands at the center, surrounded by various magical creatures, each one a potential familiar.
+
+[b]"Every mage at Avalon bonds with a familiar,"[/b] he explains. [b]"These aren't pets or servants—they're partners. Equals. Your familiar will grow with you, learn with you, and sometimes know you better than you know yourself."[/b]
+
+*line_break
+
+*page_break
+
+You can already feel Polly's presence—she's been with you since arrival, her sarcastic commentary a constant companion.
+
+But Polly is... unusual. She's bonded to Avalon itself, an ancient dimensional anchor. She can narrate multiple students' stories simultaneously.
+
+*page_break
+
+Polly lands on your shoulder.
+
+[i]"Right. Decision time, ${name}. I can be your familiar if you want—I'm already invested in your story. But fair warning: I come with three hundred years of sarcasm and a tendency to spoil plot points."[/i]
+
+*line_break
+
+[i]"Or you can bond with one of the other familiars here. Each has unique gifts. Choose wisely."[/i]
+
+*page_break
+
+*label familiar_choice_menu
+
+Izack gestures to the assembled creatures:
+
+*page_break
+
+*choice
+  #Bond with Polly—the ancient, sarcastic raven who's been with you from the start.
+    *set familiar_type "polly"
+    *set familiar_name "Polly"
+    *set polly_is_familiar true
+    *set familiar_personality "sarcastic"
+    *goto polly_bond
+
+  #Bond with Lumina—a phoenix chick wreathed in gentle starlight, symbol of rebirth and hope.
+    *set familiar_type "phoenix"
+    *set familiar_personality "hopeful"
+    *goto lumina_bond
+
+  #Bond with Whisper—a shadow-fox that flickers between dimensions, master of secrets.
+    *set familiar_type "shadowfox"
+    *set familiar_personality "mysterious"
+    *goto whisper_bond
+
+  #Bond with Ember—a small fire elemental with a mischievous streak and fierce loyalty.
+    *set familiar_type "elemental"
+    *set familiar_personality "mischievous"
+    *goto ember_bond
+
+  #Bond with Quartz—a crystalline serpent that hums with dimensional frequencies.
+    *set familiar_type "serpent"
+    *set familiar_personality "wise"
+    *goto quartz_bond
+
+  #Bond with Void—a small aberration from between dimensions, utterly unique.
+    *set familiar_type "void"
+    *set familiar_personality "alien"
+    *goto void_bond
+
+*comment ================================================
+*comment POLLY BOND
+*comment ================================================
+
+*label polly_bond
+
+You extend your hand to Polly.
+
+"I choose you. You've been with me from the beginning. Let's make it official."
+
+*line_break
+
+For once, Polly is speechless.
+
+*page_break
+
+She hops onto your extended hand, her metallic feathers shimmering with runic patterns.
+
+[i]"Well,"[/i] she finally says, her voice softer than usual. [i]"That's... unexpected. And touching. Which is annoying because I was going for cynical detachment."[/i]
+
+*line_break
+
+Izack smiles.
+
+[b]"Polly rarely bonds with individual students. You should feel honored."[/b]
+
+*page_break
+
+The leylines in the chamber pulse, and you feel the bond form—not a binding, but a [i]connection[/i]. Polly's ancient consciousness brushes against yours, sharing fragments of three centuries of memory.
+
+*line_break
+
+[i]"There,"[/i] Polly says. [i]"Now you're stuck with me. And I'm stuck with you. Let's try not to die embarrassingly, shall we?"[/i]
+
+*set polly_relationship +20
+*set collaboration +10
+*set hidden_lore_discovered +1
+*goto bond_complete
+
+*comment ================================================
+*comment LUMINA BOND - Phoenix
+*comment ================================================
+
+*label lumina_bond
+
+*page_break
+
+What will you name your phoenix familiar?
+
+*input_text familiar_name
+
+*page_break
+
+You approach the phoenix chick.
+
+${familiar_name} looks up at you with eyes like molten gold. Despite being small enough to fit in your palm, ${he_she} radiates warmth and hope.
+
+*line_break
+
+When you touch ${him_her}, flame doesn't burn—it [i]welcomes[/i].
+
+*page_break
+
+The bond forms in a burst of gentle starlight.
+
+${familiar_name} chirps and settles onto your shoulder, tiny wings spreading protectively.
+
+*line_break
+
+Izack nods with approval.
+
+[b]"A phoenix familiar. Rare. They represent rebirth, second chances, and the eternal cycle of growth. ${familiar_name} will guide you through your darkest moments."[/b]
+
+*page_break
+
+You feel the bond—a warmth in your chest, like carrying a small sun.
+
+${familiar_name} will grow as you grow, eventually becoming a magnificent phoenix. But for now, ${he_she}'s content to be your companion.
+
+*set empathy +15
+*set power +10
+*set honesty_vs_deception +10
+*goto bond_complete
+
+*comment ================================================
+*comment WHISPER BOND - Shadow Fox
+*comment ================================================
+
+*label whisper_bond
+
+*page_break
+
+What will you name your shadow-fox familiar?
+
+*input_text familiar_name
+
+*page_break
+
+You approach the shadow-fox.
+
+${familiar_name} watches you with eyes that shimmer between colors—now silver, now gold, now deep violet. ${He_She} flickers in and out of visibility, never quite solid.
+
+*line_break
+
+When you extend your hand, ${familiar_name} [i]melts[/i] into shadow and reforms beside you.
+
+*page_break
+
+The bond forms like a whisper in the dark.
+
+You feel ${familiar_name}'s consciousness—curious, secretive, loyal beyond measure. ${He_She} knows the spaces between spaces, the secrets hidden in shadows.
+
+*line_break
+
+Izack looks impressed.
+
+[b]"A shadow-fox. They're masters of dimensional boundaries, able to slip between realities. ${familiar_name} will help you find hidden paths that others miss."[/b]
+
+*page_break
+
+${familiar_name} circles you once, leaving a trail of fading shadow, then settles at your feet—always there, even when unseen.
+
+*set knowledge +10
+*set power +10
+*set secret_paths_found +1
+*goto bond_complete
+
+*comment ================================================
+*comment EMBER BOND - Fire Elemental
+*comment ================================================
+
+*label ember_bond
+
+*page_break
+
+What will you name your fire elemental familiar?
+
+*input_text familiar_name
+
+*page_break
+
+You approach the fire elemental.
+
+${familiar_name} bounces with excitement—a small flame shaped vaguely like a cat, crackling with mischievous energy.
+
+*line_break
+
+When you offer your hand, ${familiar_name} leaps onto it.
+
+The flame doesn't burn—it [i]tickles[/i].
+
+*page_break
+
+The bond forms in a burst of warmth and laughter.
+
+${familiar_name} zips around you in excited circles, leaving trails of harmless sparks. You feel ${his_her} fierce loyalty, playful nature, and surprising wisdom beneath the mischief.
+
+*line_break
+
+Izack grins.
+
+[b]"Fire elementals are passionate, protective, and prone to pranks. ${familiar_name} will keep you warm in more ways than one."[/b]
+
+*page_break
+
+${familiar_name} settles onto your shoulder, purring like a cat made of comfortable flame.
+
+*set empathy +10
+*set power +15
+*set individual_vs_collective -10
+*goto bond_complete
+
+*comment ================================================
+*comment QUARTZ BOND - Crystal Serpent
+*comment ================================================
+
+*label quartz_bond
+
+*page_break
+
+What will you name your crystalline serpent familiar?
+
+*input_text familiar_name
+
+*page_break
+
+You approach the crystal serpent.
+
+${familiar_name} coils elegantly, ${his_her} body made of living crystal that hums with dimensional frequencies. Light refracts through ${him_her} in impossible patterns.
+
+*line_break
+
+When you place your hand near ${him_her}, the humming intensifies—a harmony you can feel in your bones.
+
+*page_break
+
+The bond forms like a perfect chord resolving.
+
+${familiar_name} wraps around your wrist, becoming a living bracelet. You feel ${his_her} ancient wisdom, ${his_her} connection to leylines and dimensional currents.
+
+*line_break
+
+Izack looks respectful.
+
+[b]"Crystal serpents are rare. They're living tuning forks for dimensional magic, able to sense and harmonize with magical frequencies. ${familiar_name} will make you exceptionally sensitive to dimensional boundaries."[/b]
+
+*page_break
+
+The crystal serpent hums softly, a constant reminder of the magic flowing through everything.
+
+*set knowledge +15
+*set collaboration +10
+*set communication_vs_domination +15
+*goto bond_complete
+
+*comment ================================================
+*comment VOID BOND - Aberration
+*comment ================================================
+
+*label void_bond
+
+*page_break
+
+What will you name your void familiar?
+
+*input_text familiar_name
+
+*page_break
+
+You approach the aberration.
+
+${familiar_name} is... difficult to describe. ${He_She} exists in the space between dimensions—sometimes visible as a shimmer of impossible colors, sometimes just a sense of presence.
+
+*line_break
+
+When you reach toward ${him_her}, reality [i]bends[/i] slightly.
+
+*page_break
+
+The bond forms like stepping through a mirror.
+
+${familiar_name} settles into your shadow—not [i]on[/i] it, but [i]in[/i] it. You feel ${his_her} utterly alien perspective, ${his_her} love for you that transcends human understanding.
+
+*line_break
+
+Izack looks both impressed and concerned.
+
+[b]"A void familiar. I've only seen one bond successfully in my lifetime. They're from the spaces between realities—completely unique, utterly loyal, and... unpredictable. ${familiar_name} will show you things no other mage can see."[/b]
+
+*page_break
+
+You feel ${familiar_name} in your peripheral vision, always there, never quite visible.
+
+It's unsettling. It's wonderful.
+
+*set knowledge +15
+*set power +10
+*set secret_paths_found +2
+*set hidden_lore_discovered +1
+*goto bond_complete
+
+*comment ================================================
+*comment BOND COMPLETE
+*comment ================================================
+
+*label bond_complete
+
+*page_break
+
+The bonding ritual completes.
+
+You feel your familiar's presence like an extension of yourself—not controlling you, not controlled by you, but [i]with[/i] you.
+
+*page_break
+
+*if polly_is_familiar
+  Polly ruffles her feathers with satisfaction.
+
+  [i]"Well. This is going to be interesting. I've narrated hundreds of stories, but I've rarely been [b]in[/b] one. Let's make it memorable, ${name}."[/i]
+
+*if familiar_type = "phoenix"
+  ${familiar_name} chirps softly, tiny wings spreading.
+
+  You feel ${his_her} warmth, ${his_her} hope, ${his_her} promise that no matter how dark things get, there's always a dawn.
+
+*if familiar_type = "shadowfox"
+  ${familiar_name} flickers in and out of visibility, eyes gleaming.
+
+  You feel ${his_her} curiosity, ${his_her} love of secrets, ${his_her} promise to always find the hidden path.
+
+*if familiar_type = "elemental"
+  ${familiar_name} crackles happily, leaving trails of harmless sparks.
+
+  You feel ${his_her} fierce joy, ${his_her} playful mischief, ${his_her} absolute loyalty.
+
+*if familiar_type = "serpent"
+  ${familiar_name} hums in harmony with the leylines around you.
+
+  You feel ${his_her} ancient wisdom, ${his_her} connection to all dimensional magic, ${his_her} patient guidance.
+
+*if familiar_type = "void"
+  ${familiar_name} exists in your shadow, a presence you feel but rarely see.
+
+  You feel ${his_her} alien affection, ${his_her} unique perspective, ${his_her} promise to show you wonders.
+
+*page_break
+
+Izack smiles warmly.
+
+[b]"The bond is complete. You and ${familiar_name} are partners now. Take care of each other."[/b]
+
+*line_break
+
+[b]"Now, let's get you settled into your dorm room."[/b]
+
+*page_break
+
+*goto_scene dorm_room

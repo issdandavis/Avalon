@@ -1,0 +1,231 @@
+*comment ================================================
+*comment ARRIVAL AT AVALON ACADEMY
+*comment ================================================
+
+*label polite_approach
+
+You walk through the crystalline gate, feeling the leyline energy wash over you like warm water. It tingles across your skin, welcoming and ancient.
+
+Izack Thorne stands in the courtyard—tall, dark-haired, with eyes that seem to see through dimensions. His presence is gentle but undeniably powerful.
+
+"Welcome," he says warmly, his voice carrying that peculiar resonance of someone who speaks multiple magical languages fluently. "I'm Izack. You must be ${name}. How are you feeling after the portal crossing?"
+
+*line_break
+
+[i]*Perched on his shoulder, I ruffle my feathers.*[/i]
+
+"Oh good, we got a polite one. Those are always fun to watch when they realize magic here doesn't care about your manners."
+
+*line_break
+
+Izack shoots me a look—one I've seen a thousand times. Fond exasperation.
+
+"What Polly means is that magic responds to intention and collaboration, not formality. But courtesy is always appreciated."
+
+He gestures toward the soaring academy structures beyond.
+
+"Your first lesson begins shortly. We'll be exploring the nature of magical boundaries—specifically, how they can be [i]bridged[/i] rather than broken."
+
+*choice
+  #Express excitement about learning collaborative techniques.
+    *set lesson_approach "collaborative"
+    *set collaboration +15
+    *set izack_relationship +15
+
+    Your eyes light up. "That sounds incredible. I've always believed magic works better when we work together."
+
+    Izack's smile deepens. "Then you're already halfway to understanding Avalon's core principle."
+
+    *goto first_lesson_setup
+
+  #Ask if you'll learn individual magic too—you want to be self-sufficient.
+    *set lesson_approach "balanced"
+    *set aria_relationship +10
+
+    "Will we also learn individual techniques?" you ask. "I believe in collaboration, but self-sufficiency is important too."
+
+    Izack nods thoughtfully. "A pragmatic approach. Aria will appreciate that perspective."
+
+    *goto first_lesson_setup
+
+*comment ================================================
+
+*label ask_polly
+
+[i]I hop closer, my feathers catching the leyline light and refracting it into impossible colors.[/i]
+
+"Smart. Ask the raven who's been here since the beginning. I like you already."
+
+*line_break
+
+Here's what you need to know, ${name}:
+
+Avalon is [i]alive[/i]. Not metaphorically—Izack literally created a sentient dimensional realm that grows from the World Tree. The magic here works through collaboration, which means your success depends on how well you listen to the currents, your fellow students, and yes, even the cranky raven.
+
+*line_break
+
+[i]I tilt my head, one eye fixing you with ancient intelligence.[/i]
+
+Izack will teach you to [i]feel[/i] magic rather than force it. Aria—his wife, brilliant politician turned boundary mage—will teach you precision and control. Zara, their first student, will probably befriend you because she's annoyingly nice. And I'll keep you honest.
+
+*page_break
+
+Just then, a young woman with hybrid features approaches. Pointed ears, striking draconic eyes, an aura of someone who belongs to multiple worlds at once.
+
+"Hi! You must be new. I'm Zara." Her smile is genuinely warm. "Polly giving you the full orientation?"
+
+*choice
+  #Thank Polly and ask Zara what her experience has been like.
+    *set collaboration +5
+    *set zara_relationship +15
+    *set polly_relationship +5
+
+    "Thank you, Polly," you say sincerely, then turn to Zara. "What's it been like for you here?"
+
+    Zara's face lights up. "It's been incredible! I was the first student here—came from a hybrid bloodline that didn't fit anywhere else. Avalon was the first place that celebrated what I am instead of asking me to choose."
+
+    *goto zara_friendship
+
+  #Ask Zara about the different magical traditions taught here.
+    *set lesson_approach "studious"
+    *set aria_relationship +5
+
+    "What traditions does Avalon teach?" you ask. "I want to understand the curriculum."
+
+    Zara nods enthusiastically. "We integrate everything—dimensional magic, boundary work, elemental traditions, even the old ways from the Verdant Tithe..."
+
+    *goto first_lesson_setup
+
+*comment ================================================
+
+*label confident_entrance
+
+You stride through the gate with purpose. You've read about Avalon, studied dimensional theory, and you're ready to prove yourself.
+
+*set collaboration -5
+
+*line_break
+
+A woman with sharp eyes and elegant bearing steps into your path. Her presence radiates controlled power—this is someone who knows exactly where every boundary lies and how to manipulate them.
+
+"Aria Ravencrest," she introduces herself, voice cool and assessing. "Co-founder, boundary specialist, and the person who makes sure enthusiastic students don't accidentally collapse dimensional barriers."
+
+*line_break
+
+[i]"That's Izack's wife. She's the reason Avalon hasn't imploded from all the experimental magic. Show some respect."[/i]
+
+*line_break
+
+Aria's expression softens slightly—though her eyes remain evaluating.
+
+"Confidence is good. Overconfidence in dimensional magic is how you end up scattered across three realities." She crosses her arms. "Let me ask you something: what do you think is more important—controlling magic, or understanding it?"
+
+*choice
+  #Controlling it—power without control is dangerous.
+    *set lesson_approach "control"
+    *set aria_relationship +15
+    *set collaboration -5
+
+    "Control," you answer firmly. "Power without discipline is just chaos waiting to happen."
+
+    Aria nods thoughtfully. "A practical answer. I've spent years mastering boundary magic precisely because uncontrolled dimensional rifts are catastrophic."
+
+    *goto aria_control_path
+
+  #Understanding it—you can't work with something you don't comprehend.
+    *set lesson_approach "understanding"
+    *set collaboration +15
+    *set aria_relationship +10
+    *set izack_relationship +5
+
+    "Understanding," you say. "You can force magic to obey, but if you don't understand it, that control is brittle."
+
+    Aria's expression shifts to genuine warmth. "Exactly. You can force magic to obey, but it will fight you every step. Understand it, and it becomes a willing partner."
+
+    *goto aria_understanding_path
+
+  #Both equally—they inform each other.
+    *set lesson_approach "balanced"
+    *set aria_relationship +15
+    *set collaboration +5
+
+    "Both," you answer. "They're not opposites—they inform each other. Understanding gives you better control; control lets you test your understanding."
+
+    Aria actually smiles. "Well reasoned. You'll do well here."
+
+    *goto first_lesson_setup
+
+*comment ================================================
+
+*label zara_friendship
+
+*set zara_relationship +5
+
+[i]*I watch from Izack's shoulder, observing the easy rapport forming.*[/i]
+
+"She's not exaggerating. Zara's the bridge between traditions. Also, she'll probably want to study with you, so prepare for that."
+
+*line_break
+
+Zara laughs. "Polly's right. I love working with other students. Magic here is so much stronger when we combine our approaches. My hybrid heritage lets me see connections others miss."
+
+She gestures toward a crystalline building that pulses with soft light.
+
+"Come on, first lesson's about to start. Izack's teaching today—dimensional resonance and collaborative casting."
+
+*page_break
+
+As you walk together through the courtyard, you notice leylines glowing beneath the stones, all converging toward the central Spiral Spire. The air hums with potential.
+
+This is really happening. You're at Avalon Academy.
+
+*goto first_lesson_setup
+
+*comment ================================================
+
+*label aria_control_path
+
+"But," Aria continues, her tone shifting to teaching mode, "control without understanding is brittle. It breaks under pressure. Izack taught me that magic isn't about domination—it's about partnership."
+
+She places a hand on your shoulder.
+
+"You have the discipline for power. Let me teach you the wisdom to use it well. Come—your first lesson awaits."
+
+*line_break
+
+[i]"Translation: Aria likes you but thinks you're going to learn the hard way. I've seen this before. It's educational."[/i]
+
+*goto first_lesson_setup
+
+*comment ================================================
+
+*label aria_understanding_path
+
+[i]*I actually look impressed—which doesn't happen often.*[/i]
+
+"Congratulations, you passed Aria's test. She and Izack are going to love you."
+
+*line_break
+
+Aria smiles—a rare, genuine expression. "Polly's not wrong. That's the philosophy at Avalon's core. Magic is alive—it has currents, rhythms, preferences. Learning to [i]listen[/i] to those is more powerful than any control technique."
+
+She guides you toward the academy proper.
+
+"Izack's teaching the first lesson today. You'll practice dimensional resonance—feeling the boundaries between realities and learning to work [i]with[/i] them, not against them."
+
+*line_break
+
+[i]"Fair warning: this is where things get weird. Dimensional magic feels like falling while standing still. Just go with it."[/i]
+
+*goto first_lesson_setup
+
+*comment ================================================
+
+*label first_lesson_setup
+
+*page_break
+*stat_chart
+
+Your journey at Avalon Academy has truly begun.
+
+*goto_scene familiar_selection

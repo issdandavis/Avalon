@@ -1,0 +1,58 @@
+*comment ================================================
+*comment STATS SCREEN
+*comment ================================================
+
+[b]${name}[/b]
+Student of Avalon Academy
+
+*line_break
+*line_break
+
+[b]MAGICAL ALIGNMENT[/b]
+
+Your approach to magic shapes your destiny at Avalon.
+
+*stat_chart
+  percent collaboration Collaboration vs Individual Power
+
+*line_break
+
+[b]RELATIONSHIPS[/b]
+
+The bonds you forge with Avalon's legendary mages will determine your path.
+
+*stat_chart
+  opposed_pair Izack Thorne
+    izack_relationship
+  opposed_pair Aria Ravencrest
+    aria_relationship
+  opposed_pair Zara (First Student)
+    zara_relationship
+  opposed_pair Polly (Ancient Raven)
+    polly_relationship
+
+*line_break
+
+[b]YOUR JOURNEY[/b]
+
+*if chosen_path != "none"
+  Path Chosen: [i]${chosen_path}[/i]
+  *line_break
+
+*if expedition_choice != "none"
+  Expedition: [i]${expedition_choice}[/i]
+  *line_break
+
+*if artifact_earned != "none"
+  Artifact: [i]${artifact_earned}[/i]
+  *line_break
+
+*if achievement != ""
+  Achievement: [i]${achievement}[/i]
+  *line_break
+
+*line_break
+*line_break
+
+[i]"Every choice writes your story into the living memory of Avalon."
+- Polly's Wingscroll, Volume I[/i]
