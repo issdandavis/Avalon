@@ -261,6 +261,7 @@ When a new AI session starts on this project:
 ## UPDATE LOG
 
 - **Nov 22, 2025:** Created AI handoff document
+- **Nov 22, 2025:** Expanded all three expedition scenes (singing_dunes, verdant_tithe, rune_glacier) from placeholders to full content (600+ lines each)
 - **Nov 20, 2025:** Merged choice game foundation (PRs #6, #7)
 
 ---
