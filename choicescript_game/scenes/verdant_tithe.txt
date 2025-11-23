@@ -1,997 +1,183 @@
-*comment ================================================
-*comment VERDANT TITHE EXPEDITION - FULL EXPANSION
-*comment A sentient forest where every thought has weight
-*comment Target: 15-20 scenes with meaningful branching
-*comment ================================================
-
-*temp forest_bond 0
-*temp mind_quiet 0
-*temp memory_shared false
-*temp heartwood_called false
-*temp vine_connection false
-
-*label forest_arrival
-
-The portal opens onto an ocean of green.
-
-*line_break
-
-Trees larger than Avalon's towers rise into mist, their canopy creating a twilight world below where shafts of emerald light pierce through like columns in a living cathedral. The air itself feels [i]alive[/i]—thick with the scent of growing things, loam, ancient bark, and something else entirely.
-
-Awareness.
-
-*line_break
-
-You can feel the forest [i]noticing[/i] you. Not hostile. Not welcoming either. Just... aware. Like walking into a room where everyone turns to look.
-
-[i]"Welcome to the Verdant Tithe. Try not to think too loudly—the trees here literally read your mind. And yes, they're judging you. They've had millions of years to develop opinions."[/i]
-
-*page_break
-
-Izack leads this expedition personally, his presence calm and grounding amid the forest's overwhelming presence.
-
-"Welcome to one of Avalon's transplanted biomes," he says, his voice resonating with the quiet authority of someone who belongs here. "The Verdant Tithe was drawn from the ancient forests of Nirestal. Here, every thought has weight. Every emotion leaves a trace."
-
-*line_break
-
-As if to demonstrate, a vine near you shifts—slowly, purposefully—reaching toward a student who's thinking intensely about their family. The plant seems to [i]sense[/i] the emotion, responding to homesickness like a flower turning toward the sun.
-
-"The Thoughtvines are just the beginning," Izack continues. "In the deep forest, the trees themselves remember every person who's passed through. They carry centuries of human thought like rings in their bark."
-
-*choice
-    #"How do we keep the forest from reading everything?"
-        Izack smiles. "You can't prevent it entirely. But you can learn to quiet your surface thoughts—let the deeper ones sink below where casual observation can't reach."
-
-        He demonstrates, his expression going still. The nearby vines, which had been subtly leaning toward him, relax and turn away.
-
-        "The forest respects boundaries, if you learn to create them."
-
-        [i]"Translation: think boring thoughts and the vines get bored. Think interesting thoughts and suddenly you've got a botanical audience. I've been practicing 'empty head' for three thousand years. Very effective."[/i]
-
-        *set mind_quiet +5
-        *goto forest_first_steps
-
-    #"What does the forest do with the thoughts it reads?"
-        "Nothing malicious," Izack assures you. "The Tithe takes a piece of your consciousness as payment for passage—usually just surface thoughts or recent memories. In return, it offers guidance and protection."
-
-        [i]"Think of it like a museum that charges admission in memories instead of coins. You'll probably forget what you had for breakfast yesterday. In exchange, the forest won't let anything eat you. Fair trade, honestly."[/i]
-
-        *goto forest_first_steps
-
-    #Stay quiet and focus on keeping your mind calm.
-        You don't speak. Instead, you try to still your thoughts, letting them settle like sediment in water.
-
-        The nearest vine, which had been drifting toward you, pauses. Considers. Then slowly turns away.
-
-        Izack notices and nods approvingly. "Already learning. Good."
-
-        *set mind_quiet +10
-        *set forest_bond +5
-        *goto forest_first_steps
-
-*label forest_first_steps
-
-Your group begins walking the forest path. The ground is soft with centuries of fallen leaves, each step releasing the scent of earth and green growth.
-
-*line_break
-
-Around you, luminescent fungi bloom in response to your footsteps—pale blue, soft gold, vibrant purple. They light the path like lanterns, then fade behind you, creating a moving corridor of soft light.
-
-[i]"The fungi are the forest's nervous system. Every step you take sends signals through their network. Right now, every tree in a mile radius knows exactly where you are, how many of you there are, and—roughly—what mood you're in."[/i]
-
-*page_break
-
-You can hear whispers in the rustling leaves. Not words, exactly, but something close to meaning. The forest murmuring to itself about the visitors passing through.
-
-One of the other students stumbles, their anxiety spiking—and immediately, vines shift throughout the surrounding area, orienting toward the emotional disturbance.
-
-"Easy," Izack says gently. "Fear feeds them. Calm starves them. You control what they see by controlling what you feel."
-
-*choice
-    #Reach out to help the anxious student calm down.
-        You move to their side, placing a hand on their shoulder. "Breathe. Focus on something simple—a happy memory, a favorite song."
-
-        The student's breathing slows. The vines, sensing the emotional shift, gradually lose interest and drift away.
-
-        Izack watches with approval. "Collaborative calming. Excellent. The forest responds better to collective peace than individual struggle."
-
-        *set collaboration +5
-        *set forest_bond +5
-        *goto forest_path_split
-
-    #Focus on keeping your own mind calm—set an example.
-        You breathe slowly, deliberately. Let your thoughts become still water. The vines near you turn away, uninterested in such a quiet mind.
-
-        The anxious student notices, tries to copy your technique. Gradually, they calm.
-
-        [i]"Nothing like peer pressure to motivate emotional regulation. Whatever works."[/i]
-
-        *set mind_quiet +10
-        *goto forest_path_split
-
-    #Observe curiously—how exactly do the vines track emotions?
-        You watch the vines closely, trying to understand their mechanism. They seem to sense not thoughts themselves, but the [i]energy[/i] of thoughts—emotional charge, intensity, focus.
-
-        Fascinating. The forest isn't reading minds so much as reading souls.
-
-        *set izack_relationship +5
-        *goto forest_path_split
-
-*label forest_path_split
-
-The path ahead suddenly splits into three directions.
-
-*line_break
-
-Each trail seems to call to different aspects of your mind. One whispers of dreams and possibility. Another thrums with the pulse of shared consciousness. The third feels ancient beyond measure—a summons from something vast and patient.
-
-Izack stops, gesturing at the diverging paths with something like reverence.
-
-*page_break
-
-"The forest is testing you. It wants to know what kind of mind you have—what you seek, what you fear, what you're capable of becoming."
-
-He points to each path in turn:
-
-"The silver trees are Dreamwillows. They show visions of possible futures—all of them, not just the pleasant ones."
-
-"That trail leads deeper into the Thoughtvine network. You'll experience what true connection feels like—minds braiding together into something greater."
-
-"And that glow in the distance..." He pauses. "The Heartwood Tree. The forest's heart and mind made manifest. It calls only those it wishes to teach."
-
-*line_break
-
-[i]"Three paths, three lessons, three very different ways to have a forest rummage through your psyche. Choose wisely. Or don't. The forest will teach you something either way."[/i]
-
-*choice
-    #Take the path lined with silver Dreamwillow trees.
-        *set chosen_path "dreamwillow"
-        *goto dreamwillow_grove
-
-    #Follow the trail where Thoughtvines grow thickest.
-        *set chosen_path "thoughtvine"
-        *goto thoughtvine_deep
-
-    #Choose the path leading to the distant glow—the Heartwood Tree.
-        *set chosen_path "heartwood"
-        *set heartwood_called true
-        *goto heartwood_approach
-
-    *if mind_quiet >= 10
-        #Wait. Let the forest guide you to the path you're meant to take.
-            *goto forest_guided_path
-
-*label forest_guided_path
-
-Instead of choosing, you quiet your mind completely. Let your thoughts become still. Wait.
-
-*line_break
-
-The forest notices.
-
-Vines drift toward you—but not aggressively. Curiously. One touches your hand, gentle as a greeting, and suddenly you [i]know[/i] where you're meant to go.
-
-Not a thought. Not a word. Just certainty, planted in your mind like a seed.
-
-*page_break
-
-[i]"Did the forest just... choose for you? That's either a very good sign or a very bad one. With sentient forests, it's hard to tell."[/i]
-
-Izack's eyes widen slightly. "The Tithe rarely guides anyone directly. It must have seen something in you."
-
-*if collaboration >= 60
-    The path to the Heartwood Tree glows brighter, beckoning.
-    *set heartwood_called true
-    *set forest_bond +20
-    *goto heartwood_approach
+*comment verdant_tithe.txt
+*comment Scene representing the Verdant Tithe expedition. Contains multiple trials.
+
+*label verdant_tithe
+*comment This scene is called when the player enters the Verdant Tithe.  
+
+The Verdant Tithe greets you like the breath of a living world. Towering trees arch overhead, their leaves shimmering with faint magical currents.  
+Vines coil and uncoil like curious serpents, and the ground itself pulses faintly, as if beneath its soil beats a giant heart.  
+
+"Remember," Zara whispers, "we are guests here."  
+Izack nods. "And the Tithe has a sense of humor."  
+Polly caws. "Brace yourselves."
+
+*comment Initialize trial number and group cohesion
+*temp group_cohesion 100
+*rand trial_number 1 4
+
+*gosub_scene verdant_trial
+
+*label verdant_complete
+*comment Conclude the expedition
+
+You emerge from the Verdant Tithe into a clearing where shafts of sunlight pierce the canopy.  
+Everyone breathes easier. You feel changed, not just by what you saw but by how you faced it.  
+Izack clasps your shoulder. "You did well," he says. "The Tithe doesn't yield easily, but you navigated it without losing yourself."  
+Aria smiles softly. "Rest. We'll debrief in the morning."  
+Polly lands on your head. "And maybe shower. You have moss in your hair."  
+*set verdant_tithe_survived true
+*finish
+
+*label verdant_trial
+*comment Determine which trial occurs based on trial_number
+
+*if (trial_number = 1)
+    *set trial_type "labyrinth_of_roots"
+    *goto laby_roots
+*elseif (trial_number = 2)
+    *set trial_type "mirror_of_truth"
+    *goto mirror_truth
+*elseif (trial_number = 3)
+    *set trial_type "memory_moss"
+    *goto memory_moss
 *else
-    The Thoughtvine trail pulses with bioluminescent invitation.
-    *set vine_connection true
-    *set forest_bond +15
-    *goto thoughtvine_deep
+    *set trial_type "guardian_negotiation"
+    *goto guardian_negotiation
 
-*label dreamwillow_grove
-
-The Dreamwillow grove is breathtaking.
-
-*line_break
-
-Silver leaves shimmer overhead like mirrors catching starlight. The air is heavy with possibility—every breath tastes like [i]potential[/i], like the moment before a choice is made. The trees themselves seem to hum with futures yet to be written.
-
-Izack gestures for the group to sit beneath the largest tree, its trunk wider than a house, its bark silver-white and smooth as glass.
-
-*page_break
-
-"Dreamwillows show visions of possible futures," he explains softly. "But be warned—they show [i]all[/i] possibilities, not just pleasant ones. The forest wants you to understand that every choice branches reality."
-
-[i]"Think of it as aggressive career counseling. 'Here are all the ways your life could go, including the really depressing ones.' Very motivating."[/i]
-
-*line_break
-
-You lean against the silvery bark. It's warm despite the shade, and the moment you touch it, drowsiness overtakes you...
-
-*goto dreamwillow_visions
-
-*label dreamwillow_visions
-
-Your vision blurs. Reality softens. And suddenly you're [i]seeing[/i]—
-
-*line_break
-
-—yourself, years older, standing at the heart of Avalon's Spiral Spire. Dozens of students surround you, their minds linked with yours in a complex collaborative spell. You're teaching them what Izack taught you. The vision feels warm, right, [i]possible[/i].
-
-*page_break
-
-The image shifts—
-
-*line_break
-
-—yourself, alone in a tower. Surrounded by books and power. You've mastered magic beyond what anyone thought possible, but there's no one to share it with. Everyone you loved has drifted away, one by one, unable to match your ascent. The tower is cold. You are cold. Empty.
-
-*page_break
-
-The vision shifts again—
-
-*line_break
-
-—yourself, standing at a threshold between Avalon and something [i]else[/i]. The demon realm Varn'ka'zul pulses beyond the barrier like a wound in reality. You're making a choice—a choice that will determine the fate of both worlds. The weight of it is crushing.
-
-But somehow, you're strong enough to bear it.
-
-*page_break
-
-The visions fade. You gasp, returning to the present, silver leaves rustling overhead.
-
-[i]"The Dreamwillows don't tell you which future is 'right.' They just show you that your choices matter. What you do now echoes forward. No pressure or anything."[/i]
-
-Izack's hand rests on your shoulder, grounding you.
-
-"The forest has shown you its deepest lesson: magic is choice, and every choice shapes not just you, but the world around you."
+*comment Labyrinth of Roots
+*label laby_roots
+Massive roots twist and loop like serpents, forming a maze that shifts as you watch.  
+You step onto the first path and the roots close behind you.  
+Polly perches overhead, flying just above the ever-changing labyrinth.
 
 *choice
-    #"The first vision—teaching others, collaborative magic—that's what I want."
-        *set collaboration +15
-        *set izack_relationship +10
-        "Then pursue it," Izack says simply. "Every choice you make from this moment shapes whether that future becomes real."
+    #Use your Scout instincts to look for patterns in the shifting roots.
+        *if (expedition_role = "scout")
+            *set perception +3
+            *set group_cohesion +5
+            You notice faint glimmers on the roots—Runethic glyphs indicating direction.  
+            You lead the group through twists and turns. After a few dizzying minutes, light filters through the canopy ahead.  
+            *goto laby_exit
+        *else
+            *set group_cohesion -10
+            The roots respond unpredictably to your directions. You find yourself doubling back more than once.  
+            *goto laby_exit
+    #Ask Zara to communicate with the roots.
+        *set zara_relationship +2
+        Zara places her hands on a root and murmurs Kor'aelin words: *sil'lan kor'ra* — "together-gentleness heart-flow."  
+        The roots rumble and shift, clearing a path.  
+        *set group_cohesion +10
+        *goto laby_exit
+    #Attempt to force your way through using brute magic.
+        *set individual_power +4
+        *set group_cohesion -15
+        You channel energy and burn through a tangled wall. The smell of scorched wood fills the air. The roots shudder in pain, and the path behind you collapses.  
+        "Easy!" Izack shouts. "It's alive!"  
+        *goto laby_exit
 
-        *goto dreamwillow_conclusion
+*label laby_exit
+After much effort (and possibly some apologizing), you emerge from the labyrinth. The roots close behind you, leaving no trace of the path you took.  
+Polly flutters back to your shoulder. "At least you didn't end up as compost," she says.
+*return
 
-    #"The lonely tower terrified me. How do I avoid that path?"
-        Izack's expression softens. "By remembering that power without connection is just another kind of prison. The strongest magic is woven together, not hoarded alone."
-
-        [i]"Also, maybe don't lock yourself in towers. Just a thought. Towers are bad for social lives."[/i]
-
-        *set collaboration +10
-        *goto dreamwillow_conclusion
-
-    #"That final vision—the choice between worlds—is that real? Will that happen?"
-        "Perhaps." Izack's voice is careful. "The Dreamwillows show possibilities, not certainties. But they don't show impossibilities either."
-
-        He meets your eyes.
-
-        "If that moment comes, you'll be ready. Or you won't. That's what choices are."
-
-        *set forest_bond +10
-        *goto dreamwillow_conclusion
-
-*label dreamwillow_conclusion
-
-As you leave the grove, a single silver leaf detaches from the Dreamwillow and drifts down to you. You catch it instinctively.
-
-*line_break
-
-The leaf is warm, and when you hold it, you can still sense echoes of possibility—not visions, but [i]potential[/i]. A reminder that the future isn't fixed.
-
-[i]"A Dreamwillow leaf. They're incredibly rare gifts. Hold onto that—it'll tingle when you're about to make a choice that matters. Very useful. Also mildly annoying when you're just trying to decide what to eat for dinner."[/i]
-
-*set artifact_earned "dreamwillow_leaf"
-*set forest_bond +15
-
-*goto forest_return
-
-*label thoughtvine_deep
-
-The Thoughtvines grow so thick here that they form living walls, pulsing gently with bioluminescent light—blue and green and soft violet, shifting like aurora trapped in organic form.
-*comment VERDANT TITHE EXPEDITION
-*comment The Sentient Forest - Where Thoughts Have Weight
-*comment ================================================
-
-*temp forest_path ""
-*temp forest_blessing false
-*temp forest_bond 0
-
-The portal opens onto an ocean of green.
-
-Trees larger than Avalon's towers rise into mist, their canopy creating a twilight world below. The air itself feels [i]alive[/i]—thick with the scent of growing things and something else...
-
-Awareness.
-
-*page_break
-
-Izack leads this expedition personally. "Welcome to the Verdant Tithe, one of Avalon's transplanted biomes drawn from the ancient forests of Nirestal. Here, every thought has weight."
-
-*line_break
-
-As if to demonstrate, a vine near you shifts, reaching toward a student who's thinking intensely about their family. The plant seems to [i]sense[/i] the emotion.
-
-*line_break
-
-[i]*Perched on Izack's shoulder* "The Thoughtvines are just the beginning. In the deep forest, the trees themselves remember every person who's passed through. Try to keep your mind calm—anxious thoughts attract attention you don't want."[/i]
-
-*page_break
-
-Izack nods. "The Tithe takes a piece of your consciousness as payment for passage—usually just surface thoughts or recent memories. In return, it offers guidance and protection. But you must learn to quiet your mind."
-
-*line_break
-
-Your group begins walking the forest path. Around you, luminescent fungi bloom in response to your footsteps, and you swear you can hear whispers in the rustling leaves.
-
-*line_break
-
-The forest is [i]thinking[/i].
-
-*page_break
-
-Suddenly, the path ahead splits into three directions. Each trail seems to call to different aspects of your mind—pulling at your curiosity, your memories, your deepest self.
-
-*line_break
-
-Izack smiles knowingly. "The forest is testing you. Choose the path that resonates, but understand—each leads to a different lesson."
+*comment Mirror of Truth
+*label mirror_truth
+An ancient pool lies ahead, its surface perfectly still. As you approach, it shimmers and rises into a vertical plane, reflecting not just your face but your desires, fears, and possible futures.  
+Aria warns, "The Mirror doesn't lie. But it doesn't always tell the truth you expect."
 
 *choice
-  #Take the path lined with silver Dreamwillow trees—you sense visions there.
-    *set forest_path "dreamwillow"
-    *set collaboration +5
-    *set izack_relationship +10
-    *goto dreamwillow_path
+    #Look into the mirror alone.
+        *set stress +3
+        *set philosophical_depth +3
+        The reflection shows you at the center of a vast Spiral, friends and lovers orbiting around you. In some loops, you are alone; in others, you are surrounded by laughter.  
+        You realize you crave connection as much as you fear losing yourself.  
+        *if (romantic_interest = "none" and (relationship_zara > 40 or relationship_izack > 40 or relationship_aria > 40))
+            The mirror flickers, offering a glimpse of you and one of them holding hands beneath the World Tree.  
+            A spark of hope flares in your chest.  
+        *goto mirror_exit
+    #Invite the team to join and see the reflection together.
+        *set collaboration +4
+        *set empathy +2
+        Everyone holds hands and looks into the mirror. It shows a tapestry of moments where you work together, fail together, and laugh together.  
+        The bonds between you strengthen; group_cohesion rises.  
+        *set group_cohesion +10
+        *goto mirror_exit
+    #Refuse to look; avert your gaze.
+        *set stress +1
+        *set individual_power +2
+        You sense the Mirror's surface ripple as you pass without looking.  
+        It feels like skipping an important page, but you keep your secrets to yourself.  
+        *goto mirror_exit
 
-  #Follow the trail where Thoughtvines grow thickest—you want to understand the forest's mind.
-    *set forest_path "thoughtvine"
-    *set collaboration +10
-    *set zara_relationship +5
-    *goto thoughtvine_path
+*label mirror_exit
+Polly shakes her feathers. "Self-reflection can be useful," she says, "if you actually pay attention to it."  
+You continue deeper into the forest.  
+*return
 
-  #Choose the path leading to a distant glow—the Heartwood Tree awaits.
-    *set forest_path "heartwood"
-    *set collaboration +15
-    *set izack_relationship +10
-    *goto heartwood_path
-
-*comment ================================================
-
-*label dreamwillow_path
-
-The Dreamwillow grove is breathtaking. Silver leaves shimmer overhead, and the air is heavy with possibility—as if reality itself is thinner here, more malleable.
-
-*line_break
-
-Izack gestures for the group to sit beneath the largest tree, its trunk wider than three men standing side by side.
-
-"Dreamwillows show visions of possible futures," he explains softly. "But be warned—they show [i]all[/i] possibilities, not just pleasant ones. The forest wants you to understand that every choice branches reality."
-
-*page_break
-
-As you lean against the silvery bark, drowsiness overtakes you. Your vision blurs, and suddenly you're seeing...
-
-*line_break
-
-[i]...yourself, years older, standing at the heart of Avalon's Spiral Spire, guiding dozens of students through a complex collaborative spell. The vision feels warm, right, [b]possible[/b].[/i]
-
-*page_break
-
-[i]...yourself, alone in a tower, surrounded by books and power, having mastered magic but lost all your connections. Cold. Empty. A warning.[/i]
-
-*page_break
-
-[i]...yourself, standing at a threshold between Avalon and the demon realm Varn'ka'zul, making a choice that will determine the fate of both worlds. The weight of it crushes you.[/i]
-
-*page_break
-
-The visions fade. You gasp, returning to the present with a racing heart.
-
-*line_break
-
-[i]"The Dreamwillows don't tell you which future is 'right.' They just show you that your choices matter. What you do now echoes forward into all possible tomorrows."[/i]
-
-*line_break
-
-Izack places a hand on your shoulder, his touch grounding. "The forest has shown you its deepest lesson: magic is choice, and every choice shapes not just you, but the world around you."
-
-*set forest_blessing true
-*set chosen_path "Dreamwalker"
-
-*goto forest_conclusion
-
-*comment ================================================
-
-*label thoughtvine_path
-
-The Thoughtvines grow so thick here that they form living walls, pulsing gently with bioluminescent light that breathes in time with your heartbeat.
-
-*line_break
-
-As you walk among them, you feel your thoughts becoming... [i]shared[/i].
-
-It's not invasive. More like your consciousness is expanding to include the forest itself. Boundaries blur. You can sense the other students' wonder, Izack's pride, Polly's amused observation—all of it flowing together like streams joining a river.
-
-*page_break
-
-And beneath it all, the forest's vast, ancient mind.
-
-[i]"This is what the Third Thread feels like—consciousness braiding together. Not domination, not submission, just... connection. Multiple minds becoming something greater than any single one could be alone."[/i]
-
-*line_break
-
-You don't just hear Polly's words. You [i]feel[/i] the three thousand years behind them. The loneliness of watching civilizations rise and fall. The joy of finding Izack, of having purpose again.
-
-You feel all of it, and she feels you feeling it.
-
-*set vine_connection true
+*comment Memory Moss trial
+*label memory_moss
+A carpet of vivid green moss stretches across your path. When you step on it, visions flood your mind: memories, real and imagined, of times you felt strong, weak, loved, and alone.  
+Your group's cohesion is tested by what is revealed.  
 
 *choice
-    #Embrace the connection fully—let your mind merge with the forest.
-        *set forest_bond +20
-        *set collaboration +15
-        *goto thoughtvine_merge
+    #Share a painful memory with the group.
+        *set vulnerability +5
+        *set collaboration +3
+        You describe a moment when you failed someone important to you. The moss glows gently, absorbing your sadness.  
+        Others share their own stories. You all feel lighter afterward.  
+        *set group_cohesion +10
+        *goto moss_exit
+    #Stay silent and focus on your own memories.
+        *set stress +5
+        *set power +1
+        The moss shows you a memory of your beach arrival—the moment Clay formed from need. You re-experience the weight of responsibility.  
+        You carry the lesson forward but don't share it.  
+        *set group_cohesion -5
+        *goto moss_exit
+    #Tell a joke to break the tension.
+        *set joy +3
+        *set polly_relationship +3
+        You quip something about the moss being a better listener than most professors.  
+        Laughter ripples through the group. The moss seems to vibrate happily.  
+        *set group_cohesion +5
+        *goto moss_exit
 
-    #Maintain some boundaries—share, but don't dissolve completely.
-        *set forest_bond +10
-        *set collaboration +10
-        *goto thoughtvine_careful
+*label moss_exit
+Polly hops along the moss. "Better a field of memories than a field of nettles," she quips.  
+You move on, new stories woven into your shared history.  
+*return
 
-    #Pull back—this is too much, too fast.
-        *set forest_bond -5
-        *goto thoughtvine_retreat
-
-*label thoughtvine_merge
-
-You let go.
-
-*line_break
-
-Your boundaries dissolve into the forest's consciousness like salt in water. You become the trees, the vines, the fungi, the millions of insects and birds and small creatures that call this place home. You experience the forest's memory—centuries compressed into moments.
-
-*page_break
-
-You see the Dryads singing this forest into awareness, feel the moment it first began to [i]think[/i]. You witness battles fought beneath these canopies, lovers meeting in secret clearings, children being born and elders passing on.
-
-The forest has seen [i]everything[/i]. And now, for a moment, so have you.
-
-*line_break
-
-When you return to yourself, tears are streaming down your face. Not from sadness—from [i]fullness[/i]. From understanding what it means to be truly connected to something larger than yourself.
-
-[i]"...That was a lot, wasn't it? Take your time. Most students need a minute after the full merge. Some need a week."[/i]
-
-*set memory_shared true
-
-*goto thoughtvine_question
-
-*label thoughtvine_careful
-
-You share, but carefully. Let the forest see some of you while keeping your core self intact.
-
-*line_break
-
-It's like holding hands instead of embracing—connection without dissolution. You feel the forest's ancient presence, sense its memories, but from a respectful distance.
-
-The vines seem to appreciate the boundary. They pulse warmly against your skin but don't try to push deeper.
-
-[i]"Smart. Full merger is intense. This way you get the connection without the existential crisis afterward."[/i]
-
-*set memory_shared true
-
-*goto thoughtvine_question
-
-*label thoughtvine_retreat
-
-You pull back, hard.
-
-*line_break
-
-Your mind snaps back into your own skull like a rubber band releasing. The vines withdraw, not offended but clearly... disappointed?
-
-Izack is at your side immediately. "Too much?"
-
-"Too fast," you manage.
-
-He nods understanding. "The forest can be overwhelming. There's no shame in setting limits."
-
-[i]"The Thoughtvines aren't for everyone. Some minds need more walls than others. Nothing wrong with that."[/i]
-
-*goto forest_return
-
-*label thoughtvine_question
-
-The vines pulse brighter, and you feel a question form in your mind—not in words, but in pure meaning:
-
-[i]Will you remember me? Will you carry this connection forward?[/i]
-
-*line_break
-
-The forest wants to know if you'll honor what you've learned here. If the thread between your mind and its ancient consciousness will remain woven, or if you'll cut it when you leave.
-
-Izack watches carefully. "The Tithe is offering you a bond. Not as deep as the Heartwood, but real. Permanent."
-
-[i]"This is the forest asking if you want to be pen pals. Except instead of letters, it's psychic communion across any distance. Very romantic, in a botanical way."[/i]
+*comment Guardian negotiation trial
+*label guardian_negotiation
+An ancient, vine-covered stone figure blocks your path. Its eyes glow with Runethic runes.  
+When it speaks, its voice is the groan of tectonic plates: "State your purpose, Spiral-walkers."
 
 *choice
-    #"Yes. I promise to carry this connection always."
-        The vines flare with golden light. You feel something settle into place behind your thoughts—a warm presence, ancient and patient. The forest will be with you now, always.
-
-        [i]"And just like that, you've got a forest in your head. Welcome to the strangest friendship you'll ever have."[/i]
-
-        *set collaboration +20
-        *set forest_bond +25
-        *set artifact_earned "forest_bond"
-        *goto forest_return
-
-    #"I'll remember what you taught me. But I'm not ready for a permanent bond."
-        The vines dim slightly—not offended, but perhaps a little sad. The question fades from your mind, replaced by gentle acceptance.
-
-        Izack nods. "Honest. The forest appreciates honesty."
-
-        [i]"The forest will remember that you respected it enough to say no. That matters too."[/i]
-
-        *set collaboration +10
-        *set forest_bond +10
-        *goto forest_return
-
-*label heartwood_approach
-
-The path leads deep into the forest's heart.
-
-*line_break
-
-The trees here are impossibly ancient—their trunks so wide it would take twenty people linking hands to encircle them. Their bark is inscribed with natural runes that glow faintly gold, and their roots disappear into earth that [i]shines[/i].
-
-The air grows warmer. Thicker. Charged with something that makes your teeth tingle.
-
-*page_break
-
-And then you see it.
-
-The Heartwood Tree.
-
-*line_break
-
-It's not just big—it's [i]fundamental[/i]. A tree so massive it seems less like a plant and more like a pillar holding up the sky. Its bark pulses like a heartbeat. Its roots glow where they meet the ground, spreading in all directions like veins carrying life to every corner of the forest.
-
-You can feel its awareness—vast, patient, kind but utterly inhuman. A consciousness that was ancient when your ancestors' ancestors were learning to use fire.
-
-*page_break
-
-[i]*Unusually quiet* "This is one of the oldest living things in any realm. It was here before Avalon, before Izack, before most of what we call civilization. It's the forest's heart and mind made manifest. I've been alive three thousand years, and this tree makes me feel young."[/i]
-
-Izack bows respectfully. After a moment, you find yourself doing the same.
-
-"The Heartwood only reveals itself to those it wishes to teach," Izack says softly. "You've been called here, ${name}. That's not something to take lightly."
-
-*goto heartwood_communion
-
-*label heartwood_communion
-
-As you approach, the tree's roots shift—slowly, deliberately—creating a natural seat at its base. An invitation.
-*line_break
-
-It's not invasive—more like your consciousness is expanding to include the forest itself. You can sense the other students' wonder, Izack's pride, Polly's amused observation.
-
-And beneath it all, the forest's vast, ancient mind.
-
-*page_break
-
-[i]"This is what the Third Thread feels like—consciousness braiding together. Not domination, not submission, just... connection. Multiple minds becoming something greater."[/i]
-
-*line_break
-
-A memory that isn't yours surfaces: you see this forest centuries ago, feel the Dryads singing it into awareness, experience the moment it first began to [i]think[/i].
-
-*line_break
-
-The forest is sharing itself with you.
-
-*page_break
-
-Izack's voice cuts through gently. "You're experiencing the forest's living memory. It's offering you a gift—understanding of how collaboration at the deepest level feels."
-
-*line_break
-
-The vines pulse brighter, and you feel a question form in your mind—not in words, but in pure meaning:
-
-*line_break
-
-[i]Will you remember me? Will you carry this connection forward?[/i]
-
-*line_break
-
-The forest wants to know if you'll honor what you've learned here.
-
-*choice
-  #Promise to carry the forest's lesson of connection with you always.
-    *set forest_blessing true
-    *set forest_bond +3
-    *set collaboration +20
-    *set chosen_path "Forestbound"
-
-    "I will," you speak aloud and in thought simultaneously. "I'll remember. I'll carry you with me."
-
-    The forest [i]blooms[/i].
-
-    *goto forest_bond_accepted
-
-  #Accept the gift gratefully but make no binding promises.
-    *set forest_blessing false
-    *set collaboration +10
-
-    You bow respectfully to the forest's presence, grateful but cautious about promises you're unsure you can keep.
-
-    The vines dim slightly—not rejection, but understanding.
-
-    *goto forest_conclusion
-
-*comment ================================================
-
-*label forest_bond_accepted
-
-The Thoughtvines surge with light, wrapping gently around your arms, your shoulders, leaving patterns of silver-green that fade into your skin like tattoos made of living chlorophyll.
-
-*line_break
-
-[i]"Oh. Oh wow. The forest just [b]bonded[/b] with you. That's... that's never happened to a student before. Even Izack doesn't have that."[/i]
-
-*page_break
-
-Izack stares, wonder and something like envy crossing his face. "You've achieved true symbiosis. A piece of the Verdant Tithe lives within you now. You'll carry its awareness, its memory, its life force."
-
-*line_break
-
-You can feel it—the whisper of leaves in your mind, the slow growth of roots beneath your feet even when you stand on stone, the patient wisdom of trees that have lived a thousand years.
-
-*line_break
-
-You are no longer entirely human. You are [i]more[/i].
-
-*set artifact_earned "Forest Bond - Living Symbiosis"
-*achievement visible forestbound Bonded with the Verdant Tithe
-
-*goto forest_conclusion
-
-*comment ================================================
-
-*label heartwood_path
-
-The path leads deep into the forest's heart, where even Izack walks with reverence.
-
-*line_break
-
-The trees here are impossibly ancient, their bark inscribed with natural runes that glow faintly with their own inner light. The air thrums with old magic.
-
-*line_break
-
-At the center stands a tree unlike any other.
-
-*page_break
-
-[b]The Heartwood Tree.[/b]
-
-*line_break
-
-It's massive beyond belief, with bark that seems to pulse like a heartbeat and roots that disappear into glowing earth. You can feel its awareness—vast, patient, kind but utterly inhuman.
-
-*line_break
-
-[i]*Unusually quiet* "This is one of the oldest living things in any realm. It was here before Avalon, before Izack, before most of what we call civilization. It's the forest's heart and mind made manifest."[/i]
-
-*page_break
-
-Izack bows respectfully to the tree. "The Heartwood only reveals itself to those it wishes to teach. You've been [i]called[/i] here."
-
-*line_break
-
-As you approach, the tree's roots shift, creating a natural seat at its base. The invitation is clear.
-
-*line_break
-
-You sit.
-
-*page_break
-
-The moment you touch the Heartwood, understanding floods through you:
-
-You feel the interconnection of all living things. Every breath you take feeds the plants. Every plant's gift feeds you. The cycle has no beginning and no end—just an eternal dance of giving and receiving.
-
-You understand that magic isn't something you [i]do[/i]. It's something you [i]participate in[/i]. A conversation, not a command. A collaboration between yourself and everything that exists.
-
-*line_break
-
-Time stretches. Or maybe it contracts. Hard to tell. You experience centuries in heartbeats—the forest's memory, its dreams, its hopes for the future.
-
-And then, gently, you return to yourself.
-
-*page_break
-
-The Heartwood extends a branch toward you. At its tip hangs a single fruit—golden, glowing with concentrated life essence, impossibly beautiful.
-
-An offering.
-
-[i]"...I've visited this tree with Izack a hundred times. It's never offered its fruit before. Ever. To anyone."[/i]
-
-Izack's voice is barely a whisper. "If you eat that, you'll be bonded to the forest forever. You'll carry a piece of the Verdant Tithe in your soul. You'll be able to feel the forest across any distance—and it will feel you."
-
-"That's not a small thing," he adds. "That's a [i]transformation[/i]."
-
-*choice
-    #Accept the fruit and bond with the forest's ancient wisdom.
-        *goto heartwood_acceptance
-
-    #Politely decline—the gift is too great, and you're not ready.
-        *goto heartwood_decline
-
-    *if mind_quiet >= 15
-        #Ask the Heartwood what it sees in you—why this gift, why now?
-            *goto heartwood_question
-
-*label heartwood_acceptance
-
-Your hand trembles as you reach for the fruit.
-
-*line_break
-
-It's warm. Heavier than it looks. When you bite into it, golden juice runs down your chin, and flavor explodes across your tongue—not sweet or sour or savory, but [i]alive[/i]. Tasting of sunlight and rain and deep earth and growing things.
-
-*page_break
-
-And then the bond snaps into place.
-
-*line_break
-
-You gasp. Suddenly you can feel [i]everything[/i]—every tree, every vine, every root and leaf and flower in the Verdant Tithe. The forest isn't just around you anymore. It's [i]in[/i] you. Part of you.
-
-You are the forest, and the forest is you.
-
-[i]"...I don't have words for this. You just became a Heartwood Guardian. The forest's chosen champion. The last one was before I was born, and I'm ancient."[/i]
-
-*page_break
-
-Izack watches with something approaching awe.
-
-"The forest has claimed you," he says softly. "You'll never be alone again. And you'll carry responsibilities others can't imagine."
-
-He bows to you—genuinely, not perfunctorily.
-
-"Welcome, Guardian."
-
-*set forest_bond +50
-*set collaboration +25
-*set artifact_earned "heartwood_bond"
-*set ending_type "heartwood_guardian"
-
-*goto forest_return
-
-*label heartwood_decline
-
-"I'm honored," you say, and you mean it. "But this gift is too great. I'm not ready for what it means."
-
-*line_break
-
-The branch withdraws slowly—not offended, but perhaps... understanding. The fruit fades back into the leaves, still glowing, waiting for someone else.
-
-Or waiting for you, someday, when you're ready.
-
-*page_break
-
-Izack lets out a breath. "There's wisdom in knowing your limits. The forest respects that."
-
-[i]"You just turned down immortal forest communion because you knew yourself well enough to say no. That's... actually incredibly mature. The Heartwood will remember. It's patient. If you change your mind in fifty years, it'll still be here."[/i]
-
-*set forest_bond +15
-*set collaboration +10
-
-*goto forest_return
-
-*label heartwood_question
-
-Instead of reaching for the fruit, you place your hand on the Heartwood's bark and open your mind.
-
-[i]Why me?[/i]
-
-*line_break
-
-The answer comes not in words but in [i]knowing[/i]:
-
-You see yourself through the forest's eyes. Not your face, not your body—your [i]essence[/i]. The way you've approached everything here with curiosity rather than fear. The way you've respected boundaries while remaining open. The way your consciousness [i]fits[/i] with the forest's rhythms.
-
-*page_break
-
-The Heartwood chose you because you're ready to be chosen. Because you asked instead of assumed. Because you listened.
-
-[i]"The tree literally just told you 'because you're you.' I'd be annoyed by how vague that is if it wasn't also kind of beautiful."[/i]
-
-Izack nods slowly. "The Heartwood doesn't explain itself often. You should feel honored."
-
-Now you understand the fruit's weight. And you can choose with clear eyes.
-
-*set forest_bond +10
-
-*choice
-    #Now that you understand, accept the fruit.
-        *goto heartwood_acceptance
-
-    #Understanding makes you more certain—respectfully decline.
-        *goto heartwood_decline
-
-*label forest_return
-
-The path back to the portal feels different now. The forest isn't just watching you anymore—it's [i]acknowledging[/i] you. Vines drift aside as you approach. Fungi light your path more brightly. Leaves whisper something that might be farewell.
-
-*line_break
-
-*if forest_bond >= 40
-    You can feel the Tithe's presence in your mind, warm and welcoming. It will be with you always now, a connection that transcends distance.
-*elseif memory_shared
-    The forest's memories linger in your thoughts—centuries of accumulated wisdom, available whenever you need guidance.
-*else
-    You carry the forest's lessons with you: patience, connection, the understanding that all life is woven together.
-
-*page_break
-
-As you reach the portal back to Avalon, Izack turns to address the group.
-
-"The Verdant Tithe teaches different lessons to different minds. What matters isn't which path you walked, but what you learned on it."
-
-*line_break
-
-[i]"Translation: it's not a competition. Unless you bonded with the Heartwood, in which case, congratulations, you win. But don't be smug about it—the forest can tell."[/i]
-
-You step through the portal, carrying the Verdant Tithe's gift:
-
-*if artifact_earned = "heartwood_bond"
-    The eternal bond of a Heartwood Guardian, champion of the forest's ancient purpose.
-*elseif artifact_earned = "forest_bond"
-    A permanent connection to the Thoughtvines, the forest always present in the back of your mind.
-*elseif artifact_earned = "dreamwillow_leaf"
-    A silver Dreamwillow leaf that tingles when important choices approach.
-*else
-    Memories of connection and possibility—and the knowledge that you can always return.
-
-*line_break
-
-The Verdant Tithe fades behind you, but its presence echoes in your soul.
-
-*goto_scene endings
-Understanding floods through you like sunlight through leaves:
-
-*line_break
-
-You feel the interconnection of all living things—how every breath you take feeds the plants, how every plant's gift feeds you. You understand that magic isn't something you [i]do[/i], it's something you [i]participate in[/i].
-
-*line_break
-
-Life is not separate. Life is [b]one[/b].
-
-*page_break
-
-The Heartwood offers you a single fruit—golden, glowing with concentrated life essence, pulsing with a heartbeat that matches your own.
-
-*line_break
-
-Izack's eyes widen. "I've visited this tree a hundred times. It's never offered its fruit before."
-
-*line_break
-
-[i]"If you eat that, you'll be bonded to the forest forever. You'll carry a piece of the Verdant Tithe in your soul. That's not a small thing, ${name}. That's... that's becoming something entirely new."[/i]
-
-*choice
-  #Accept the fruit and bond with the forest's ancient wisdom.
-    *set forest_blessing true
-    *set forest_bond +5
-    *set collaboration +25
-    *set chosen_path "Heartwood Guardian"
-
-    You take the golden fruit. It's warm in your hand, alive in ways that transcend simple biology.
-
-    You eat it.
-
-    *goto heartwood_transformation
-
-  #Politely decline—the gift is too great, and you're not ready for that bond.
-    *set collaboration +10
-    *set izack_relationship +15
-
-    "I'm honored beyond words," you say, bowing deeply. "But I'm not ready for such a bond. I still have so much to learn."
-
-    *goto heartwood_declined
-
-*comment ================================================
-
-*label heartwood_transformation
-
-The world explodes into connection.
-
-*page_break
-
-Every living thing in Avalon suddenly feels [i]close[/i]—you sense the golem Clayborn's growing consciousness, the fish in Avalon's Time Ocean swimming through memory, the students' hopes and fears pulsing like heartbeats.
-
-*line_break
-
-You've become part of life's great web.
-
-*line_break
-
-[i]*Tears streaming* "Do you know what you just did? The Heartwood hasn't chosen a guardian in three thousand years. You're bonded to one of the oldest, wisest living things in existence. I'm actually crying. Caw."[/i]
-
-*page_break
-
-Izack kneels before you in respect. "You carry the forest's heart now. When you speak, ancient wisdom speaks through you. When you act, the pattern of life itself guides you."
-
-*line_break
-
-Aria appears—you sense her before you see her, her life force bright and structured like a boundary made flesh.
-
-"I've spent my life studying boundaries," she says, wonder in her voice. "You just erased them. You exist in perfect balance between human and forest, individual and collective, mortal and eternal."
-
-*set artifact_earned "Heartwood Guardian - Ancient Wisdom"
-*achievement visible heartwood_guardian Guardian of the Heartwood
-
-*goto forest_conclusion
-
-*comment ================================================
-
-*label heartwood_declined
-
-The Heartwood's awareness shifts—and you sense... approval?
-
-*line_break
-
-The tree's roots form a different pattern, and a single leaf falls into your hand—silver-edged, glowing faintly with preserved life force.
-
-*line_break
-
-[i]"The tree respects your honesty. By admitting you're not ready, you proved the wisdom it was looking for. That leaf is a promise—when you ARE ready, the Heartwood will remember you."[/i]
-
-*line_break
-
-Izack places a hand on your shoulder. "Knowing your limitations is its own form of strength. The Heartwood tested your humility as much as your potential."
-
-*set artifact_earned "Heartwood Leaf - Future Promise"
-*set forest_blessing true
-
-*goto forest_conclusion
-
-*comment ================================================
-
-*label forest_conclusion
-
-*page_break
-
-The expedition concludes after three days of forest immersion. Your group returns to the portal site, where Avalon's energy shimmers, calling you home.
-
-*line_break
-
-*if forest_bond >= 3
-  You are forever changed. Thoughtvines grow where you walk, plants bloom in your presence, and the whisper of leaves follows you even in stone corridors. You are the forest's ambassador to the world of mages.
-
-*if forest_blessing
-  The forest blessed you. You carry its wisdom forward.
-
-*line_break
-
-Izack addresses the group one final time. "You've learned that consciousness itself can be shared, that boundaries between self and other are negotiable, that life speaks in languages older than words."
-
-*line_break
-
-[i]"Translation: you learned that magic isn't something you own—it's something you're part of. The forest taught you. Now go be part of something bigger."[/i]
-
-*page_break
-*stat_chart
-
-*if forest_bond >= 5
-  *goto_scene endings heartwood_guardian_ending
-
-*if forest_bond >= 3
-  *goto_scene endings forestbound_ending
-
-*if forest_blessing
-  *goto_scene endings balanced_ending
-
-*goto_scene endings standard_ending
+    #Address it in Kor'aelin, inviting collaboration.
+        *set collaboration +4
+        *set knowledge +2
+        You step forward and say, *sil'nav vel'ra med'gal* — "diversity invitation learning-strength."  
+        The guardian tilts its head, then steps aside.  
+        *set group_cohesion +10
+        "You have respect for language and life," it rumbles. "Proceed."
+        *goto guardian_exit
+    #Speak Runethic, asserting your authority.
+        *set power +4
+        *set individual_power +2
+        You intone, *Vel'ar nos med'ar thular syn'ar nuu*, the ancient invocation.  
+        The guardian considers your words, then nods slowly. "Old tongue spoken by young voice," it says. "Be cautious with old power."  
+        It moves aside.  
+        *goto guardian_exit
+    #Let Zara negotiate in Diplomatic Avali.
+        *set zara_relationship +3
+        *set diplomacy +3
+        Zara steps forward, speaking Avali phrases of respect and intent.  
+        The guardian's stone brows raise in surprise; clearly it does not often hear the common tongue used with such nuance.  
+        "Interesting," it says. "Pass, and remember this language shapes hearts."  
+        *set group_cohesion +5
+        *goto guardian_exit
+
+*label guardian_exit
+Polly flutters onto the guardian's shoulder as you pass. "He'll tell everyone you sang to him," she whispers. "Ancient statues gossip more than you think."  
+You continue on, grateful for your varied linguistic repertoire.  
+*return
