@@ -1,493 +1,108 @@
-*comment ================================================
-*comment EXPEDITION PREPARATION
-*comment Choosing your expedition and preparing for it
-*comment ================================================
+*comment expedition_prep.txt
+*comment Preparing for the Verdant Tithe expedition. The player chooses their role, equipment, and mindset.  
 
-*temp mentor_advice ""
-*temp preparation_focus ""
-*temp equipment_choice ""
+*label expedition_prep
+*comment This scene is called when the player is invited to join the Verdant Tithe expedition.
 
-*label start
+Polly lands on your shoulder as you read the expedition notice posted outside the Guild Hall.  
+"Verdant Tithe," she reads. "A test of collaboration, trust, and the ability to not get eaten by flora. Fun."
 
-[b]== THE DAY BEFORE THE EXPEDITION ==[/b]
+Izack and Aria stand at a nearby table covered in maps and supply lists.  
+"The Verdant Tithe is more than just a field trip," Izack says. "It's a rite of passage for Avalon students. We need volunteers to fill different roles."
 
-*line_break
-
-Izack calls an assembly in the Hall of Threads.
-
-All first-year students gather, buzzing with nervous excitement. This is it—the moment everyone's been preparing for.
-
-*page_break
-
-[b]"Tomorrow,"[/b] Izack begins, [b]"you'll each journey to one of Avalon's pocket dimensions for your first solo expedition."[/b]
-
-*line_break
-
-A murmur runs through the assembled students.
-
-[b]"You've learned theory. You've practiced techniques. But there's no substitute for real experience. You'll face challenges that can't be simulated in a classroom."[/b]
-
-*page_break
-
-Aria steps forward.
-
-[b]"Three realms are open to first-years: the Singing Dunes, the Verdant Tithe, and the Rune Glacier. Each tests different aspects of dimensional magic. Choose wisely."[/b]
-
-*line_break
-
-Zara adds:
-
-[b]"You won't be in danger—we monitor all expeditions closely. But you will be challenged. Pushed to your limits. And what you learn there will shape your entire magical career."[/b]
-
-*page_break
-
-Polly, perched on your shoulder, mutters:
-
-[i]"This is the dramatic part where they tell you it's dangerous but safe. Classic teacher contradiction."[/i]
-
-*page_break
-
-After the assembly, you're called to a private meeting with your chosen mentor.
-
-*if class_focus = "theory"
-  *goto aria_meeting
-
-*if class_focus = "practical"
-  *goto izack_meeting
-
-*if class_focus = "living_magic"
-  *goto zara_meeting
-
-*label aria_meeting
-
-*set mentor_advice "aria"
-
-You meet Aria in her library office.
-
-Books line every wall, some of them hovering in mid-air, others rearranging themselves autonomously.
-
-*page_break
-
-[b]"Sit,"[/b] she says, gesturing to a chair.
-
-You sit.
-
-She studies you for a moment, her sharp eyes assessing.
-
-*page_break
-
-[b]"You've excelled in theory,"[/b] she says. [b]"You understand the [i]why[/i] behind dimensional magic. That's valuable. But tomorrow, theory alone won't be enough."[/b]
-
-*line_break
-
-She pulls out a detailed map of the three realms.
-
-[b]"The Singing Dunes will test your honesty. The Verdant Tithe will test your connection to living magic. The Rune Glacier will test your ability to understand ancient power."[/b]
-
-*page_break
-
-She points to the Singing Dunes.
-
-[b]"For someone with your theoretical background, I'd recommend the Dunes. The desert judges truth—and truth is something you've learned to recognize through rigorous study."[/b]
-
-*line_break
-
-She pauses.
-
-[b]"But the choice is yours. Trust your knowledge, ${name}. You've earned it."[/b]
-
-*set aria_relationship +5
-*goto preparation_choice
-
-*label izack_meeting
-
-*set mentor_advice "izack"
-
-You meet Izack in his workshop.
-
-Dimensional threads float through the air like luminous spider silk. He's casually manipulating three different pocket dimensions simultaneously while eating a sandwich.
-
-*page_break
-
-[b]"Hey, ${name}!"[/b] He dismisses the dimensional work with a wave. [b]"Excited for tomorrow?"[/b]
-
-You admit you're nervous.
-
-[b]"Good! Nerves mean you're taking it seriously."[/b]
-
-*page_break
-
-He gestures to a floating hologram showing all three realms.
-
-[b]"You've been excellent at practical work. You [i]feel[/i] magic naturally. That's rare."[/b]
-
-*line_break
-
-He points to each realm in turn.
-
-[b]"The Singing Dunes rewards honesty and emotional truth. The Verdant Tithe rewards connection and relationship. The Rune Glacier rewards both control and partnership."[/b]
-
-*page_break
-
-He grins.
-
-[b]"For someone who collaborates as naturally as you do, I'd lean toward either the Tithe or the Glacier. But honestly? Follow your instincts. They've served you well so far."[/b]
-
-*line_break
-
-[b]"Trust the magic, ${name}. It wants to work with you."[/b]
-
-*set izack_relationship +5
-*goto preparation_choice
-
-*label zara_meeting
-
-*set mentor_advice "zara"
-
-You meet Zara in the gardens.
-
-She's tending to a Thoughtvine that's grown remarkably large, its purple flowers blooming in response to her gentle touch.
-
-*page_break
-
-[b]"Come, walk with me,"[/b] she says.
-
-You walk through paths lined with magical plants, each one humming with life and dimensional energy.
-
-*page_break
-
-[b]"You have a gift for living magic,"[/b] Zara says quietly. [b]"You don't just [i]use[/i] magic—you [i]relate[/i] to it. That's rare, especially in first-years."[/b]
-
-*line_break
-
-She stops by a fountain where all three realms are visible in the water's reflection.
-
-*page_break
-
-[b]"The Singing Dunes will challenge your honesty with yourself. The Verdant Tithe will offer you deep connection with living power. The Rune Glacier will test whether you can partner with ancient, alien consciousness."[/b]
-
-*line_break
-
-She touches the water, and the image shifts to show the Verdant Tithe.
-
-[b]"For someone who understands relationship as you do, I think the Tithe would welcome you. But any path can teach you what you need to learn."[/b]
-
-*page_break
-
-She smiles warmly.
-
-[b]"Trust your heart, ${name}. It's guided you well so far."[/b]
-
-*set zara_relationship +5
-*goto preparation_choice
-
-*label preparation_choice
-
-*page_break
-
-You have until morning to prepare.
-
-You can focus your preparation in one area to give yourself an advantage:
-
-*page_break
+Aria lays out three role cards. "Scout," "Mage," and "Heart."  
+She looks at you. "Which role resonates with you?"
 
 *choice
-  #Study the realm's history and theory—knowledge is power.
-    *set preparation_focus "research"
-    *set collaboration +5
+    #Scout – navigate, perceive, and sense danger.
+        *set expedition_role "scout"
+        *set perception +3
+        *set agility +3
+        "The forest is alive," Aria warns. "You'll need to listen more than you look."
+        *goto choose_equipment
+    #Mage – maintain spells, reinforce wards, and handle magical hurdles.
+        *set expedition_role "mage"
+        *set magic_control +3
+        *set academics +2
+        "The Tithe respects those who respect it," Izack adds. "Weave your spells with invitations, not commands."
+        *goto choose_equipment
+    #Heart – foster group cohesion, morale, and empathy.
+        *set expedition_role "heart"
+        *set empathy +4
+        *set collaboration +2
+        "You'll be responsible for holding us together," Aria says. "The Verdant Tithe tests relationships as much as skill."
+        *goto choose_equipment
 
-    You spend the evening in the library.
+*label choose_equipment
+The supply table holds an assortment of gear, each resonating with different skill sets.
 
-    *if class_focus = "theory"
-      Your theoretical training makes parsing the complex texts easier.
-
-    *line_break
-
-    You read everything you can about all three realms—their formation, their rules, their past expeditions.
-
-    *page_break
-
-    You learn that the Singing Dunes were created to test authenticity. That the Verdant Tithe grows in response to emotional bonds. That the Rune Glacier remembers every mage who's ever walked on it.
-
-    *line_break
-
-    Knowledge won't solve everything, but it will help you make informed choices.
-
-    *page_break
-
-    Aria finds you late at night, still reading.
-
-    [b]"Good,"[/b] she says simply. [b]"Preparation matters."[/b]
-
-    *goto equipment_selection
-
-  #Practice meditation and dimensional sensing—be in peak magical condition.
-    *set preparation_focus "meditation"
-    *set collaboration +10
-
-    You spend the evening in your meditation space.
-
-    *if dorm_style = "zen"
-      Your minimalist room provides the perfect environment.
-
-    *line_break
-
-    You practice sensing dimensional boundaries, calming your mind, preparing yourself mentally and magically.
-
-    *page_break
-
-    You work on being [i]present[/i]—not anxious about tomorrow, not dwelling on past lessons, just [i]here[/i], now, centered.
-
-    *line_break
-
-    True magical power comes from clarity, not force.
-
-    *page_break
-
-    *if class_focus = "practical"
-      Izack checks on you and nods approvingly.
-
-      [b]"Perfect. You're ready."[/b]
-
-    *if class_focus != "practical"
-      You feel the dimensional threads around you more clearly than ever before.
-
-      You're as ready as you'll ever be.
-
-    *goto equipment_selection
-
-  #Talk to other students who've done expeditions—learn from experience.
-    *set preparation_focus "community"
-    *set collaboration +15
-
-    You spend the evening talking to second-year students.
-
-    *if training_partner = "lyra"
-      Lyra helps you find students who approached expeditions methodically.
-
-    *if training_partner = "kade"
-      Kade introduces you to students who took risks and thrived.
-
-    *if training_partner = "selene"
-      Selene points you toward students who excelled competitively.
-
-    *page_break
-
-    You hear dozens of stories.
-
-    Marcus tells you about his Verdant Tithe expedition, where a Thoughtvine showed him his own future. A student named Cassandra describes the Rune Glacier's impossible beauty and alien intelligence. Another student, Tomas, laughs about how the Singing Dunes called him out on a lie he'd been telling himself for years.
-
-    *page_break
-
-    Everyone's experience was different.
-
-    But they all emphasize the same thing: [i]Be honest. Be open. Be willing to collaborate.[/i]
-
-    *page_break
-
-    You return to your room feeling connected to a community of learners.
-
-    You're not alone in this.
-
-    *goto equipment_selection
-
-*label equipment_selection
-
-*page_break
-
-Finally, you need to choose what to bring.
-
-Each student can carry one magical tool from the Academy's equipment vault:
-
-*page_break
+*comment Each choice modifies stats and the type of challenges the player can handle.
 
 *choice
-  #A compass that points toward areas of high dimensional activity.
-    *set equipment_choice "compass"
-
-    You select the dimensional compass.
-
-    It's a beautiful brass instrument that hums with captured energy. Instead of pointing north, it points toward the strongest dimensional currents.
-
-    *line_break
-
-    This will help you navigate and find important locations in whichever realm you choose.
-
-    *page_break
-
-    The equipment master, an older mage named Thaddeus, nods approval.
-
-    [b]"Practical choice. Navigation matters when you're in an unfamiliar dimension."[/b]
-
-    *goto final_preparations
-
-  #A journal that records magical impressions automatically.
-    *set equipment_choice "journal"
-    *set collaboration +5
-
-    You select the impression journal.
-
-    It's a leather-bound book that looks ordinary, but when you open it, pages fill themselves with notes about nearby magic—documenting dimensional currents, magical signatures, anything notable.
-
-    *line_break
-
-    This will help you learn and remember everything you experience.
-
-    *page_break
-
-    Thaddeus smiles.
-
-    [b]"Scholar's choice. Good for those who value understanding over pure power."[/b]
-
-    *goto final_preparations
-
-  #A resonance crystal that helps you sense emotional/magical connections.
-    *set equipment_choice "crystal"
-    *set collaboration +10
-
-    You select the resonance crystal.
-
-    It's a small, multifaceted gem that warms when you're near compatible magical energy or beings who might become allies.
-
-    *line_break
-
-    This will help you identify opportunities for collaboration and partnership.
-
-    *page_break
-
-    Thaddeus's eyebrows rise.
-
-    [b]"Interesting. Most students choose navigation or protection. You chose [i]connection[/i]. I respect that."[/b]
-
-    *goto final_preparations
-
-*label final_preparations
-
-*page_break
-
-Everything is ready.
-
-You return to your room one last time before tomorrow.
-
-*if has_familiar_perch
-  Polly is waiting on her perch, unusually quiet.
-
-*line_break
-
-[i]"So,"[/i] she says. [i]"Tomorrow you step into your first real challenge. Nervous?"[/i]
-
-*page_break
-
-You admit that yes, you're nervous.
-
-[i]"Good. Fear keeps you alert. Just don't let it paralyze you."[/i]
-
-*line_break
-
-She hops closer.
-
-[i]"I'll be with you, obviously. Can't have my narrator's subject dying in their first expedition. Would make for a very short story."[/i]
-
-*page_break
-
-Despite her sarcasm, there's genuine care in her voice.
-
-[i]"You've learned a lot in these weeks, ${name}. More than most. I think... I think you're going to surprise people tomorrow."[/i]
-
-*line_break
-
-[i]"Now get some sleep. You'll need it."[/i]
-
-*page_break
-
-You lie in bed, looking up at the ceiling.
-
-*if magical_feature = "memory_crystal"
-  You touch your memory crystal, recording this moment—the anticipation, the nervousness, the excitement.
-
-*line_break
-
-Tomorrow, everything changes.
-
-Tomorrow, you'll prove what you're capable of.
-
-*page_break
-
-[b]== EXPEDITION DAY ==[/b]
-
-*line_break
-
-Morning arrives.
-
-You stand in the portal chamber with other first-years, each preparing to enter their chosen realm.
-
-*page_break
-
-Izack, Aria, and Zara stand together, ready to open the portals.
-
-[b]"Remember,"[/b] Izack says, [b]"there are no wrong choices. Only different paths to understanding."[/b]
-
-*line_break
-
-Aria adds: [b]"Trust your knowledge."[/b]
-
-Zara finishes: [b]"Trust your heart."[/b]
-
-*page_break
-
-Three portals shimmer into existence:
-
-• The Singing Dunes—golden sand and impossible truth
-• The Verdant Tithe—living forest and deep connection
-• The Rune Glacier—ancient ice and alien wisdom
-
-*page_break
+    #Pick the Alchemical Satchel – potions and salves for healing and enhancement.
+        *set equipment_chosen "alchemical_satchel"
+        *set magic_control +2
+        *set academics +1
+        "Brewed by the Cassisi Lab," Izack says. "They do wonders for headaches and vine burns."  
+        *goto mental_preparation
+    #Grab the Runethic Toolkit – carving tools and rune stones.
+        *set equipment_chosen "runethic_toolkit"
+        *set knowledge +2
+        *set power +1
+        "Remember: runes like straight lines and clear intent," Aria reminds you.  
+        *goto mental_preparation
+    #Choose the Spirit Flute – attunes you to plant and animal spirits.
+        *set equipment_chosen "spirit_flute"
+        *set empathy +2
+        *set magic_control +2
+        Zara passes you the flute. "It will help you hear what the Verdant Tithe is saying. Listen closely."  
+        *goto mental_preparation
+    #Take the Multi-Tool Drone – Cassisivadan gadget that repairs and scouts.
+        *set equipment_chosen "multi_tool_drone"
+        *set creativity +2
+        *set agility +1
+        The little device buzzes around your head, chirping in an excited rhythm. "You'll need to talk to it in Cassisivadan," Polly notes.
+        *goto mental_preparation
+
+*label mental_preparation
+Polly eyes you. "Mindset matters as much as gear," she says. "How are you approaching this expedition?"
 
 *choice
-  #Enter the portal to the Singing Dunes.
-    *set expedition_choice "singing_dunes"
-    *set biome_visited "Singing Dunes"
+    #With cautious optimism. I trust my team and the forest.
+        *set mental_preparation "optimistic"
+        *set stress -3
+        You breathe deeply and visualize the Verdant Tithe as an ally, not an enemy.  
+        "Good," Polly says. "The forest hears intentions."
+        *goto expedition_brief
+    #With intellectual curiosity. I want to study everything we encounter.
+        *set mental_preparation "curious"
+        *set academics +2
+        You mentally prepare to take notes on every plant, creature, and resonance.  
+        "Just don't wander off chasing research," Aria warns.
+        *goto expedition_brief
+    #With nerves and trepidation. I'm not sure I'm ready.
+        *set mental_preparation "nervous"
+        *set stress +3
+        *set collaboration +1
+        You find your hands shaking slightly and your heart racing.  
+        Izack places a reassuring hand on your shoulder. "Everyone feels that way their first time," he says.
+        *goto expedition_brief
+    #With determination. The Spiral prepared me for this.
+        *set mental_preparation "determined"
+        *set power +2
+        *set individual_power +2
+        You clench your fists and resolve to face whatever the Tithe throws at you.  
+        "Let's hope it doesn't throw too hard," Polly mutters.
+        *goto expedition_brief
 
-    You step toward the golden portal.
+*label expedition_brief
+With role, gear, and mindset chosen, you gather with the expedition team at dawn. Izack, Aria, Zara, Rupert, and several other students stand in a semicircle.  
+Polly flaps to the center. "Repeat after me," she says. "*Sil'na med'thara. Kor'val thul'ael.*" You intone the Kor'aelin invocation, feeling the air chill and taste faintly of mint.  
+The Spiral hums in approval.  
 
-    Polly lands on your shoulder.
+Aria passes you a sealed envelope. "For emergencies," she says. "Do not open unless absolutely necessary."  
+Zara checks her pack of herbs and runes. Rupert adjusts his dueling coat again.  
 
-    [i]"The desert of truth. This should be interesting."[/i]
+"The Verdant Tithe awaits," Izack announces. "Let's move out."
 
-    *page_break
-
-    You step through.
-
-    *goto_scene singing_dunes
-
-  #Enter the portal to the Verdant Tithe.
-    *set expedition_choice "verdant_tithe"
-    *set biome_visited "Verdant Tithe"
-
-    You step toward the green portal.
-
-    Polly lands on your shoulder.
-
-    [i]"The living forest. Don't eat anything without asking first."[/i]
-
-    *page_break
-
-    You step through.
-
-    *goto_scene verdant_tithe
-
-  #Enter the portal to the Rune Glacier.
-    *set expedition_choice "rune_glacier"
-    *set biome_visited "Rune Glacier"
-
-    You step toward the blue portal.
-
-    Polly lands on your shoulder.
-
-    [i]"The ancient ice. Dress warmly. Metaphorically speaking."[/i]
-
-    *page_break
-
-    You step through.
-
-    *goto_scene rune_glacier
+*finish
