@@ -1,0 +1,20 @@
+name: ChoiceScript Tests
+
+on:
+  push:
+    paths:
+      - 'choicescript_game/scenes/**'
+      - '.github/workflows/choicescript-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  quicktest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Run Quicktest and Randomtest
+        run: |
+          echo "Running Quicktest and Randomtest (placeholder)."
+          # TODO: Add commands to run ChoiceScript's Quicktest and Randomtest here
+          echo "Quicktest and Randomtest completed."
