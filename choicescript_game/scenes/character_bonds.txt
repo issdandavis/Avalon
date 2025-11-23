@@ -1,799 +1,196 @@
-*comment ================================================
-*comment CHARACTER BONDS
-*comment Deepening relationships after the first expedition
-*comment This scene plays between first expedition and final trial
-*comment ================================================
+*comment character_bonds.txt
+*comment Scenes to deepen relationships with the main characters. Players choose who to spend time with and engage in conversations that reveal backstory, philosophy, and personality nuances.
 
-*temp bond_choice ""
-*temp conversation_depth ""
-*temp shared_moment ""
-
-*label start
-
-*comment This scene occurs after returning from your chosen expedition
-*comment but before the final trial
-
-*page_break
-
-[b]== ONE WEEK AFTER THE EXPEDITION ==[/b]
-
-*line_break
-
-You've returned from your expedition changed.
-
-*if artifact_earned = "Truth-Sworn Sand"
-  The desert's truth still echoes in your thoughts.
-
-*if artifact_earned = "Heartwood Guardian - Ancient Wisdom"
-  You feel every living thing in Avalon as if they're part of you.
-
-*if artifact_earned = "Glacier Partnership"
-  The glacier's presence hums constantly in your mind.
-
-*if artifact_earned = "Dreamwillow Vision"
-  Glimpses of possible futures flicker at the edges of your vision.
-
-*if artifact_earned = "Thoughtvine Bond"
-  The forest's collective memory whispers wisdom when you need it.
-
-*if artifact_earned = "Runeweaver's Mark"
-  Living runes dance beneath your skin with every movement.
-
-*line_break
-
-Everyone who went on expeditions came back different.
-
-Some are quieter, more thoughtful. Others are more confident. A few seem shaken but determined.
-
-*page_break
-
-Classes continue, but there's a shift.
-
-The masters treat you less like students and more like emerging mages. You've proven yourselves in the field.
-
-*page_break
-
-Tonight, there's no formal training.
-
-Instead, you have free time—rare in Avalon's intensive program. You can spend it deepening your connection with someone who matters.
-
-*page_break
+*label character_bonds
+You find a free afternoon slot with no pressing assignments—an excellent opportunity to spend time with someone and deepen your connection.  
+Who do you seek out?
 
 *choice
-  #Spend time with Izack Thorne—understand his vision for collaborative magic.
-    *set bond_choice "izack"
-    *goto izack_bond
+    #Izack Thorne – the nervous dimensional theorist.
+        *goto bond_izack
+    #Aria Ravencrest – the precise boundary architect.
+        *goto bond_aria
+    #Zara – the dragon-blooded naturalist.
+        *goto bond_zara
+    #Rupert – the reluctantly humbled prince.
+        *goto bond_rupert
+    #Polly – the sentient raven with too many opinions.
+        *goto bond_polly
+    *if (clay_is_familiar)
+        #Your clay familiar – an extension of your own heart.
+            *goto bond_clay
 
-  #Spend time with Aria Ravencrest—learn from her vast knowledge and sharp insight.
-    *set bond_choice "aria"
-    *goto aria_bond
+*label bond_izack
+You track down Izack in one of the side towers, where he is attempting to coax a staircase into staying in one place.  
+He notices you and smiles nervously, chalk dust smudged across his cheek.
 
-  #Spend time with Zara—explore the connection between life and dimensional magic.
-    *set bond_choice "zara"
-    *goto zara_bond
-
-  #Spend time with Polly—appreciate the sarcastic raven who's been with you from the start.
-    *set bond_choice "polly"
-    *goto polly_bond
-
-  #Spend time with your training partner—strengthen your collaborative connection.
-    *set bond_choice "partner"
-    *goto partner_bond
-
-*comment ================================================
-*comment IZACK BOND SCENE
-*comment ================================================
-
-*label izack_bond
-
-You find Izack on the observation deck at the top of the Spiral Spire.
-
-He's sitting on the edge, legs dangling over a drop that would terrify most people, casually eating an apple while watching dimensional currents swirl through the sky.
-
-*page_break
-
-[b]"Hey, ${name}!"[/b] He pats the space beside him. [b]"Join me?"[/b]
-
-You sit carefully, trying not to look down.
-
-[b]"Don't worry—there's a dimensional cushion below. If you fall, you'll just float gently back up. Probably."[/b]
-
-*line_break
-
-He grins at your expression.
-
-[b]"I'm kidding. Definitely. There's definitely a safety net."[/b]
-
-*page_break
-
-You sit together in companionable silence for a moment.
-
-[b]"I heard about your expedition,"[/b] Izack says. [b]"Impressive. You did something most mages never achieve."[/b]
-
-*line_break
-
-*if artifact_earned = "Glacier Partnership"
-  [b]"Partnership with the glacier. I was twenty-seven when I achieved that. You did it in weeks."[/b]
-
-*if collaboration > 70
-  [b]"Your collaboration scores are exceptional. You really understand what I'm trying to teach."[/b]
-
-*if collaboration <= 70
-  [b]"You're learning. Growing. That's what matters."[/b]
-
-*page_break
-
-He tosses his apple core off the spire.
-
-Instead of falling, it dissolves into dimensional energy and disperses as golden light.
-
-[b]"Can I tell you something?"[/b]
-
-*page_break
+"Ah, ${name}!" he says. "Excellent! Maybe you can help me convince this staircase that floors go *up* and *down*, not *east* and *west*."
 
 *choice
-  #"Of course."
-    *set conversation_depth "open"
-    *set izack_relationship +15
-    *set collaboration +10
+    #Offer to help with the negotiation.
+        *set izack_relationship +3
+        *set collaboration +2
+        *set magic_control +1
+        You whisper to the staircase in Kor'aelin, inviting it to rest in one orientation. The air chills, mint fills your mouth, and the stairs grudgingly align.  
+        "Brilliant!" Izack exclaims. "See? It likes you! Or it likes your pronunciation. Either way, I'm grateful."  
+        *goto izack_chat
+    #Ask Izack how he ended up building Avalon.
+        *set izack_relationship +2
+        "Long story short? Aria told me my coffee table idea was impractical and I took it as a challenge," he jokes.  
+        Then he becomes serious. "I wanted a place where people like me—people who asked too many questions—could belong. I didn't have that growing up."  
+        *goto izack_chat
+    #Invite him to get tea and take a break from work.
+        *set izack_relationship +3
+        *set empathy +2
+        Izack looks longingly at the teapot on his desk. "Oh stars, yes," he sighs. "If this staircase is going to wander, it can do it without me for fifteen minutes."  
+        *goto izack_chat
 
-    [b]"I created Avalon,"[/b] he begins, [b]"because I was tired of seeing magic treated as individual power. Mages hoarding knowledge, competing instead of collaborating, treating magic like a weapon or a tool."[/b]
+*label izack_chat
+You and Izack chat for a while about everything from the ethics of dimensional tweaking to his favorite pastry (almond swirls).  
+At one point, he confesses, "Sometimes I still feel like that kid who accidentally summoned a coffee table into his parents' living room. The difference is now I'm allowed to break things on purpose."  
+His laughter is self-deprecating and warm.  
+Polly, perched nearby, comments, "He still summons coffee tables when he's nervous."  
+*finish
 
-    *line_break
+*label bond_aria
+You find Aria in the boundary lab, where delicate sigils float in mid-air. Her hair is pulled back, her focus absolute.
 
-    He gestures to the dimension around you—the Spiral Spire, the World Tree, the pocket realms.
-
-    *page_break
-
-    [b]"This place is my argument. My [i]proof[/i] that magic works better as collaboration. That dimensional power isn't about control—it's about relationship."[/b]
-
-    *line_break
-
-    He looks at you seriously.
-
-    [b]"Every student who graduates understanding that makes the magical world a little better. You're part of that, ${name}. You're proof that it works."[/b]
-
-    *page_break
-
-    *if collaboration > 75
-      [b]"Especially you. You [i]get[/i] it in a way most students have to work years to understand."[/b]
-
-    *if class_focus = "practical"
-      [b]"The way you [i]feel[/i] magic, the way you work [i]with[/i] it instead of forcing it—that's what I'm trying to teach. You already do it naturally."[/b]
-
-    *page_break
-
-    You sit with that for a moment.
-
-    Then you ask: "Do you ever doubt? Ever wonder if you're wrong about collaboration?"
-
-    *line_break
-
-    He laughs.
-
-    [b]"Every day. That's how I know I'm on the right path—I keep questioning it, testing it, proving it. Certainty is the enemy of growth."[/b]
-
-    *page_break
-
-    He stands, offering you a hand up.
-
-    [b]"Come on. I want to show you something."[/b]
-
-    *line_break
-
-    He leads you to a viewing panel where you can see all of Avalon at once—every pocket dimension, every student, every magical current.
-
-    [b]"This is what collaboration looks like when it scales. Hundreds of mages, thousands of spells, all working together as one living system."[/b]
-
-    *page_break
-
-    [b]"Someday, ${name}, you might create something like this too. Not a copy of Avalon, but your own vision of what collaborative magic can be."[/b]
-
-    *line_break
-
-    [b]"I believe in you."[/b]
-
-    *goto bond_complete
-
-  #"Sure, if you want to share."
-    *set conversation_depth "friendly"
-    *set izack_relationship +10
-    *set collaboration +5
-
-    [b]"Creating Avalon was lonely,"[/b] he admits. [b]"Everyone thought I was crazy. A living dimension? Sentient magical architecture? Impossible, they said."[/b]
-
-    *line_break
-
-    He smiles wryly.
-
-    [b]"But I kept believing. And eventually, Avalon [i]answered[/i]. It wanted to exist. It wanted to grow."[/b]
-
-    *page_break
-
-    [b]"Teaching students like you makes it worth it. Every time someone 'gets' collaboration, every time someone achieves partnership with magic instead of domination... that's why I do this."[/b]
-
-    *line_break
-
-    You thank him for sharing.
-
-    He grins.
-
-    [b]"Thanks for listening. Sometimes even legendary mages need to talk."[/b]
-
-    *goto bond_complete
-
-*comment ================================================
-*comment ARIA BOND SCENE
-*comment ================================================
-
-*label aria_bond
-
-You find Aria in the restricted section of the library.
-
-She's surrounded by floating books, each one open to a different page, creating a three-dimensional web of interconnected knowledge.
-
-*page_break
-
-She glances up when you enter.
-
-[b]"${name}. Come. I'm working on something that might interest you."[/b]
-
-*line_break
-
-You approach carefully, not wanting to disturb her complex arrangement.
-
-*page_break
-
-[b]"I'm mapping the theoretical connections between all recorded collaborative magic breakthroughs in the past five centuries."[/b]
-
-*line_break
-
-She waves a hand, and the books rearrange, showing a pattern.
-
-[b]"Notice anything?"[/b]
-
-*page_break
+She notices you and smiles. "Looking for a distraction or a demonstration?" she asks.
 
 *choice
-  #Study the pattern carefully before answering.
-    *set conversation_depth "intellectual"
-    *set aria_relationship +15
-    *set collaboration +5
+    #Ask her about her passion for boundary magic.
+        *set aria_relationship +3
+        *set academics +1
+        "I grew up in a place where boundaries were enforced brutally," she says quietly. "I learned early that walls can protect and imprison. I wanted to build better ones—ones you could open if you knew how."  
+        She traces a sigil in the air, and a shimmering doorway appears momentarily.  
+        *goto aria_chat
+    #Request a lesson in precise sigil work.
+        *set aria_relationship +2
+        *set magic_control +3
+        Aria demonstrates how to draw a perfect circle in the air without letting your hand shake. "It's all in the breath," she says. You follow her lead, the act meditative and satisfying.  
+        *goto aria_chat
+    #Invite her to share stories over lunch.
+        *set aria_relationship +3
+        *set social +2
+        Over roasted vegetable wraps, Aria tells you about her first time successfully weaving a boundary and how she nearly fainted from joy.  
+        "They didn't let me do any more for a week," she laughs. "They were worried I'd collapse a wall."  
+        *goto aria_chat
 
-    You examine the floating books, tracking the connections.
+*label aria_chat
+After your time together, Aria looks thoughtful. "Thank you," she says. "I don't often talk about myself. Boundaries, you know."  
+She offers you a small piece of chalk laced with boundary sigils. "For emergencies," she says. "It holds things together."  
+*finish
 
-    After several minutes, you see it.
-
-    "Every breakthrough involved accepting help. Or asking questions. Or admitting limitations."
-
-    *line_break
-
-    Aria's expression shifts—almost a smile.
-
-    [b]"Exactly. [i]Exactly[/i]."[/b]
-
-    *page_break
-
-    She pulls out a chair for you.
-
-    [b]"Most people see collaborative magic as a technique. A method. But it's deeper than that—it's an [i]epistemology[/i]. A way of knowing."[/b]
-
-    *line_break
-
-    She gestures to the books.
-
-    [b]"Individual mages hit ceilings. Their own limits become invisible walls. But collaborative mages? They can see past their own blind spots because others show them what they can't see alone."[/b]
-
-    *page_break
-
-    *if class_focus = "theory"
-      [b]"You understand this. Your theoretical work shows it. You don't just memorize—you [i]synthesize[/i]. You see connections."[/b]
-
-    *if artifact_earned = "Truth-Sworn Sand"
-      [b]"The desert marked you truthbound. That's rare. Truth requires seeing past your own biases. Collaboration requires the same skill."[/b]
-
-    *page_break
-
-    She pulls out an ancient text.
-
-    [b]"Here. This is from the First Mages. Most students aren't ready for it. But you are."[/b]
-
-    *line_break
-
-    You spend the next hour reading together, discussing, debating. Aria treats you like an intellectual equal—challenging your ideas, but respecting your reasoning.
-
-    *page_break
-
-    When you finally leave, she says:
-
-    [b]"You have a good mind, ${name}. Don't waste it."[/b]
-
-    *line_break
-
-    From Aria, that's high praise indeed.
-
-    *goto bond_complete
-
-  #Admit you're not sure what the pattern is.
-    *set conversation_depth "honest"
-    *set aria_relationship +10
-    *set collaboration +10
-
-    You study the pattern, but you're not seeing what she wants you to see.
-
-    "I'm not sure. Can you explain?"
-
-    *line_break
-
-    Aria nods, seeming pleased rather than disappointed.
-
-    [b]"Good. Better to admit you don't know than to guess blindly."[/b]
-
-    *page_break
-
-    She rearranges the books into a clearer pattern.
-
-    [b]"Every major breakthrough in collaborative magic came from someone who admitted they didn't know something. Who asked for help. Who recognized their own limitations."[/b]
-
-    *line_break
-
-    She looks at you directly.
-
-    [b]"You just demonstrated that principle. Many students would have tried to bluff. You were honest."[/b]
-
-    *page_break
-
-    [b]"Intellectual honesty is rarer than you'd think,"[/b] she continues. [b]"And it's essential for true learning."[/b]
-
-    *line_break
-
-    She pulls out a book.
-
-    [b]"Here. Read this chapter. Come back when you have questions—not when you think you understand, but when you [i]know[/i] you don't."[/b]
-
-    *goto bond_complete
-
-*comment ================================================
-*comment ZARA BOND SCENE
-*comment ================================================
-
-*label zara_bond
-
-You find Zara in the greenhouses, tending to a Dreamwillow sapling.
-
-The tree is young but already showing signs of its future power—the branches shimmer with possibility, and you can see faint visions in the leaves.
-
-*page_break
-
-[b]"${name},"[/b] Zara greets you warmly. [b]"Perfect timing. I need a second set of hands—or rather, a second magical presence."[/b]
-
-*line_break
-
-She gestures to the Dreamwillow.
-
-[b]"This sapling is struggling to stabilize its dimensional connection. It needs to feel safe, grounded. Can you help?"[/b]
-
-*page_break
+*label bond_zara
+You locate Zara in the greenhouse, her fingers buried in soil as she sings softly in a language you don't recognize. The plants seem to lean toward her voice.  
+She looks up when you arrive and flashes a grin, scales glinting in the light.
 
 *choice
-  #Reach out to the tree with gentle magical energy.
-    *set conversation_depth "nurturing"
-    *set zara_relationship +15
-    *set collaboration +10
+    #Compliment her singing and ask what language it is.
+        *set zara_relationship +3
+        *set empathy +1
+        "It's Ur'aelin," she says. "Fragments of the Proto-Spiral. My grandma taught me what she knew. It's mostly lullabies and curse words."  
+        She sings a few more lines; the air tastes like starfruit.  
+        *goto zara_chat
+    #Ask to help with the plants.
+        *set zara_relationship +2
+        *set guild_elementalist +1
+        You kneel beside her and carefully tend to the seedlings. As you work, Zara tells you about her dream to cultivate a garden that exists in multiple realities at once.  
+        *goto zara_chat
+    #Invite her to spar—amicable dragon-style.
+        *set zara_relationship +3
+        *set power +2
+        Zara's eyes gleam. "Don't worry, I won't burn down the greenhouse," she promises.  
+        You spar gently in a training ring conjured by Izack, and though you lose, you learn to anticipate her tail swipes.  
+        *goto zara_chat
 
-    You extend your magical awareness carefully, touching the tree's consciousness with gentle respect.
+*label zara_chat
+Zara eventually sits cross-legged and sips from a bottle of shimmering liquid. "Being part dragon isn't just breath weapons," she says. "It's expectations. People think I'm always strong. Sometimes I'm tired too."  
+You feel closer to her for her honesty.  
+*finish
 
-    *if artifact_earned = "Heartwood Guardian - Ancient Wisdom"
-      The moment you connect, the tree [i]recognizes[/i] you. You bonded with its ancient parent. It trusts you instantly.
+*label bond_rupert
+You find Rupert in the library, reading a thick tome with a look of intense concentration. His enchanted suitcase hovers nearby, tidying up stray books.
 
-      Zara gasps softly.
-
-      [b]"Oh. Oh, it [i]knows[/i] you. That's... ${name}, that's extraordinary."[/b]
-
-    *line_break
-
-    The sapling's fear quiets.
-
-    You can feel its young consciousness—curious, scared, trying to understand the strange dimension it's growing in.
-
-    *page_break
-
-    You send feelings of safety. Growth. Welcome.
-
-    The tree's branches stop trembling. Its dimensional connection stabilizes. New leaves unfurl, glowing with soft silver light.
-
-    *line_break
-
-    Zara smiles beautifully.
-
-    [b]"You have the gift, ${name}. True connection with living magic. Some mages study for decades and never develop what you have naturally."[/b]
-
-    *page_break
-
-    *if class_focus = "living_magic"
-      [b]"Your work this month showed it. But this... this confirms it. You don't just [i]use[/i] living magic. You [i]understand[/i] it."[/b]
-
-    *page_break
-
-    She touches the tree gently.
-
-    [b]"Living things respond to respect, to care, to genuine connection. You offered all three without even thinking about it."[/b]
-
-    *line_break
-
-    She looks at you thoughtfully.
-
-    [b]"After you graduate, if you want to study deeper work with living magic... I'd be honored to mentor you."[/b]
-
-    *goto bond_complete
-
-  #Ask what the tree needs before acting.
-    *set conversation_depth "respectful"
-    *set zara_relationship +10
-    *set collaboration +10
-
-    "What does it need?" you ask. "What's making it unstable?"
-
-    *line_break
-
-    Zara nods approvingly.
-
-    [b]"Good question. Too many mages jump to solutions before understanding the problem."[/b]
-
-    *page_break
-
-    She places a hand on the tree.
-
-    [b]"Dreamwillows show possible futures. This sapling is overwhelmed—it's seeing too many possibilities, all at once, with no framework to organize them."[/b]
-
-    *line_break
-
-    [b]"It needs to feel [i]grounded[/i]. Present. Safe in [i]this[/i] moment, not lost in possible futures."[/b]
-
-    *page_break
-
-    Together, you and Zara work with the tree.
-
-    You provide stability. She provides comfort. The tree calms, its visions clarifying into manageable glimpses rather than overwhelming floods.
-
-    *line_break
-
-    Zara smiles.
-
-    [b]"Well done. You asked, you listened, you helped. That's the heart of collaborative magic with living things."[/b]
-
-    *goto bond_complete
-
-*comment ================================================
-*comment POLLY BOND SCENE
-*comment ================================================
-
-*label polly_bond
-
-You return to your dorm room early.
-
-*if has_familiar_perch
-  Polly is on her perch, preening feathers.
-*if has_familiar_perch = false
-  Polly is perched on your windowsill.
-
-*line_break
-
-She looks up when you enter.
-
-[i]"No evening plans? No studying or socializing?"[/i]
-
-*page_break
-
-You shake your head.
-
-"I thought maybe we could just... talk. We've been so busy with training and expeditions. I realized I don't know much about you beyond the sarcasm."
-
-*line_break
-
-Polly tilts her head, surprised.
-
-[i]"You want to know about [b]me[/b]? Usually people just tolerate my commentary."[/i]
-
-*page_break
+"Oh, it's you," he says, marking his place. "Care to judge me for being industrious?" There's a smile hiding under the sarcasm.
 
 *choice
-  #"I'd like to know more. You've been with me since I arrived."
-    *set conversation_depth "genuine"
-    *set polly_relationship +20
-    *set collaboration +10
-
-    Polly is quiet for a long moment.
-
-    Then she hops closer.
-
-    [i]"Alright. Fine. You want the real story?"[/i]
-
-    *page_break
-
-    [i]"I'm old, ${name}. Not raven-years old. [b]Ancient[/b]. I was there when Izack first theorized dimensional magic. I watched Aria compile the first comprehensive magical library. I've seen three hundred years of students come through Avalon."[/i]
-
-    *line_break
-
-    She ruffles her feathers.
-
-    *page_break
-
-    [i]"I'm not just a familiar. I'm... a dimensional anchor. Part of Avalon itself. Izack bound me here—voluntarily, I should add—to help guide students."[/i]
-
-    *line_break
-
-    [i]"I narrate because that's my [b]function[/b]. I witness. I remember. I tell the stories."[/i]
-
-    *page_break
-
-    She looks at you with one bright eye.
-
-    [i]"But you're the first student in decades who asked about [b]me[/b] instead of just accepting my presence."[/i]
-
-    *line_break
-
-    [i]"That matters. That says something about who you are."[/i]
-
-    *page_break
-
-    She hops onto your shoulder—closer than she usually gets.
-
-    [i]"I've seen a lot of students, ${name}. You're... you're special. And I don't say that lightly."[/i]
-
-    *line_break
-
-    [i]"Most students think collaborative magic is about working with other people. But it's deeper. It's about seeing [b]everyone[/b] as real. Even sarcastic ravens."[/i]
-
-    *page_break
-
-    She settles into the comfortable silence.
-
-    [i]"Thank you,"[/i] she says quietly. [i]"For asking. For caring."[/i]
-
-    *goto bond_complete
-
-  #"Tell me about the students you've watched over the years."
-    *set conversation_depth "curious"
-    *set polly_relationship +15
-    *set collaboration +5
-
-    Polly's eyes light up.
-
-    [i]"Oh, now we're talking. Story time with Polly the Ancient Raven."[/i]
-
-    *page_break
-
-    She settles in, clearly enjoying having an audience.
-
-    [i]"Three hundred years of students. Some brilliant, some mediocre, some absolutely hopeless. Let me tell you about the most interesting ones..."[/i]
-
-    *line_break
-
-    She spends the next hour telling stories.
-
-    *page_break
-
-    There was Cassian, who created an entire pocket dimension as a graduation project and got lost in it for two weeks. There was Elara, who partnered with a Thoughtvine so deeply she could communicate with all plants in Avalon. There was Marcus—not your Marcus, a different one—who failed his first three expeditions but became one of the greatest dimensional theorists of the century.
-
-    *line_break
-
-    [i]"The point is,"[/i] Polly concludes, [i]"everyone's journey is different. Yours is still being written."[/i]
-
-    *goto bond_complete
-
-*comment ================================================
-*comment TRAINING PARTNER BOND SCENE
-*comment ================================================
-
-*label partner_bond
-
-*if training_partner = "lyra"
-  *goto lyra_bond_scene
-*if training_partner = "kade"
-  *goto kade_bond_scene
-*if training_partner = "selene"
-  *goto selene_bond_scene
-
-*label lyra_bond_scene
-
-You find Lyra in the library, surrounded by detailed maps of dimensional currents.
-
-She looks up, adjusts her glasses.
-
-[b]"Hey. Working on the collaborative mapping assignment?"[/b]
-
-*page_break
-
-You nod.
-
-[b]"Want to work together?"[/b]
-
-*line_break
-
-You spend the next several hours mapping currents together.
-
-Lyra's precision complements your intuition perfectly. Where she catches details, you see patterns. Where you sense possibilities, she measures actualities.
-
-*page_break
-
-Eventually, you complete a map more detailed than either of you could have created alone.
-
-Lyra smiles—a rare, genuine expression.
-
-[b]"We work well together. I... don't say this often, but I'm glad you're my partner."[/b]
-
-*set collaboration +15
-*goto bond_complete
-
-*label kade_bond_scene
-
-You find Kade attempting to juggle three dimensional pockets simultaneously.
-
-It's going about as well as you'd expect—chaotic, energetic, barely controlled.
-
-[b]"${name}! Help me stabilize this!"[/b]
-
-*page_break
-
-You rush over, lending your magic to his ambitious attempt.
-
-Together, you manage to keep all three pockets stable—barely.
-
-*line_break
-
-When you finally let them collapse safely, Kade laughs breathlessly.
-
-[b]"That was insane! And awesome! And we [i]did it[/i]!"[/b]
-
-*page_break
-
-He grins at you.
-
-[b]"You know what? You make me better. You keep me from going too far, but you don't stop me from trying. That's... that's exactly what I need."[/b]
-
-*set collaboration +15
-*goto bond_complete
-
-*label selene_bond_scene
-
-You find Selene practicing advanced dimensional manipulation alone.
-
-She notices you watching.
-
-[b]"What?"[/b]
-
-*page_break
-
-"Just... you're really good at this."
-
-*line_break
-
-She blinks, surprised by the compliment.
-
-[b]"... thanks."[/b]
-
-*page_break
-
-After a moment:
-
-[b]"You're not bad yourself. You approach magic differently than I do. It's... interesting."[/b]
-
-*line_break
-
-She hesitates, then:
-
-[b]"Want to practice together? Actually [i]together[/i], not competitively?"[/b]
-
-*page_break
-
-You practice for an hour.
-
-It's the first time Selene has treated magic as collaboration rather than competition.
-
-*line_break
-
-At the end, she says quietly:
-
-[b]"I think... I think I've been doing this wrong. Competition pushes me, but collaboration... collaboration makes me [i]better[/i]."[/b]
-
-*set collaboration +15
-*goto bond_complete
-
-*comment ================================================
-*comment BOND SCENE COMPLETION
-*comment ================================================
-
-*label bond_complete
-
-*page_break
-
-The evening ends.
-
-You return to your room feeling more connected—to people, to magic, to Avalon itself.
-
-*page_break
-
-*if bond_choice = "izack"
-  Izack's faith in you feels like a weight and a gift. You want to live up to it.
-
-*if bond_choice = "aria"
-  Aria's respect is hard-won. Having earned it makes you more confident in your intellectual abilities.
-
-*if bond_choice = "zara"
-  Zara's offer to mentor you after graduation opens up possibilities you hadn't considered.
-
-*if bond_choice = "polly"
-  Understanding Polly's true nature—her ancient wisdom and genuine care—makes you feel less alone.
-
-*if bond_choice = "partner"
-  Your training partner has become more than just someone you practice with. They're becoming a true friend.
-
-*page_break
-
-Tomorrow, preparation begins for the final trial.
-
-But tonight, you've deepened a bond that will last beyond Avalon.
-
-*page_break
-
-*goto_scene final_trial
-
-*comment ================================================
-*comment ROMANCE CHECK - Triggers romance_scenes if applicable
-*comment ================================================
-
-*page_break
-
-*if (romance_enabled = true) and ((izack_relationship > 70) or (aria_relationship > 70) or (zara_relationship > 70))
-  You feel a deeper connection forming...
-
-  *if (izack_relationship > 70) and (romantic_interest = "none" or romantic_interest = "izack")
-    Something about Izack makes your heart race.
-
-    *page_break
-
-    *choice
-      #Explore these feelings for Izack
-        *set romantic_interest "izack"
-        *goto_scene romance_scenes
-
-      #Keep it professional
-        *set romantic_interest "none"
-        *goto next_scene
-
-  *if (aria_relationship > 70) and (romantic_interest = "none" or romantic_interest = "aria")
-    Aria's brilliance captivates you.
-
-    *page_break
-
-    *choice
-      #Explore these feelings for Aria
-        *set romantic_interest "aria"
-        *goto_scene romance_scenes
-
-      #Keep it professional
-        *set romantic_interest "none"
-        *goto next_scene
-
-  *if (zara_relationship > 70) and (romantic_interest = "none" or romantic_interest = "zara")
-    Zara's warmth draws you in.
-
-    *page_break
-
-    *choice
-      #Explore these feelings for Zara
-        *set romantic_interest "zara"
-        *goto_scene romance_scenes
-
-      #Keep it professional
-        *set romantic_interest "none"
-        *goto next_scene
-
-*label next_scene
-
-*comment Check for secret paths discovered
-*if (secret_paths_found >= 1) or (hidden_lore_discovered >= 1)
-  *goto_scene secret_paths
-
-*goto_scene final_trial
+    #Ask how he's adjusting to Avalon life.
+        *set rupert_relationship +3
+        "It's... humbling," he admits. "I went from commanding armies to being told to carry my own books. It's good for me, I suppose. Don't tell anyone I said that."  
+        *goto rupert_chat
+    #Challenge him to a game of magical chess.
+        *set rupert_relationship +2
+        *set academics +2
+        The enchanted chess board conjures creatures instead of pieces. Your knights are little clay golems. Rupert's bishop quotes poetry as it moves.  
+        He beats you on the last move, but only because Polly keeps distracting you.  
+        *goto rupert_chat
+    #Compliment his dueling coat and ask about his past duels.
+        *set rupert_relationship +3
+        *set social +1
+        He straightens his coat. "I once dueled a sorcerer who tried to cheat by summoning a swarm of bees," he says. "It was... sticky."  
+        He laughs at the memory. "I won, but I still can't stand honey."  
+        *goto rupert_chat
+
+*label rupert_chat
+Rupert's sarcastic veneer slips occasionally, revealing a thoughtful, earnest core.  
+"My parents named me after a hero," he confesses. "Do you have any idea how exhausting that is?"  
+He closes his book with a sigh. "I'm trying to figure out who I am if I'm not trying to live up to someone else."  
+You nod; you understand.  
+*finish
+
+*label bond_polly
+You find Polly perched on the top shelf of the library, annotating a book with her beak.  
+"Finally," she says. "Someone to appreciate my wit without being obligated to feed me."
+
+*choice
+    #Ask Polly about her favorite gossip.
+        *set polly_relationship +3
+        "Did you know Aria talks in her sleep? It's adorable," she whispers conspiratorially. "Also, the World Tree has opinions about the new courtyard fountain. It wanted a statue of itself. Narcissistic, if you ask me."  
+        *goto polly_chat
+    #Ask Polly to teach you a Kor'aelin phrase.
+        *set polly_relationship +2
+        *set collaboration +2
+        "How about *thul'joy sil'play*?" she suggests. "It means 'spiral joy together play.' Also works as a distraction if you yell it during a duel."  
+        *goto polly_chat
+    #Invite Polly to watch the sunset with you.
+        *set polly_relationship +3
+        *set philosophical_depth +2
+        You both sit on the edge of the Spire as the sun dips below the horizon. Polly is quiet for once.  
+        "The Spiral is beautiful," she finally says. "I forget sometimes. People keep me busy."  
+        *goto polly_chat
+
+*label polly_chat
+Polly preens contentedly and then fixes you with one black eye.  
+"Everyone thinks I'm just a snark dispenser," she says. "But I'm a snark dispenser with depth."  
+You both laugh. For a moment, the world feels simple.  
+*finish
+
+*label bond_clay
+*comment Bond with the clay familiar if chosen.  
+You sit with your clay companion in a quiet courtyard. It shapes itself into a smaller version of you, then into a bird, then back into a lump with a smiling face.  
+Its eyes glow gently as it awaits your attention.
+
+*choice
+    #Tell it about your day and encourage it to share.
+        *set clay_bond +4
+        *set empathy +2
+        The clay ripples with images and emotions. You see flashes of how it perceived your day: colors when you listened to Aria, warmth when Zara smiled at you, frustration during lectures.  
+        It radiates affection toward you.  
+        *goto clay_chat
+    #Teach it a new shape by sculpting together.
+        *set clay_bond +3
+        *set creativity +3
+        Together, you coax the clay into forming an intricate spiral lizard. It giggles (somehow) and then shapes itself into the same.  
+        *goto clay_chat
+    #Ask it about its origin—how it came to you.
+        *set clay_bond +2
+        The clay shivers and then projects a memory: you on a beach, alone and crying. A piece of driftwood and sand forming Clay in your hands.  
+        You feel the same mix of need and wonder that created your familiar.  
+        *set has_understood_clay_origin true
+        *goto clay_chat
+
+*label clay_chat
+Clay presses into your hand, its warmth and solidity a comfort. You realize that while it is an extension of you, it is also its own consciousness in the making.  
+Polly lands nearby. "Fascinating thing, creation through need," she muses. "It always leaves me feeling... hopeful."  
+*finish
