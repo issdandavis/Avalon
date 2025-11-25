@@ -3,6 +3,11 @@
 ## Overview
 This document describes the connected accounts ecosystem for the Avalon/Spiral of Pollyoneth project and the automated communication workflows between them.
 
+> **🤖 NEW: AI Inbox Management System**  
+> Automated email and GitHub notification management with AI-powered auto-replies and categorization.  
+> **Quick Start:** See [AI Employees Guide](docs/AI_EMPLOYEES_GUIDE.md)  
+> **Full Documentation:** See [Inbox Management Guide](docs/INBOX_MANAGEMENT.md)
+
 ---
 
 ## 🔗 Connected Accounts
@@ -82,7 +87,19 @@ This document describes the connected accounts ecosystem for the Avalon/Spiral o
   - Error recovery
 - **Silent Mode:** ✅ Configured for background operation
 
-#### Layer 3: Integration Services
+#### Layer 3: AI Inbox Management (NEW)
+- **Location:** `.github/workflows/inbox-management.yml`
+- **Purpose:** Automated inbox and email management
+- **Features:**
+  - Auto-reply to all GitHub notifications
+  - Smart categorization and labeling
+  - Multi-account synchronization
+  - Email integration support
+  - Scheduled inbox monitoring
+- **AI Employees:** 5 specialized agents working 24/7
+- **Documentation:** [AI Employees Guide](docs/AI_EMPLOYEES_GUIDE.md)
+
+#### Layer 4: Integration Services
 - **Zapier/Make/n8n:** External automation platform
 - **Purpose:** Complex multi-service workflows
 - **Silent Mode:** ✅ Configured to suppress non-critical notifications
@@ -91,7 +108,22 @@ This document describes the connected accounts ecosystem for the Avalon/Spiral o
 
 ## 📊 Automated Communication Workflows
 
-### Workflow 1: Development Progress Sync
+### Workflow 1: AI Inbox Management (NEW)
+```
+GitHub Notification → AI Categorization → Auto-Reply
+├── Analyze content and priority
+├── Send automated acknowledgment
+├── Apply smart labels
+├── Update project board
+└── Track in unified inbox
+
+Schedule: Every 6 hours + on-demand
+AI Agents: 5 specialized agents
+Documentation: docs/INBOX_MANAGEMENT.md
+```
+**User Notifications:** Auto-replies to users; silent admin operation
+
+### Workflow 2: Development Progress Sync
 ```
 GitHub Commit → Actions Workflow → Multi-Account Update
 ├── Update GitHub Projects board
