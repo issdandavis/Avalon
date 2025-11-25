@@ -160,7 +160,8 @@ jobs:
             Timestamp: $(date -u)"
             
             # Push to a management branch (don't clutter main)
-            git push origin HEAD:agent-management-logs --force-with-lease || git push origin HEAD:agent-management-logs
+            # Use --force-with-lease for safety - if push fails, branch has unexpected changes
+            git push origin HEAD:agent-management-logs --force-with-lease
             
             echo "✅ Reports committed to agent-management-logs branch"
           else

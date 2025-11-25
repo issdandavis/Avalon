@@ -37,9 +37,9 @@ But they need you to:
 
 ### Step 1: Open Your Terminal
 
-**Windows:** Press Windows key, type "cmd", press Enter  
+**Linux/WSL:** Press Ctrl+Alt+T or search for "Terminal" in applications  
 **Mac:** Press Cmd+Space, type "terminal", press Enter  
-**Linux:** You know what to do 😉
+**Windows:** Press Windows key, type "cmd", press Enter
 
 ### Step 2: Navigate to Repository
 

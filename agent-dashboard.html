@@ -192,14 +192,36 @@
             const file = e.target.files[0];
             if (!file) return;
             
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File too large. Maximum size is 10MB.');
+                return;
+            }
+            
+            // Validate file type
+            if (!file.name.endsWith('.json')) {
+                alert('Please select a JSON file.');
+                return;
+            }
+            
             const reader = new FileReader();
             reader.onload = function(event) {
                 try {
                     const data = JSON.parse(event.target.result);
+                    
+                    // Validate expected structure
+                    if (!data.health_score || !data.workers || !data.task_queue) {
+                        alert('Invalid report format. Please select a valid status report JSON file.');
+                        return;
+                    }
+                    
                     renderDashboard(data);
                 } catch (err) {
                     alert('Error parsing JSON: ' + err.message);
                 }
+            };
+            reader.onerror = function() {
+                alert('Error reading file. Please try again.');
             };
             reader.readAsText(file);
         });

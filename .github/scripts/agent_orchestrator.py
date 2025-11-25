@@ -154,19 +154,27 @@ class AgentOrchestrator:
             'rune_glacier.txt': 'Rune Glacier'
         }
         
+        # Target line count for 100% completion (configurable)
+        TARGET_LINES = 1000
+        
         status = {}
         for filename, name in expeditions.items():
             filepath = scenes_dir / filename
             if filepath.exists():
-                with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-                    content = f.read()
-                    lines = len(content.splitlines())
-                    placeholders = content.count('PLACEHOLDER') + content.count('TODO') + content.count('STUB')
-                    
+                try:
+                    with open(filepath, 'r', encoding='utf-8', errors='replace') as f:
+                        content = f.read()
+                        lines = len(content.splitlines())
+                        placeholders = content.count('PLACEHOLDER') + content.count('TODO') + content.count('STUB')
+                        
+                        status[name] = {
+                            'lines': lines,
+                            'placeholders': placeholders,
+                            'estimated_complete': min(100, int((lines / TARGET_LINES) * 100))
+                        }
+                except Exception as e:
                     status[name] = {
-                        'lines': lines,
-                        'placeholders': placeholders,
-                        'estimated_complete': min(100, int((lines / 1000) * 100))  # Assume 1000 lines = complete
+                        'error': f'Failed to read file: {str(e)}'
                     }
             else:
                 status[name] = {
