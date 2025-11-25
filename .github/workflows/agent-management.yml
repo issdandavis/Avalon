@@ -21,6 +21,10 @@ jobs:
   agent-management:
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: write  # Needed to commit reports
+      actions: read    # Needed to check workflow status
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
