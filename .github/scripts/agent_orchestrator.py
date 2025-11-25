@@ -71,11 +71,17 @@ class AgentOrchestrator:
                         'exists': False,
                         'status': 'Not yet initialized'
                     }
+            except subprocess.CalledProcessError as e:
+                status[worker_name] = {
+                    'branch': branch_name,
+                    'exists': False,
+                    'error': f'Git command failed: {e.stderr if hasattr(e, "stderr") else str(e)}'
+                }
             except Exception as e:
                 status[worker_name] = {
                     'branch': branch_name,
                     'exists': False,
-                    'error': str(e)
+                    'error': f'Unexpected error: {type(e).__name__}: {str(e)}'
                 }
         
         return status

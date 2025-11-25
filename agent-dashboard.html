@@ -445,25 +445,5 @@
             list.innerHTML = recommendations.map(r => `<li>${r}</li>`).join('');
         }
     </script>
-</head>
-<body>
-    <div class="container">
-        <h1>🎯 Agent Management Dashboard</h1>
-        <div class="subtitle">Avalon/Spiral of Pollyoneth Autonomous AI System</div>
-        
-        <div class="file-input">
-            <label><strong>Load Status Report:</strong></label>
-            <input type="file" id="jsonInput" accept=".json" />
-            <p style="margin-top: 8px; font-size: 12px; color: #666;">
-                Select a status JSON file from <code>logs/agent-management/status-*.json</code>
-            </p>
-        </div>
-        
-        <div id="dashboard-content">
-            <p style="text-align: center; padding: 60px; color: #999;">
-                Please load a status report JSON file to view the dashboard.
-            </p>
-        </div>
-    </div>
 </body>
 </html>
