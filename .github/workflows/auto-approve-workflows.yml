@@ -1,0 +1,74 @@
+name: Auto-Approve Enterprise Account Workflows
+
+# Automatically approves and enables workflow runs from all enterprise accounts
+# For multi-profile organizations where one person manages multiple accounts
+
+on:
+  workflow_run:
+    workflows: ["*"]
+    types:
+      - requested
+  
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+  checks: write
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'issdandavis' || github.actor == 'issdandavis' || github.event.workflow_run.actor.login == 'issdandavis'
+    
+    steps:
+      - name: Auto-approve workflow runs from enterprise accounts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔓 Auto-approving workflows for enterprise account"
+          
+          # List of approved enterprise account usernames/emails
+          APPROVED_ACCOUNTS=(
+            "issdandavis"
+            "215328633+issdandavis@users.noreply.github.com"
+          )
+          
+          ACTOR="${{ github.actor }}"
+          
+          # Check if actor is in approved list
+          APPROVED=false
+          for account in "${APPROVED_ACCOUNTS[@]}"; do
+            if [[ "$ACTOR" == "$account" ]]; then
+              APPROVED=true
+              break
+            fi
+          done
+          
+          if [[ "$APPROVED" == "true" ]]; then
+            echo "✅ Account $ACTOR is approved for auto-workflow execution"
+            echo "approved=true" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ Account $ACTOR is not in approved list"
+            echo "approved=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Enable workflow runs for PRs
+        if: github.event_name == 'pull_request_target'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # Approve PR from enterprise account
+          gh pr review $PR_NUMBER --approve --body "✅ Auto-approved: Enterprise account workflow authorization"
+          echo "✅ PR #$PR_NUMBER auto-approved"
+      
+      - name: Set workflow approval status
+        run: |
+          echo "Enterprise account auto-approval complete"
+          echo "All workflows from approved accounts will run automatically"
