@@ -15,8 +15,22 @@ This repository contains narrative source material and chat logs related to the 
 4. Start the ChoiceScript server from inside `game/choicescript/` (`run-server.bat` on Windows, `serve.command` on macOS, `bash serve.sh` on Linux/WSL), then open the browser at `http://localhost:4200/` if it does not open automatically.
 5. Edit scenes in `game/scenes/` and re-run `./game/sync_scenes.sh` to refresh the playable build.
 
+## 🤖 Automation & Connected Accounts
+This repository features AI-powered automation for inter-account communications and progress tracking. All automation runs in **silent mode** by default (no user notifications for routine updates).
+
+**Key Features:**
+- Automated progress tracking and metrics
+- Silent content synchronization
+- Quality checks and validation
+- Daily maintenance tasks
+
+**Documentation:**
+- **[ACCOUNTS_README.md](ACCOUNTS_README.md)** - Complete account automation setup guide
+- **[docs/AUTOMATION_GUIDE.md](docs/AUTOMATION_GUIDE.md)** - Integration workflows
+- **Configuration:** `config/automation-settings.json`
+
 ## Security
-Previous commits contained plaintext API keys. They have been removed from the tracked files. Make sure to rotate any keys that may have been exposed and only store live credentials in your local `.env` file.
+Previous commits contained plaintext API keys. They have been removed from the tracked files. Make sure to rotate any keys that may have been exposed and only store live credentials in your local `.env` file. All automation credentials are stored securely in GitHub Secrets.
 # 🎮 Polly's Wingscroll: The First Thread
 
 **A choice-based narrative game set in Avalon Academy**
