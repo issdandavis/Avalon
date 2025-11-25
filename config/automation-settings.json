@@ -229,10 +229,7 @@
     "enable_advanced_analytics": true,
     "enable_automated_backups": true,
     "enable_link_validation": true,
-    "enable_syntax_checking": true,
-    "enable_inbox_management": true,
-    "enable_auto_replies": true,
-    "enable_email_integration": false
+    "enable_syntax_checking": true
   },
   "inbox_management": {
     "enabled": true,

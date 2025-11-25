@@ -66,8 +66,14 @@ jobs:
 
               // Prioritize based on labels
               if (labels.includes('bug')) {
-                priority = 'critical';
                 category = 'bug-report';
+                // Check for critical indicators
+                if (labels.includes('security') || issue.title.toLowerCase().includes('security') ||
+                    issue.title.toLowerCase().includes('crash') || labels.includes('critical')) {
+                  priority = 'critical';
+                } else {
+                  priority = 'high';
+                }
               } else if (labels.includes('enhancement')) {
                 category = 'feature-request';
               } else if (labels.includes('question')) {
@@ -118,9 +124,9 @@ jobs:
                 "- Community members and maintainers will be notified\n" +
                 "- Response time: 1-3 days\n\n" +
                 "**Helpful Resources:**\n" +
-                "- [Documentation](../docs/)\n" +
-                "- [Contributing Guide](../CONTRIBUTING.md)\n" +
-                "- [Project Roadmap](../docs/PROJECT_ROADMAP.md)\n\n" +
+                "- [Documentation](docs/)\n" +
+                "- [Contributing Guide](CONTRIBUTING.md)\n" +
+                "- [Project Roadmap](docs/PROJECT_ROADMAP.md)\n\n" +
                 "---\n" +
                 "*This is an automated response from the Avalon AI Inbox Management System*";
             }
@@ -493,7 +499,7 @@ jobs:
           echo "  - Auto-reply: Enabled"
           echo "  - Categorization: Enabled"
           echo ""
-          echo "**Additional Accounts (if configured):**
+          echo "**Additional Accounts (if configured):**"
           echo "  - GitLab (configure in secrets: GITLAB_TOKEN)"
           echo "  - Bitbucket (configure in secrets: BITBUCKET_TOKEN)"
           echo "  - Codeberg (configure in secrets: CODEBERG_TOKEN)"
