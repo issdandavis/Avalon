@@ -206,8 +206,8 @@ jobs:
             if [ -f "$file" ]; then
               # Check for common syntax errors
               if grep -q "^\*choice" "$file"; then
-                # Verify choices are properly formatted
-                if ! grep -A 1 "^\*choice" "$file" | grep -q "^\s*#"; then
+                # Verify choices are properly formatted (using POSIX character class)
+                if ! grep -A 1 "^\*choice" "$file" | grep -q "^[[:space:]]*#"; then
                   echo "⚠️  Potential formatting issue in $file"
                   ERRORS=$((ERRORS + 1))
                 fi
@@ -226,12 +226,17 @@ jobs:
         run: |
           echo "🔗 Checking documentation links..."
           
-          # Find broken internal links
+          # Find broken internal links (basic check for relative links)
           find . -name "*.md" -type f | while read file; do
-            grep -oP '\[.*?\]\(\K[^)]+(?=\))' "$file" | while read link; do
-              if [[ "$link" =~ ^[^http] ]] && [[ "$link" != \#* ]]; then
-                if [ ! -f "$(dirname "$file")/$link" ] && [ ! -f "$link" ]; then
-                  echo "⚠️  Broken link in $file: $link"
+            grep -oP '\[.*?\]\(\K[^)]+(?=\))' "$file" 2>/dev/null | while read link; do
+              # Skip external URLs and anchors
+              if [[ ! "$link" =~ ^https?:// ]] && [[ ! "$link" =~ ^# ]]; then
+                # Check if it's a simple relative link (not going up directories)
+                if [[ "$link" =~ ^[^./] ]] || [[ "$link" =~ ^\./[^.] ]]; then
+                  FILE_DIR=$(dirname "$file")
+                  if [ ! -f "$FILE_DIR/$link" ] && [ ! -f "$link" ]; then
+                    echo "⚠️  Potentially broken link in $file: $link"
+                  fi
                 fi
               fi
             done
