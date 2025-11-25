@@ -370,97 +370,97 @@ jobs:
         run: |
           mkdir -p /tmp/email-templates
 
-          cat > /tmp/email-templates/general-inquiry.txt << 'EOF'
-Subject: Re: {SUBJECT}
+          cat > /tmp/email-templates/general-inquiry.txt <<'EOF'
+          Subject: Re: {SUBJECT}
 
-Thank you for your email regarding the Avalon project!
+          Thank you for your email regarding the Avalon project!
 
-This is an automated response to let you know that your message has been received and categorized.
+          This is an automated response to let you know that your message has been received and categorized.
 
-**What happens next:**
-- Your message has been added to our inbox management system
-- A team member will review it within 24-48 hours
-- You'll receive a personal response soon
+          **What happens next:**
+          - Your message has been added to our inbox management system
+          - A team member will review it within 24-48 hours
+          - You'll receive a personal response soon
 
-**In the meantime:**
-- Check out our documentation: https://github.com/issdandavis/Avalon/tree/main/docs
-- Play the game: https://github.com/issdandavis/Avalon/blob/main/PLAY_THE_GAME.md
-- Join our community discussions
+          **In the meantime:**
+          - Check out our documentation: https://github.com/issdandavis/Avalon/tree/main/docs
+          - Play the game: https://github.com/issdandavis/Avalon/blob/main/PLAY_THE_GAME.md
+          - Join our community discussions
 
-Best regards,
-Avalon AI Inbox Management System
+          Best regards,
+          Avalon AI Inbox Management System
 
----
-This is an automated response. Please do not reply to this email.
-For urgent matters, visit: https://github.com/issdandavis/Avalon/issues
-EOF
+          ---
+          This is an automated response. Please do not reply to this email.
+          For urgent matters, visit: https://github.com/issdandavis/Avalon/issues
+          EOF
 
-          cat > /tmp/email-templates/bug-report.txt << 'EOF'
-Subject: Re: Bug Report - {SUBJECT}
+          cat > /tmp/email-templates/bug-report.txt <<'EOF'
+          Subject: Re: Bug Report - {SUBJECT}
 
-Thank you for reporting this bug!
+          Thank you for reporting this bug!
 
-**Automated Bug Report Processing:**
+          **Automated Bug Report Processing:**
 
-Your bug report has been received and logged in our system.
+          Your bug report has been received and logged in our system.
 
-**Next Steps:**
-1. A GitHub issue will be created automatically
-2. The development team will be notified
-3. You'll receive updates on the issue status
+          **Next Steps:**
+          1. A GitHub issue will be created automatically
+          2. The development team will be notified
+          3. You'll receive updates on the issue status
 
-**Issue Tracking:**
-- Priority: {PRIORITY}
-- Category: Bug Report
-- Expected Response: 24 hours
+          **Issue Tracking:**
+          - Priority: {PRIORITY}
+          - Category: Bug Report
+          - Expected Response: 24 hours
 
-**What we need from you:**
-Please ensure your report includes:
-- Steps to reproduce
-- Expected vs actual behavior
-- System information (browser, OS)
-- Screenshots if applicable
+          **What we need from you:**
+          Please ensure your report includes:
+          - Steps to reproduce
+          - Expected vs actual behavior
+          - System information (browser, OS)
+          - Screenshots if applicable
 
-You can track this issue at: {ISSUE_URL}
+          You can track this issue at: {ISSUE_URL}
 
-Best regards,
-Avalon Development Team
+          Best regards,
+          Avalon Development Team
 
----
-Automated Bug Report System
-EOF
+          ---
+          Automated Bug Report System
+          EOF
 
-          cat > /tmp/email-templates/collaboration-request.txt << 'EOF'
-Subject: Re: Collaboration Inquiry - {SUBJECT}
+          cat > /tmp/email-templates/collaboration-request.txt <<'EOF'
+          Subject: Re: Collaboration Inquiry - {SUBJECT}
 
-Thank you for your interest in collaborating on the Avalon project!
+          Thank you for your interest in collaborating on the Avalon project!
 
-**Automated Response:**
+          **Automated Response:**
 
-We're excited that you want to contribute! Your collaboration request has been received.
+          We're excited that you want to contribute! Your collaboration request has been received.
 
-**How to Get Started:**
-1. Review our Contributing Guide: https://github.com/issdandavis/Avalon/blob/main/CONTRIBUTING.md
-2. Check the Project Roadmap: https://github.com/issdandavis/Avalon/blob/main/docs/PROJECT_ROADMAP.md
-3. Join our discussions: https://github.com/issdandavis/Avalon/discussions
+          **How to Get Started:**
+          1. Review our Contributing Guide: https://github.com/issdandavis/Avalon/blob/main/CONTRIBUTING.md
+          2. Check the Project Roadmap: https://github.com/issdandavis/Avalon/blob/main/docs/PROJECT_ROADMAP.md
+          3. Join our discussions: https://github.com/issdandavis/Avalon/discussions
 
-**Collaboration Opportunities:**
-- Game content writing
-- ChoiceScript development
-- Testing and QA
-- Documentation
-- Artwork and design
+          **Collaboration Opportunities:**
+          - Game content writing
+          - ChoiceScript development
+          - Testing and QA
+          - Documentation
+          - Artwork and design
 
-A maintainer will reach out within 48 hours to discuss specific opportunities.
+          A maintainer will reach out within 48 hours to discuss specific opportunities.
 
-Looking forward to working with you!
+          Looking forward to working with you!
 
-Best regards,
-Avalon Project Team
+          Best regards,
+          Avalon Project Team
 
----
-Automated Collaboration System
-EOF
+          ---
+          Automated Collaboration System
+          EOF
 
           echo "✅ Email templates generated"
           ls -la /tmp/email-templates/
