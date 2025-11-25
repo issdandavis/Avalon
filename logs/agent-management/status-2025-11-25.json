@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-11-25T18:42:56.543040",
+  "configuration": {
+    "silent_mode": false,
+    "api_key_configured": false
+  },
+  "workers": {
+    "scene-writer": {
+      "branch": "ai-scene-development",
+      "exists": false,
+      "status": "Not yet initialized"
+    },
+    "content-polisher": {
+      "branch": "ai-content-polish",
+      "exists": false,
+      "status": "Not yet initialized"
+    },
+    "stat-balancer": {
+      "branch": "ai-stat-balance",
+      "exists": false,
+      "status": "Not yet initialized"
+    },
+    "autonomous-worker": {
+      "branch": "ai-autonomous-work",
+      "exists": false,
+      "status": "Not yet initialized"
+    }
+  },
+  "task_queue": {
+    "total_pending": 34,
+    "in_progress": 0,
+    "needs_review": 0,
+    "completed": 8,
+    "total": 42
+  },
+  "scene_completion": {
+    "Singing Dunes": {
+      "lines": 931,
+      "placeholders": 0,
+      "estimated_complete": 93
+    },
+    "Verdant Tithe": {
+      "lines": 183,
+      "placeholders": 0,
+      "estimated_complete": 18
+    },
+    "Rune Glacier": {
+      "lines": 1266,
+      "placeholders": 0,
+      "estimated_complete": 100
+    }
+  },
+  "merge_conflicts": [
+    {
+      "branch": "ai-scene-development",
+      "has_conflicts": false
+    },
+    {
+      "branch": "ai-content-polish",
+      "has_conflicts": false
+    },
+    {
+      "branch": "ai-stat-balance",
+      "has_conflicts": false
+    },
+    {
+      "branch": "ai-autonomous-work",
+      "has_conflicts": false
+    }
+  ],
+  "health_score": 60
+}

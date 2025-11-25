@@ -60,7 +60,26 @@ This repository now includes a complete **AI autonomous workflow system** that:
 - ✨ Tests for bugs and validates code (daily)
 - ✨ Makes progress even while you sleep!
 
-👉 **[READ: AI_SYSTEM_ACTIVATION_GUIDE.md](AI_SYSTEM_ACTIVATION_GUIDE.md)** to activate the AI workers
+### 🎯 NEW: Agent Management System
+
+**Managing your AI team made easy!**
+
+The **Agent Manager** coordinates all 5 AI workers and tells you exactly what needs attention:
+
+```bash
+# Check system health (60 seconds)
+python .github/scripts/agent_manager_cli.py health
+
+# See what to do next
+python .github/scripts/agent_manager_cli.py recommend
+```
+
+**Visual Dashboard:** Open `agent-dashboard.html` in browser for colorful status display
+
+👉 **For Beginners:** [AGENT_MANAGEMENT_README.md](AGENT_MANAGEMENT_README.md) - 3 minute guide  
+👉 **Detailed Guide:** [docs/AGENT_MANAGEMENT_GUIDE.md](docs/AGENT_MANAGEMENT_GUIDE.md)  
+👉 **Activation:** [AI_SYSTEM_ACTIVATION_GUIDE.md](AI_SYSTEM_ACTIVATION_GUIDE.md)  
+👉 **Verify Closed PRs:** [CLOSED_SESSIONS_VERIFICATION.md](CLOSED_SESSIONS_VERIFICATION.md)
 
 **Quick activation:** Add `ANTHROPIC_API_KEY` to repository secrets and watch the magic happen!
 
