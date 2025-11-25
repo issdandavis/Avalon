@@ -199,6 +199,28 @@ Avalon/
 
 ---
 
+## 🤖 Multi-AI Collaboration System
+
+This project uses a coordinated multi-AI workflow to ensure quality and consistency across all content.
+
+### For AI Assistants Working on This Project
+- **Start Here:** [MULTI_AI_COLLABORATION_GUIDE.md](MULTI_AI_COLLABORATION_GUIDE.md) - Complete workflow guide
+- **Quick Reference:** [QUICK_COLLAB_REF.md](QUICK_COLLAB_REF.md) - One-page overview
+- **Current Status:** [STATUS_CONTEXT.md](STATUS_CONTEXT.md) - What's happening now
+- **Scene Tracking:** [SCENE_PARITY_CHECKLIST.md](SCENE_PARITY_CHECKLIST.md) - Conversion progress
+- **Balance Data:** [STATS_MATRIX.md](STATS_MATRIX.md) - Choice impact tracking
+
+### AI Roles
+1. **Lore Curator** - Validates narrative consistency
+2. **Conversion Engineer** - HTML → ChoiceScript translation
+3. **Structural Reviewer** - Ensures scene parity
+4. **Quality Balancer** - Stat difficulty tuning
+5. **Automation Planner** - Workflow documentation
+
+All AIs share context through tracked files to maintain consistency and enable seamless handoffs.
+
+---
+
 ## 🎊 Credits
 
 ### Game Design & Writing
