@@ -49,6 +49,23 @@ See **[PLAY_THE_GAME.md](PLAY_THE_GAME.md)** for detailed instructions.
 
 ---
 
+## 🤖 NEW: AI Autonomous Development System
+
+**Game development on autopilot!**
+
+This repository now includes a complete **AI autonomous workflow system** that:
+- ✨ Writes ChoiceScript scenes automatically (every 3 hours)
+- ✨ Polishes content with sensory details (every 4 hours)
+- ✨ Balances stats and game difficulty (daily)
+- ✨ Tests for bugs and validates code (daily)
+- ✨ Makes progress even while you sleep!
+
+👉 **[READ: AI_SYSTEM_ACTIVATION_GUIDE.md](AI_SYSTEM_ACTIVATION_GUIDE.md)** to activate the AI workers
+
+**Quick activation:** Add `ANTHROPIC_API_KEY` to repository secrets and watch the magic happen!
+
+---
+
 ## 📖 About the Game
 
 ### Story
@@ -61,7 +78,7 @@ You're a new student at Avalon Academy, a living pocket dimension where the grea
 - **14 unique endings** from legendary master to humble student
 - **Deep character relationships** that affect your story
 - **5 achievements** to unlock
-- **40,000+ words** of content
+- **40,000+ words** of content (and growing via AI!)
 - **High replay value** - every playthrough is different
 
 ### Game Statistics

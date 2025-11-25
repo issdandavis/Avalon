@@ -1,0 +1,106 @@
+name: AI Content Polish - Quality Enhancement
+
+# This workflow continuously improves existing content
+# Adds sensory details, fixes typos, enhances descriptions
+
+on:
+  schedule:
+    - cron: '30 */4 * * *'  # Every 4 hours, offset from scene writer
+  workflow_dispatch:
+    inputs:
+      polish_target:
+        description: 'What to polish'
+        required: false
+        type: choice
+        options:
+          - 'sensory-details'
+          - 'character-voices'
+          - 'descriptions'
+          - 'all'
+        default: 'sensory-details'
+
+jobs:
+  polish-content:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install deps
+        run: pip install anthropic GitPython
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "SpiralVerse Polish Bot"
+          git config --global user.email "polish@spiralverse.dev"
+      
+      - name: Create branch
+        run: |
+          git checkout ai-content-polish 2>/dev/null || git checkout -b ai-content-polish
+      
+      - name: Analyze content quality
+        id: analyze
+        run: |
+          echo "Analyzing content for quality issues..."
+          
+          # Find scenes without sensory details
+          SCENES_NO_TASTE=$(grep -L "taste\|tasted\|tasting" choicescript_game/scenes/*.txt 2>/dev/null | wc -l)
+          SCENES_NO_SMELL=$(grep -L "smell\|scent\|aroma\|odor" choicescript_game/scenes/*.txt 2>/dev/null | wc -l)
+          
+          # Find scenes with very short descriptions
+          SHORT_SCENES=$(find choicescript_game/scenes -name "*.txt" -size -2k | wc -l)
+          
+          echo "scenes_no_taste=$SCENES_NO_TASTE" >> $GITHUB_OUTPUT
+          echo "scenes_no_smell=$SCENES_NO_SMELL" >> $GITHUB_OUTPUT
+          echo "short_scenes=$SHORT_SCENES" >> $GITHUB_OUTPUT
+          
+          # Select a scene that needs work
+          TARGET_SCENE=$(grep -L "taste\|smell" choicescript_game/scenes/*.txt 2>/dev/null | head -1)
+          echo "target_scene=$TARGET_SCENE" >> $GITHUB_OUTPUT
+          
+          echo "Found $SCENES_NO_TASTE scenes without taste, $SCENES_NO_SMELL without smell"
+      
+      - name: Polish with AI
+        if: steps.analyze.outputs.target_scene != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TARGET_SCENE: ${{ steps.analyze.outputs.target_scene }}
+          POLISH_TYPE: ${{ github.event.inputs.polish_target || 'sensory-details' }}
+        run: |
+          python .github/scripts/content_polisher.py
+      
+      - name: Validate changes
+        run: |
+          python .github/scripts/validate_choicescript.py choicescript_game/scenes/*.txt
+      
+      - name: Commit polish
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            POLISHED=$(git diff --name-only | head -1 | xargs basename)
+            git add choicescript_game/scenes/*.txt
+            
+            git commit -m "[AI-POLISH] Enhanced $POLISHED with sensory details
+
+- Added taste/smell descriptions
+- Enriched atmospheric writing
+- Preserved character voices
+- Maintained ChoiceScript syntax"
+            
+            git push origin ai-content-polish --force-with-lease
+            echo "✅ Polished and pushed $POLISHED"
+          fi
+      
+      - name: Summary
+        run: |
+          echo "## ✨ Content Polish Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Scenes without taste:** ${{ steps.analyze.outputs.scenes_no_taste }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Scenes without smell:** ${{ steps.analyze.outputs.scenes_no_smell }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Short scenes:** ${{ steps.analyze.outputs.short_scenes }}" >> $GITHUB_STEP_SUMMARY
