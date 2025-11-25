@@ -278,11 +278,13 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Generate daily summary
+        id: daily-summary
         run: |
           echo "📊 Generating daily summary (silent)..."
+          SUMMARY_DATE=$(date +%Y-%m-%d)
           
           cat > /tmp/daily_summary.md << EOF
-          # Daily Summary - $(date +%Y-%m-%d)
+          # Daily Summary - ${SUMMARY_DATE}
           
           ## Repository Activity
           - Commits today: $(git log --since="24 hours ago" --oneline | wc -l)
@@ -303,13 +305,14 @@ jobs:
           EOF
           
           cat /tmp/daily_summary.md
+          echo "summary_date=${SUMMARY_DATE}" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Archive daily summary
         uses: actions/upload-artifact@v4
         with:
-          name: daily-summary-$(date +%Y-%m-%d)
+          name: daily-summary-${{ steps.daily-summary.outputs.summary_date || github.run_number }}
           path: /tmp/daily_summary.md
           retention-days: 90
       
