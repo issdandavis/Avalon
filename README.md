@@ -23,6 +23,18 @@ This repository features AI-powered automation for inter-account communications 
 - Silent content synchronization
 - Quality checks and validation
 - Daily maintenance tasks
+- **NEW:** AI-powered inbox management with auto-replies
+
+**🆕 Inbox Management (NEW):**
+- ✅ **Auto-replies** to all GitHub notifications within 30 seconds
+- ✅ **Smart categorization** of issues, PRs, and discussions
+- ✅ **Multi-account support** for GitHub, GitLab, Bitbucket
+- ✅ **Email integration** ready (setup required)
+- ✅ **5 AI agents** working 24/7 to manage your inbox
+
+**Quick Start Guides:**
+- **[AI Employees Guide](docs/AI_EMPLOYEES_GUIDE.md)** - 5-minute setup for inbox management
+- **[Inbox Management](docs/INBOX_MANAGEMENT.md)** - Complete documentation
 
 **Documentation:**
 - **[ACCOUNTS_README.md](ACCOUNTS_README.md)** - Complete account automation setup guide
