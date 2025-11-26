@@ -23,11 +23,32 @@ This repository features AI-powered automation for inter-account communications 
 - Silent content synchronization
 - Quality checks and validation
 - Daily maintenance tasks
+- **NEW:** AI-powered inbox management with auto-replies
+- **NEW:** Enterprise functions monitoring and validation
+
+**🆕 Inbox Management:**
+- ✅ **Auto-replies** to all GitHub notifications within 30 seconds
+- ✅ **Smart categorization** of issues, PRs, and discussions
+- ✅ **Multi-account support** for GitHub, GitLab, Bitbucket
+- ✅ **Email integration** ready (setup required)
+- ✅ **5 AI agents** working 24/7 to manage your inbox
+
+**🏢 Enterprise Monitoring (NEW):**
+- ✅ **Automated validation** every 4 hours of all enterprise functions
+- ✅ **AI-powered confirmation** that all systems are operational
+- ✅ **Health reports** with detailed analysis and recommendations
+- ✅ **Multi-platform monitoring** (GitHub, GitLab, Bitbucket, 2FA)
+- ✅ **Security validation** and integration status
+
+**Quick Start Guides:**
+- **[AI Employees Guide](docs/AI_EMPLOYEES_GUIDE.md)** - 5-minute setup for inbox management
+- **[Inbox Management](docs/INBOX_MANAGEMENT.md)** - Complete documentation
+- **[Enterprise Monitoring](docs/ENTERPRISE_MONITORING.md)** - Enterprise functions validation
 
 **Documentation:**
 - **[ACCOUNTS_README.md](ACCOUNTS_README.md)** - Complete account automation setup guide
 - **[docs/AUTOMATION_GUIDE.md](docs/AUTOMATION_GUIDE.md)** - Integration workflows
-- **Configuration:** `config/automation-settings.json`
+- **Configuration:** `config/automation-settings.json`, `config/enterprise-settings.json`
 
 ## Security
 Previous commits contained plaintext API keys. They have been removed from the tracked files. Make sure to rotate any keys that may have been exposed and only store live credentials in your local `.env` file. All automation credentials are stored securely in GitHub Secrets.

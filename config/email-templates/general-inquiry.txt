@@ -1,0 +1,29 @@
+Subject: Re: {SUBJECT}
+
+Thank you for your email regarding the Avalon project!
+
+**Automated Response:**
+
+This is an automated acknowledgment to let you know that your message has been received and processed by our AI inbox management system.
+
+**What happens next:**
+1. Your message has been categorized and prioritized
+2. A team member will review it within 24-48 hours
+3. You'll receive a personal response soon
+
+**In the meantime, you might find these resources helpful:**
+
+📖 **Documentation:** https://github.com/issdandavis/Avalon/tree/main/docs
+🎮 **Play the Game:** https://github.com/issdandavis/Avalon/blob/main/PLAY_THE_GAME.md
+💬 **Community Discussions:** https://github.com/issdandavis/Avalon/discussions
+🐛 **Report Issues:** https://github.com/issdandavis/Avalon/issues
+
+**Need immediate assistance?**
+For urgent matters, please visit our GitHub repository and create an issue or discussion.
+
+Best regards,
+Avalon AI Inbox Management Team
+
+---
+This is an automated response. Your message has been received and will be reviewed by a human team member.
+Repository: https://github.com/issdandavis/Avalon

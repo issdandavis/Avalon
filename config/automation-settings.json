@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "last_updated": "2025-11-25",
   "automation_settings": {
     "silent_mode": {
@@ -229,6 +229,120 @@
     "enable_advanced_analytics": true,
     "enable_automated_backups": true,
     "enable_link_validation": true,
-    "enable_syntax_checking": true
+    "enable_syntax_checking": true,
+    "enable_enterprise_monitoring": true,
+    "enable_2fa_integration": false
+  },
+  "enterprise_monitoring": {
+    "enabled": true,
+    "config_file": "config/enterprise-settings.json",
+    "validation_frequency": "every_4_hours",
+    "ai_confirmation": true,
+    "report_generation": true
+  },
+  "inbox_management": {
+    "enabled": true,
+    "description": "AI-powered inbox management across all connected accounts",
+    "auto_reply": {
+      "enabled": true,
+      "delay_seconds": 30,
+      "skip_if_replied": true,
+      "templates_path": "config/email-templates/"
+    },
+    "categorization": {
+      "enabled": true,
+      "auto_label": true,
+      "priority_detection": true,
+      "categories": [
+        "bug-report",
+        "feature-request",
+        "question",
+        "pull-request",
+        "discussion",
+        "collaboration",
+        "general"
+      ]
+    },
+    "monitoring": {
+      "schedule": "every_6_hours",
+      "stale_threshold_days": 7,
+      "needs_response_threshold_hours": 24,
+      "generate_summaries": true,
+      "summary_retention_days": 30
+    },
+    "email_integration": {
+      "enabled": false,
+      "service": "none",
+      "auto_reply": true,
+      "forward_to_github": true,
+      "parse_notifications": true
+    },
+    "multi_account": {
+      "enabled": true,
+      "sync_frequency": "daily",
+      "platforms": {
+        "github": {
+          "enabled": true,
+          "username": "issdandavis",
+          "repositories": ["Avalon"]
+        },
+        "gitlab": {
+          "enabled": false,
+          "username": "",
+          "projects": []
+        },
+        "bitbucket": {
+          "enabled": false,
+          "username": "",
+          "repositories": []
+        },
+        "codeberg": {
+          "enabled": false,
+          "username": "",
+          "repositories": []
+        }
+      },
+      "unified_inbox": true,
+      "cross_platform_sync": true
+    },
+    "ai_agents": {
+      "categorization_agent": {
+        "enabled": true,
+        "triggers": ["issues", "pull_request", "discussion", "issue_comment"]
+      },
+      "auto_reply_agent": {
+        "enabled": true,
+        "triggers": ["issues.opened", "pull_request.opened", "discussion.created"]
+      },
+      "monitoring_agent": {
+        "enabled": true,
+        "schedule": "0 */6 * * *"
+      },
+      "sync_agent": {
+        "enabled": true,
+        "schedule": "0 0 * * *"
+      },
+      "email_agent": {
+        "enabled": false,
+        "requires_setup": true
+      }
+    },
+    "labels": {
+      "auto_create": false,
+      "required_labels": [
+        "automated:inbox-managed",
+        "priority:critical",
+        "priority:high",
+        "bug",
+        "enhancement",
+        "question"
+      ]
+    },
+    "notifications": {
+      "user_notifications": false,
+      "admin_on_critical": true,
+      "daily_summary": true,
+      "weekly_report": true
+    }
   }
 }
