@@ -229,7 +229,16 @@
     "enable_advanced_analytics": true,
     "enable_automated_backups": true,
     "enable_link_validation": true,
-    "enable_syntax_checking": true
+    "enable_syntax_checking": true,
+    "enable_enterprise_monitoring": true,
+    "enable_2fa_integration": false
+  },
+  "enterprise_monitoring": {
+    "enabled": true,
+    "config_file": "config/enterprise-settings.json",
+    "validation_frequency": "every_4_hours",
+    "ai_confirmation": true,
+    "report_generation": true
   },
   "inbox_management": {
     "enabled": true,
