@@ -25,8 +25,11 @@ jobs:
   auto-approve:
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login == 'issdandavis' || github.actor == 'issdandavis' || github.event.workflow_run.actor.login == 'issdandavis'
-    
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Auto-approve workflow runs from enterprise accounts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
