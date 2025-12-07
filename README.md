@@ -48,6 +48,7 @@ This repository features AI-powered automation for inter-account communications 
 **Documentation:**
 - **[ACCOUNTS_README.md](ACCOUNTS_README.md)** - Complete account automation setup guide
 - **[docs/AUTOMATION_GUIDE.md](docs/AUTOMATION_GUIDE.md)** - Integration workflows
+- **[docs/GITHUB_ACCESS.md](docs/GITHUB_ACCESS.md)** - Steps to authenticate and sync the repository
 - **Configuration:** `config/automation-settings.json`, `config/enterprise-settings.json`
 
 ## Security
