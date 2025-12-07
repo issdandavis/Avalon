@@ -232,14 +232,18 @@ jobs:
       
       - name: Create rollback point
         if: steps.evaluate.outputs.should_merge == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Creating rollback point..."
           MERGE_COMMIT=$(git rev-parse HEAD)
           echo "ROLLBACK_COMMIT=$MERGE_COMMIT" >> $GITHUB_ENV
           
           # Tag for easy rollback (30-day retention)
-          git tag -a "auto-merge-${{ needs.auto-review.outputs.pr_number }}-$(date +%s)" \
+          TAG_NAME="auto-merge-${{ needs.auto-review.outputs.pr_number }}-$(date +%s)"
+          git tag -a "$TAG_NAME" \
             -m "Auto-merge rollback point for PR #${{ needs.auto-review.outputs.pr_number }}"
+          git push origin "$TAG_NAME"
       
       - name: Upload merge artifacts
         if: always()

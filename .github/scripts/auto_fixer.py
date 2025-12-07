@@ -14,6 +14,7 @@ import os
 import re
 import sys
 import subprocess
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -332,7 +333,7 @@ def main():
     else:
         summary += "No fixes were needed - the PR is already in good shape!\n"
     
-    summary += f"\n---\n*Auto-fix completed at {subprocess.check_output(['date', '-u']).decode().strip()}*"
+    summary += f"\n---\n*Auto-fix completed at {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}*"
     
     # Save summary
     Path('/tmp/fix_summary.md').write_text(summary)

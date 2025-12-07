@@ -10,6 +10,7 @@ import os
 import re
 import sys
 import subprocess
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -141,8 +142,9 @@ def validate_choicescript_file(file_path: Path) -> Tuple[List[str], List[str]]:
     
     # Validate gotos reference existing labels
     for goto_target, line_num in gotos:
-        if goto_target not in labels and '_' not in goto_target:
-            warnings.append(f"Line {line_num}: *goto {goto_target} references undefined label")
+        # Only warn if label not found (scene references are also labels in other files)
+        if goto_target not in labels:
+            warnings.append(f"Line {line_num}: *goto {goto_target} references undefined label (may be in another scene)")
     
     return errors, warnings
 
@@ -336,7 +338,7 @@ def main():
     else:
         report += "No security issues detected.\n"
     
-    report += f"\n---\n*Auto-Review completed at {subprocess.check_output(['date', '-u']).decode().strip()}*"
+    report += f"\n---\n*Auto-Review completed at {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}*"
     
     # Save report
     Path('/tmp/review_report.md').write_text(report)

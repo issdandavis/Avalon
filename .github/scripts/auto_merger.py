@@ -9,6 +9,7 @@ import json
 import os
 import sys
 import subprocess
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -216,7 +217,7 @@ This PR cannot be auto-merged due to the blocking issues listed above.
 3. Or manually review and merge
 """
     
-    summary += f"\n---\n*Evaluation completed at {subprocess.check_output(['date', '-u']).decode().strip()}*"
+    summary += f"\n---\n*Evaluation completed at {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}*"
     
     # Save summary
     Path('/tmp/merge_summary.md').write_text(summary)
