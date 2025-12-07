@@ -114,14 +114,24 @@ class AutoMerger:
         """Get list of changed files"""
         try:
             result = subprocess.run(
-                ['git', 'diff', '--name-only', 'origin/main...HEAD'],
+                ['git', 'diff', '--name-only', 'main...HEAD'],
                 capture_output=True,
                 text=True,
                 check=True
             )
             return [f.strip() for f in result.stdout.split('\n') if f.strip()]
         except subprocess.CalledProcessError:
-            return []
+            try:
+                # Try without origin prefix
+                result = subprocess.run(
+                    ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'],
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+                return [f.strip() for f in result.stdout.split('\n') if f.strip()]
+            except subprocess.CalledProcessError:
+                return []
     
     def merge_pr(self, decision: Dict) -> bool:
         """Execute the merge"""
