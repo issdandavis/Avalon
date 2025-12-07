@@ -273,24 +273,26 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ needs.auto-review.outputs.pr_number }}
         run: |
-          COMMENT="## 🚩 Manual Review Required
+          cat > /tmp/manual_review_comment.md << 'EOF'
+          ## 🚩 Manual Review Required
 
-This PR has been flagged for manual review due to **HIGH RISK** classification.
+          This PR has been flagged for manual review due to **HIGH RISK** classification.
 
-**Risk Factors:**
-- Breaking changes detected
-- Security-sensitive files modified
-- Complex merge conflicts
-- Critical workflow changes
+          **Risk Factors:**
+          - Breaking changes detected
+          - Security-sensitive files modified
+          - Complex merge conflicts
+          - Critical workflow changes
 
-**Actions Needed:**
-1. Review the changes carefully
-2. Verify all tests pass
-3. Manually approve and merge when ready
+          **Actions Needed:**
+          1. Review the changes carefully
+          2. Verify all tests pass
+          3. Manually approve and merge when ready
 
-To bypass this check (use with caution): Add the \`override-auto-merge\` label.
+          To bypass this check (use with caution): Add the `override-auto-merge` label.
 
----
-*Autonomous PR Management System*"
+          ---
+          *Autonomous PR Management System*
+          EOF
           
-          gh pr comment "$PR_NUMBER" --body "$COMMENT"
+          gh pr comment "$PR_NUMBER" --body-file /tmp/manual_review_comment.md
