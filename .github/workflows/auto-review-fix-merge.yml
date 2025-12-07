@@ -1,0 +1,296 @@
+name: 🤖 Autonomous PR Review, Fix & Merge
+
+# This workflow automatically reviews, fixes, and merges pull requests
+# with intelligent risk assessment and safety controls
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to process'
+        required: true
+        type: number
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  checks: write
+  statuses: write
+
+jobs:
+  auto-review:
+    name: 🔍 Auto-Review PR
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'pull_request' || 
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/auto-review'))
+    
+    outputs:
+      needs_fixes: ${{ steps.review.outputs.needs_fixes }}
+      can_merge: ${{ steps.review.outputs.can_merge }}
+      risk_level: ${{ steps.review.outputs.risk_level }}
+      pr_number: ${{ steps.pr_info.outputs.pr_number }}
+    
+    steps:
+      - name: Get PR information
+        id: pr_info
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            PR_NUMBER="${{ github.event.inputs.pr_number }}"
+          elif [ "${{ github.event_name }}" == "issue_comment" ]; then
+            PR_NUMBER="${{ github.event.issue.number }}"
+          else
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+          fi
+          
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "Processing PR #$PR_NUMBER"
+      
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ steps.pr_info.outputs.pr_number }}/head
+          fetch-depth: 0
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub requests gitpython
+      
+      - name: Run automated review
+        id: review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.pr_info.outputs.pr_number }}
+        run: |
+          python .github/scripts/auto_reviewer.py \
+            --pr-number "$PR_NUMBER" \
+            --repo "${{ github.repository }}"
+      
+      - name: Post review comments
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.pr_info.outputs.pr_number }}
+        run: |
+          if [ -f /tmp/review_comments.json ]; then
+            python .github/scripts/post_review_comments.py \
+              --pr-number "$PR_NUMBER" \
+              --repo "${{ github.repository }}" \
+              --comments-file /tmp/review_comments.json
+          fi
+      
+      - name: Upload review artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-report-pr-${{ steps.pr_info.outputs.pr_number }}
+          path: |
+            /tmp/review_report.md
+            /tmp/review_comments.json
+          retention-days: 30
+
+  auto-fix:
+    name: 🔧 Auto-Fix Issues
+    runs-on: ubuntu-latest
+    needs: auto-review
+    if: |
+      needs.auto-review.outputs.needs_fixes == 'true' &&
+      !contains(github.event.pull_request.labels.*.name, 'no-auto-fix')
+    
+    outputs:
+      fixed: ${{ steps.fix.outputs.fixed }}
+      fix_commit: ${{ steps.fix.outputs.fix_commit }}
+    
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ needs.auto-review.outputs.pr_number }}/head
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub requests gitpython
+      
+      - name: Configure git
+        run: |
+          git config --global user.name "Avalon Auto-Fix Bot"
+          git config --global user.email "bot@aethromoor.github.io"
+      
+      - name: Run auto-fix
+        id: fix
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ needs.auto-review.outputs.pr_number }}
+        run: |
+          python .github/scripts/auto_fixer.py \
+            --pr-number "$PR_NUMBER" \
+            --repo "${{ github.repository }}"
+      
+      - name: Push fixes if made
+        if: steps.fix.outputs.fixed == 'true'
+        run: |
+          git push origin HEAD
+      
+      - name: Comment on fixes
+        if: steps.fix.outputs.fixed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ needs.auto-review.outputs.pr_number }}
+        run: |
+          gh pr comment "$PR_NUMBER" --body "$(cat /tmp/fix_summary.md)"
+      
+      - name: Upload fix artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fix-report-pr-${{ needs.auto-review.outputs.pr_number }}
+          path: |
+            /tmp/fix_summary.md
+            /tmp/fix_details.json
+          retention-days: 30
+
+  auto-merge:
+    name: ✅ Auto-Merge PR
+    runs-on: ubuntu-latest
+    needs: [auto-review, auto-fix]
+    if: |
+      always() &&
+      (needs.auto-review.outputs.can_merge == 'true' || needs.auto-fix.outputs.fixed == 'true') &&
+      !contains(github.event.pull_request.labels.*.name, 'no-auto-merge') &&
+      !contains(github.event.pull_request.labels.*.name, 'manual-review-required')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub requests
+      
+      - name: Evaluate merge eligibility
+        id: evaluate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ needs.auto-review.outputs.pr_number }}
+          RISK_LEVEL: ${{ needs.auto-review.outputs.risk_level }}
+        run: |
+          python .github/scripts/auto_merger.py \
+            --pr-number "$PR_NUMBER" \
+            --repo "${{ github.repository }}" \
+            --risk-level "$RISK_LEVEL" \
+            --evaluate-only
+      
+      - name: Execute merge
+        if: steps.evaluate.outputs.should_merge == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ needs.auto-review.outputs.pr_number }}
+          MERGE_METHOD: ${{ steps.evaluate.outputs.merge_method }}
+        run: |
+          gh pr merge "$PR_NUMBER" \
+            --$MERGE_METHOD \
+            --auto \
+            --delete-branch
+      
+      - name: Post merge notification
+        if: steps.evaluate.outputs.should_merge == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ needs.auto-review.outputs.pr_number }}
+        run: |
+          gh pr comment "$PR_NUMBER" --body "$(cat /tmp/merge_summary.md)"
+      
+      - name: Create rollback point
+        if: steps.evaluate.outputs.should_merge == 'true'
+        run: |
+          echo "Creating rollback point..."
+          MERGE_COMMIT=$(git rev-parse HEAD)
+          echo "ROLLBACK_COMMIT=$MERGE_COMMIT" >> $GITHUB_ENV
+          
+          # Tag for easy rollback (30-day retention)
+          git tag -a "auto-merge-${{ needs.auto-review.outputs.pr_number }}-$(date +%s)" \
+            -m "Auto-merge rollback point for PR #${{ needs.auto-review.outputs.pr_number }}"
+      
+      - name: Upload merge artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: merge-report-pr-${{ needs.auto-review.outputs.pr_number }}
+          path: |
+            /tmp/merge_summary.md
+            /tmp/merge_decision.json
+          retention-days: 90
+
+  flag-for-manual:
+    name: 🚩 Flag for Manual Review
+    runs-on: ubuntu-latest
+    needs: [auto-review]
+    if: |
+      always() &&
+      needs.auto-review.outputs.risk_level == 'high' &&
+      !contains(github.event.pull_request.labels.*.name, 'manual-review-required')
+    
+    steps:
+      - name: Add manual review label
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ needs.auto-review.outputs.pr_number }}
+        run: |
+          gh pr edit "$PR_NUMBER" --add-label "manual-review-required"
+      
+      - name: Request manual review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ needs.auto-review.outputs.pr_number }}
+        run: |
+          COMMENT="## 🚩 Manual Review Required
+
+This PR has been flagged for manual review due to **HIGH RISK** classification.
+
+**Risk Factors:**
+- Breaking changes detected
+- Security-sensitive files modified
+- Complex merge conflicts
+- Critical workflow changes
+
+**Actions Needed:**
+1. Review the changes carefully
+2. Verify all tests pass
+3. Manually approve and merge when ready
+
+To bypass this check (use with caution): Add the \`override-auto-merge\` label.
+
+---
+*Autonomous PR Management System*"
+          
+          gh pr comment "$PR_NUMBER" --body "$COMMENT"
