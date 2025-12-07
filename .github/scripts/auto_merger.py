@@ -80,12 +80,18 @@ class AutoMerger:
     def _has_merge_conflicts(self) -> bool:
         """Check if PR has merge conflicts"""
         try:
-            # Try to merge origin/main
+            # Get default branch name
+            default_branch = subprocess.check_output(
+                ['git', 'symbolic-ref', 'refs/remotes/origin/HEAD'],
+                text=True
+            ).strip().split('/')[-1]
+            
+            # Try to merge origin/default_branch
             result = subprocess.run(
                 ['git', 'merge-tree', 
-                 subprocess.check_output(['git', 'merge-base', 'HEAD', 'origin/main'], text=True).strip(),
+                 subprocess.check_output(['git', 'merge-base', 'HEAD', f'origin/{default_branch}'], text=True).strip(),
                  'HEAD',
-                 'origin/main'],
+                 f'origin/{default_branch}'],
                 capture_output=True,
                 text=True
             )
@@ -93,8 +99,9 @@ class AutoMerger:
             # Check for conflict markers
             return '<<<<<<< ' in result.stdout
         
-        except subprocess.CalledProcessError:
+        except subprocess.CalledProcessError as e:
             # If we can't determine, assume no conflicts
+            print(f"⚠️ Could not check conflicts: {e}")
             return False
     
     def _has_no_merge_label(self) -> bool:

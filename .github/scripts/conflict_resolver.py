@@ -228,6 +228,8 @@ class ConflictResolver:
         
         except subprocess.CalledProcessError as e:
             print(f"❌ Failed to commit: {e}")
+            if hasattr(e, 'stderr') and e.stderr:
+                print(f"   Error details: {e.stderr}")
             return False
 
 def main():

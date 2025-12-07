@@ -51,6 +51,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pyyaml
+          sudo apt-get update && sudo apt-get install -y jq
       
       - name: Make scripts executable
         run: |
@@ -69,9 +70,9 @@ jobs:
           
           # Read results
           if [ -f /tmp/review_result.json ]; then
-            APPROVED=$(jq -r '.approved' /tmp/review_result.json)
-            RISK_LEVEL=$(jq -r '.risk_level' /tmp/review_result.json)
-            CAN_AUTO_MERGE=$(jq -r '.can_auto_merge' /tmp/review_result.json)
+            APPROVED=$(jq -r '.approved' /tmp/review_result.json 2>/dev/null || echo "false")
+            RISK_LEVEL=$(jq -r '.risk_level' /tmp/review_result.json 2>/dev/null || echo "unknown")
+            CAN_AUTO_MERGE=$(jq -r '.can_auto_merge' /tmp/review_result.json 2>/dev/null || echo "false")
             
             echo "approved=$APPROVED" >> $GITHUB_OUTPUT
             echo "risk_level=$RISK_LEVEL" >> $GITHUB_OUTPUT
@@ -95,7 +96,16 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const prNumber = context.payload.pull_request?.number || '${{ github.event.inputs.pr_number }}';
+            
+            // Get PR number from either event type
+            const prNumber = context.payload.pull_request?.number || 
+                           parseInt('${{ github.event.inputs.pr_number }}') || 
+                           null;
+            
+            if (!prNumber) {
+              console.log('No PR number available, skipping comment');
+              return;
+            }
             
             try {
               const reviewData = JSON.parse(fs.readFileSync('/tmp/review_result.json', 'utf8'));
@@ -152,7 +162,15 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = context.payload.pull_request?.number || '${{ github.event.inputs.pr_number }}';
+            // Get PR number from either event type
+            const prNumber = context.payload.pull_request?.number || 
+                           parseInt('${{ github.event.inputs.pr_number }}') || 
+                           null;
+            
+            if (!prNumber) {
+              console.log('No PR number available, skipping approval');
+              return;
+            }
             
             try {
               await github.rest.pulls.createReview({
@@ -183,7 +201,7 @@ jobs:
       - name: Configure Git
         run: |
           git config --global user.name "Auto-Fix Bot"
-          git config --global user.email "autofix@spiralverse.dev"
+          git config --global user.email "noreply@github.com"
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -220,7 +238,15 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = context.payload.pull_request?.number || '${{ github.event.inputs.pr_number }}';
+            // Get PR number from either event type
+            const prNumber = context.payload.pull_request?.number || 
+                           parseInt('${{ github.event.inputs.pr_number }}') || 
+                           null;
+            
+            if (!prNumber) {
+              console.log('No PR number available, skipping comment');
+              return;
+            }
             
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -252,7 +278,17 @@ jobs:
         id: wait-for-ci
         with:
           script: |
-            const prNumber = context.payload.pull_request?.number || '${{ github.event.inputs.pr_number }}';
+            // Get PR number and SHA from either event type
+            const prNumber = context.payload.pull_request?.number || 
+                           parseInt('${{ github.event.inputs.pr_number }}') || 
+                           null;
+            const sha = context.payload.pull_request?.head?.sha || null;
+            
+            if (!prNumber || !sha) {
+              console.log('No PR number or SHA available');
+              return 'success';  // Proceed anyway
+            }
+            
             const maxWait = 300000; // 5 minutes
             const interval = 10000; // 10 seconds
             let elapsed = 0;
@@ -261,7 +297,7 @@ jobs:
               const { data: checks } = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: context.payload.pull_request.head.sha
+                ref: sha
               });
               
               const relevantChecks = checks.check_runs.filter(check => 
@@ -296,7 +332,16 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = context.payload.pull_request?.number || '${{ github.event.inputs.pr_number }}';
+            // Get PR number from either event type
+            const prNumber = context.payload.pull_request?.number || 
+                           parseInt('${{ github.event.inputs.pr_number }}') || 
+                           null;
+            
+            if (!prNumber) {
+              console.log('No PR number available, cannot merge');
+              return;
+            }
+            
             const riskLevel = '${{ needs.auto-review.outputs.risk_level }}';
             
             // Determine merge method
@@ -322,16 +367,19 @@ jobs:
                 body: `✅ **Auto-merged** using ${mergeMethod} merge strategy\n\nRisk Level: ${riskLevel}`
               });
               
-              // Delete branch
-              try {
-                await github.rest.git.deleteRef({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  ref: `heads/${context.payload.pull_request.head.ref}`
-                });
-                console.log('Deleted merged branch');
-              } catch (error) {
-                console.log('Could not delete branch:', error.message);
+              // Delete branch if from this repo (not a fork)
+              if (context.payload.pull_request?.head?.repo?.full_name === context.repo.owner + '/' + context.repo.repo) {
+                try {
+                  const branchRef = context.payload.pull_request.head.ref;
+                  await github.rest.git.deleteRef({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    ref: `heads/${branchRef}`
+                  });
+                  console.log('Deleted merged branch');
+                } catch (error) {
+                  console.log('Could not delete branch:', error.message);
+                }
               }
               
             } catch (error) {
