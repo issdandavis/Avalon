@@ -10,26 +10,47 @@ import json
 import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Dict, List, Optional, Any
 import yaml
 
 class AgentOrchestrator:
-    """Manages coordination between multiple AI workers"""
+    """
+    Manages coordination between multiple AI workers.
+    
+    This class provides status monitoring, health checks, and coordination
+    for all autonomous AI workers in the repository.
+    """
     
     def __init__(self):
+        """Initialize the orchestrator with repository paths and configuration."""
         self.repo_root = Path(__file__).parent.parent.parent
         self.config_file = self.repo_root / "config" / "automation-settings.json"
         self.task_queue_file = self.repo_root / "docs" / "AI_TASK_QUEUE.md"
         self.worker_status = {}
         
-    def load_config(self):
-        """Load automation configuration"""
+    def load_config(self) -> Dict[str, Any]:
+        """
+        Load automation configuration from JSON file.
+        
+        Returns:
+            Dictionary containing configuration, or empty dict if file not found
+        """
         if self.config_file.exists():
-            with open(self.config_file, 'r') as f:
-                return json.load(f)
+            try:
+                with open(self.config_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception as e:
+                print(f"⚠️ Warning: Could not load config: {e}")
+                return {}
         return {}
     
-    def get_worker_status(self):
-        """Check status of all AI workers via git branches"""
+    def get_worker_status(self) -> Dict[str, Dict[str, Any]]:
+        """
+        Check status of all AI workers via git branches.
+        
+        Returns:
+            Dictionary mapping worker names to their status information
+        """
         workers = {
             'scene-writer': 'ai-scene-development',
             'content-polisher': 'ai-content-polish',
@@ -37,7 +58,7 @@ class AgentOrchestrator:
             'autonomous-worker': 'ai-autonomous-work'
         }
         
-        status = {}
+        status: Dict[str, Dict[str, Any]] = {}
         for worker_name, branch_name in workers.items():
             try:
                 # Check if branch exists
@@ -86,13 +107,21 @@ class AgentOrchestrator:
         
         return status
     
-    def analyze_task_queue(self):
-        """Parse and analyze the task queue"""
+    def analyze_task_queue(self) -> Dict[str, Any]:
+        """
+        Parse and analyze the task queue.
+        
+        Returns:
+            Dictionary containing task statistics and counts
+        """
         if not self.task_queue_file.exists():
             return {'error': 'Task queue file not found'}
         
-        with open(self.task_queue_file, 'r') as f:
-            content = f.read()
+        try:
+            with open(self.task_queue_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+        except Exception as e:
+            return {'error': f'Could not read task queue: {e}'}
         
         # Count task statuses
         total_tasks = content.count('- [ ]')  # Not started
@@ -108,9 +137,14 @@ class AgentOrchestrator:
             'total': total_tasks + in_progress + needs_review + completed
         }
     
-    def check_merge_conflicts(self):
-        """Check for merge conflicts between AI worker branches"""
-        conflicts = []
+    def check_merge_conflicts(self) -> List[Dict[str, Any]]:
+        """
+        Check for merge conflicts between AI worker branches.
+        
+        Returns:
+            List of dictionaries containing conflict status for each branch
+        """
+        conflicts: List[Dict[str, Any]] = []
         workers = ['ai-scene-development', 'ai-content-polish', 'ai-stat-balance', 'ai-autonomous-work']
         
         for branch in workers:
@@ -141,8 +175,13 @@ class AgentOrchestrator:
         
         return conflicts
     
-    def get_scene_completion_status(self):
-        """Analyze scene completion across expeditions"""
+    def get_scene_completion_status(self) -> Dict[str, Any]:
+        """
+        Analyze scene completion across expeditions.
+        
+        Returns:
+            Dictionary mapping scene names to completion status
+        """
         scenes_dir = self.repo_root / "choicescript_game" / "scenes"
         
         if not scenes_dir.exists():
@@ -157,7 +196,7 @@ class AgentOrchestrator:
         # Target line count for 100% completion (configurable)
         TARGET_LINES = 1000
         
-        status = {}
+        status: Dict[str, Any] = {}
         for filename, name in expeditions.items():
             filepath = scenes_dir / filename
             if filepath.exists():
@@ -183,15 +222,20 @@ class AgentOrchestrator:
         
         return status
     
-    def generate_status_report(self):
-        """Generate comprehensive status report"""
+    def generate_status_report(self) -> Dict[str, Any]:
+        """
+        Generate comprehensive status report.
+        
+        Returns:
+            Dictionary containing complete system status information
+        """
         config = self.load_config()
         worker_status = self.get_worker_status()
         task_analysis = self.analyze_task_queue()
         scene_status = self.get_scene_completion_status()
         conflicts = self.check_merge_conflicts()
         
-        report = {
+        report: Dict[str, Any] = {
             'timestamp': datetime.now().isoformat(),
             'configuration': {
                 'silent_mode': config.get('silent_mode', {}).get('enabled', False),
