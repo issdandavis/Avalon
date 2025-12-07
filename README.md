@@ -48,6 +48,7 @@ This repository features AI-powered automation for inter-account communications 
 **Documentation:**
 - **[ACCOUNTS_README.md](ACCOUNTS_README.md)** - Complete account automation setup guide
 - **[docs/AUTOMATION_GUIDE.md](docs/AUTOMATION_GUIDE.md)** - Integration workflows
+- **[COMMUNICATION_CHANNELS.md](COMMUNICATION_CHANNELS.md)** - All contact and collaboration options
 - **Configuration:** `config/automation-settings.json`, `config/enterprise-settings.json`
 
 ## Security

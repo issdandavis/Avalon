@@ -201,7 +201,9 @@ Avalon/
 3. **Communication**
    - Discord: Team notifications
    - Email: Subscriber updates
-   - Slack: Internal team chat
+   - Slack: Internal team chat & real-time collaboration
+     - Join: https://join.slack.com/shareDM/zt-3jpuiis8k-UsZfwP3zVm~MDxKmn1XbKA
+     - See [COMMUNICATION_CHANNELS.md](../COMMUNICATION_CHANNELS.md) for all options
 
 4. **Social Media**
    - Twitter: Release announcements

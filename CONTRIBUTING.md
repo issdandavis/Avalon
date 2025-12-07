@@ -139,6 +139,8 @@ Update documentation with new endpoints
 - Check existing documentation
 - Review similar code in the project
 - Ask in a GitHub issue
+- Join us on [Slack](https://join.slack.com/shareDM/zt-3jpuiis8k-UsZfwP3zVm~MDxKmn1XbKA) for real-time collaboration
+- See [COMMUNICATION_CHANNELS.md](COMMUNICATION_CHANNELS.md) for all contact options
 
 ---
 
