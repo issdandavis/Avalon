@@ -109,8 +109,16 @@ class AutoFixer:
             
             # Count quotes
             if line.count('"') % 2 != 0:
-                # Add closing quote at end
-                lines[line_num - 1] = line.rstrip() + '"'
+                # Add closing quote before any trailing comment or at end
+                # Check for comment markers
+                comment_pos = line.find('*comment')
+                if comment_pos > 0:
+                    # Insert quote before comment
+                    lines[line_num - 1] = line[:comment_pos].rstrip() + '" ' + line[comment_pos:]
+                else:
+                    # Add closing quote at end of content
+                    lines[line_num - 1] = line.rstrip() + '"'
+                
                 file_path.write_text('\n'.join(lines))
                 self.fixes_applied.append(f"Fixed unclosed quote in {file_path.name}:{line_num}")
         
@@ -147,9 +155,11 @@ class AutoFixer:
             
             line = lines[line_num - 1]
             
-            # Comment out the *create line
+            # Comment out the *create line properly
             if '*create ' in line:
-                lines[line_num - 1] = '*comment ' + line
+                # Replace *create with *comment about the variable
+                var_name = line.split('*create ', 1)[1].split()[0] if ' ' in line.split('*create ', 1)[1] else 'variable'
+                lines[line_num - 1] = f'*comment Variable {var_name} should be defined in startup.txt'
                 file_path.write_text('\n'.join(lines))
                 self.fixes_applied.append(f"Commented out misplaced *create in {file_path.name}:{line_num}")
         

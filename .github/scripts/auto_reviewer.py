@@ -106,7 +106,7 @@ class AutoReviewer:
                         self.errors.append(f"{path.name}:{i} - Label contains spaces: {label}")
                 
                 # Check for *create in non-startup files
-                if stripped.startswith('*create ') and path.name != 'startup.txt':
+                if stripped.startswith('*create ') and 'startup.txt' not in str(path):
                     self.errors.append(f"{path.name}:{i} - *create only allowed in startup.txt")
             
             # Check for required *choice structure
@@ -161,10 +161,19 @@ class AutoReviewer:
             import re
             links = re.findall(r'\[([^\]]+)\]\(([^\)]+)\)', content)
             for text, url in links:
-                if url.startswith('/') or url.startswith('./'):
-                    link_path = self.repo_root / url.lstrip('./')
-                    if not link_path.exists():
-                        self.warnings.append(f"{path.name} - Broken link: {url}")
+                # Skip external URLs
+                if url.startswith('http://') or url.startswith('https://'):
+                    continue
+                
+                # Handle absolute and relative paths
+                if url.startswith('/'):
+                    link_path = self.repo_root / url.lstrip('/')
+                else:
+                    # Relative to current file
+                    link_path = path.parent / url
+                
+                if not link_path.exists():
+                    self.warnings.append(f"{path.name} - Broken link: {url}")
         
         except Exception as e:
             self.warnings.append(f"{path.name} - Error checking markdown: {e}")
