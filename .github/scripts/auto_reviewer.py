@@ -44,7 +44,7 @@ class AutoReviewer:
         """Get list of changed files in PR"""
         try:
             result = subprocess.run(
-                ['git', 'diff', '--name-only', 'origin/main...HEAD'],
+                ['git', 'diff', '--name-only', 'main...HEAD'],
                 capture_output=True,
                 text=True,
                 check=True
@@ -52,8 +52,19 @@ class AutoReviewer:
             files = [f.strip() for f in result.stdout.split('\n') if f.strip()]
             return files
         except subprocess.CalledProcessError:
-            print("⚠️ Could not get changed files, using git diff")
-            return []
+            print("⚠️ Could not get changed files, trying alternative")
+            try:
+                # Try without origin prefix
+                result = subprocess.run(
+                    ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'],
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+                files = [f.strip() for f in result.stdout.split('\n') if f.strip()]
+                return files
+            except subprocess.CalledProcessError:
+                return []
     
     def _analyze_file(self, file_path: str):
         """Analyze a single file for issues"""
