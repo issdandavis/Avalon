@@ -5,17 +5,36 @@ Find dead ends - scenes that don't properly terminate
 
 import re
 from pathlib import Path
+from typing import List
 
-def find_dead_ends():
-    """Find scenes that might be dead ends"""
+def find_dead_ends() -> None:
+    """
+    Find scenes that might be dead ends without proper termination.
+    
+    Scans all ChoiceScript scene files to identify:
+    - Scenes without *finish or *goto statements
+    - Choice blocks with fewer than 2 options
+    
+    Returns:
+        None: Outputs issues to stdout
+    """
     scenes_dir = Path("choicescript_game/scenes")
-    issues = []
+    
+    if not scenes_dir.exists():
+        print(f"❌ Error: Scenes directory not found at {scenes_dir}")
+        return
+    
+    issues: List[str] = []
     
     for scene_file in scenes_dir.glob("*.txt"):
         if "stats" in scene_file.name:
             continue
         
-        content = scene_file.read_text()
+        try:
+            content = scene_file.read_text(encoding='utf-8')
+        except Exception as e:
+            issues.append(f"⚠️ {scene_file.name}: Could not read file - {e}")
+            continue
         
         # Check if scene ends properly
         has_finish = bool(re.search(r'\*finish\s*$', content, re.MULTILINE))

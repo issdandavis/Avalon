@@ -1,6 +1,11 @@
 // Game State
 // Tracing helper (defined in tracing.js). If absent, provide no-op.
 const traceEvent = window.traceEvent || function(){};
+
+/**
+ * Main game state object
+ * @type {Object}
+ */
 const gameState = {
     currentNode: 'start',
     collaborationScore: 0,
@@ -1251,16 +1256,30 @@ const storyNodes = {
         `,
         choices: []
     }
-}
 };
 
 // UI Update Functions
+
+/**
+ * Update the stats display to reflect current game state
+ */
 function updateStats() {
     const collabPercent = Math.max(0, Math.min(100, 50 + (gameState.collaborationScore * 10)));
-    document.getElementById('collaboration-bar').style.width = collabPercent + '%';
-    document.getElementById('collaboration-value').textContent = gameState.collaborationScore;
+    const collabBar = document.getElementById('collaboration-bar');
+    const collabValue = document.getElementById('collaboration-value');
+    
+    if (collabBar) {
+        collabBar.style.width = collabPercent + '%';
+    }
+    if (collabValue) {
+        collabValue.textContent = gameState.collaborationScore;
+    }
 
-    // Update relationship displays
+    /**
+     * Get emoji representation of relationship value
+     * @param {number} value - Relationship score
+     * @returns {string} Emoji representing the relationship status
+     */
     const getEmoji = (value) => {
         if (value >= 3) return '😊';
         if (value >= 1) return '🙂';
@@ -1269,14 +1288,25 @@ function updateStats() {
         return '😐';
     };
 
-    document.getElementById('izack-rel').textContent = `Izack: ${getEmoji(gameState.relationships.izack)}`;
-    document.getElementById('aria-rel').textContent = `Aria: ${getEmoji(gameState.relationships.aria)}`;
-    document.getElementById('zara-rel').textContent = `Zara: ${getEmoji(gameState.relationships.zara)}`;
+    const izackRel = document.getElementById('izack-rel');
+    const ariaRel = document.getElementById('aria-rel');
+    const zaraRel = document.getElementById('zara-rel');
+    
+    if (izackRel) izackRel.textContent = `Izack: ${getEmoji(gameState.relationships.izack)}`;
+    if (ariaRel) ariaRel.textContent = `Aria: ${getEmoji(gameState.relationships.aria)}`;
+    if (zaraRel) zaraRel.textContent = `Zara: ${getEmoji(gameState.relationships.zara)}`;
 }
 
+/**
+ * Display a story node and its choices
+ * @param {string} nodeId - ID of the node to display
+ */
 function displayNode(nodeId) {
     const node = storyNodes[nodeId];
-    if (!node) return;
+    if (!node) {
+        console.error(`Story node not found: ${nodeId}`);
+        return;
+    }
 
     gameState.currentNode = nodeId;
 
@@ -1287,36 +1317,52 @@ function displayNode(nodeId) {
     });
 
     // Display story text
-    document.getElementById('story-text').innerHTML = node.text;
+    const storyText = document.getElementById('story-text');
+    if (storyText) {
+        storyText.innerHTML = node.text;
+    }
 
     // Display choices
     const choicesDiv = document.getElementById('choices');
-    choicesDiv.innerHTML = '';
+    if (choicesDiv) {
+        choicesDiv.innerHTML = '';
 
-    if (node.choices.length === 0) {
-        // This is an ending
-        document.getElementById('restart-btn').style.display = 'block';
-        traceEvent('ending_reached', {
-            ending: nodeId,
-            collaborationScore: gameState.collaborationScore,
-            relationships: { ...gameState.relationships },
-            path: gameState.choices.slice()
-        });
-    } else {
-        node.choices.forEach((choice, index) => {
-            const button = document.createElement('button');
-            button.className = 'choice-btn';
-            button.innerHTML = choice.text;
-            button.onclick = () => makeChoice(choice);
-            choicesDiv.appendChild(button);
-        });
+        if (node.choices.length === 0) {
+            // This is an ending
+            const restartBtn = document.getElementById('restart-btn');
+            if (restartBtn) {
+                restartBtn.style.display = 'block';
+            }
+            traceEvent('ending_reached', {
+                ending: nodeId,
+                collaborationScore: gameState.collaborationScore,
+                relationships: { ...gameState.relationships },
+                path: gameState.choices.slice()
+            });
+        } else {
+            node.choices.forEach((choice, index) => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.innerHTML = choice.text;
+                button.onclick = () => makeChoice(choice);
+                choicesDiv.appendChild(button);
+            });
+        }
     }
 
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+/**
+ * Process a player's choice and update game state
+ * @param {Object} choice - The choice object containing effects and next node
+ */
 function makeChoice(choice) {
+    if (!choice) {
+        console.error('makeChoice called with invalid choice');
+        return;
+    }
     // Apply effects
     if (choice.effects) {
         if (choice.effects.collaboration !== undefined) {
@@ -1354,6 +1400,9 @@ function makeChoice(choice) {
     displayNode(choice.next);
 }
 
+/**
+ * Reset game state and restart from the beginning
+ */
 function restartGame() {
     gameState.currentNode = 'start';
     gameState.collaborationScore = 0;
@@ -1364,7 +1413,10 @@ function restartGame() {
     };
     gameState.choices = [];
 
-    document.getElementById('restart-btn').style.display = 'none';
+    const restartBtn = document.getElementById('restart-btn');
+    if (restartBtn) {
+        restartBtn.style.display = 'none';
+    }
     updateStats();
     displayNode('start');
     traceEvent('game_restarted', {});
@@ -1372,7 +1424,10 @@ function restartGame() {
 
 // Initialize game
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('restart-btn').onclick = restartGame;
+    const restartBtn = document.getElementById('restart-btn');
+    if (restartBtn) {
+        restartBtn.onclick = restartGame;
+    }
     updateStats();
     displayNode('start');
     traceEvent('init', {

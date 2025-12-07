@@ -7,11 +7,24 @@ Provides balance recommendations
 import re
 from pathlib import Path
 from collections import defaultdict
+from typing import Dict, List, Tuple
 
-def analyze_stats():
-    """Analyze stat changes across all scenes"""
+def analyze_stats() -> None:
+    """
+    Analyze stat changes across all scenes in the ChoiceScript game.
+    
+    This function scans all scene files, identifies stat changes using *set commands,
+    and generates a comprehensive balance analysis report with recommendations.
+    
+    Returns:
+        None: Outputs analysis report to stdout
+    """
     repo_path = Path.cwd()
     scenes_dir = repo_path / "choicescript_game" / "scenes"
+    
+    if not scenes_dir.exists():
+        print(f"❌ Error: Scenes directory not found at {scenes_dir}")
+        return
     
     # Track stat changes
     stat_changes = defaultdict(lambda: {"increases": [], "decreases": [], "total": 0})
@@ -25,7 +38,12 @@ def analyze_stats():
         if "choicescript_stats" in scene_file.name:
             continue
         
-        content = scene_file.read_text()
+        try:
+            content = scene_file.read_text(encoding='utf-8')
+        except Exception as e:
+            print(f"⚠️ Warning: Could not read {scene_file.name}: {e}")
+            continue
+            
         scene_name = scene_file.stem
         
         # Find all *set commands

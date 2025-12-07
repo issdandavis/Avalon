@@ -7,10 +7,16 @@ Actually improves content quality
 import os
 import re
 from pathlib import Path
+from typing import Optional
 import anthropic
 
 class ContentPolisher:
-    """Polishes existing scenes by adding sensory details and improving prose"""
+    """
+    Polishes existing scenes by adding sensory details and improving prose.
+    
+    This class uses AI to enhance ChoiceScript game scenes while preserving
+    all game logic, character voices, and structural elements.
+    """
     
     SYSTEM_PROMPT = """You are a content polish specialist for ChoiceScript games.
 
@@ -38,18 +44,38 @@ You DO:
 Output the COMPLETE polished scene with all original code intact."""
 
     def __init__(self):
-        self.client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+        """Initialize the ContentPolisher with API client and repository paths."""
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise ValueError("ANTHROPIC_API_KEY environment variable must be set")
+        self.client = anthropic.Anthropic(api_key=api_key)
         self.repo_path = Path.cwd()
     
-    def find_scene_needing_polish(self, polish_type="sensory-details"):
-        """Find a scene that lacks sensory details"""
+    def find_scene_needing_polish(self, polish_type: str = "sensory-details") -> Optional[Path]:
+        """
+        Find a scene that lacks sensory details.
+        
+        Args:
+            polish_type: Type of polishing needed (default: "sensory-details")
+            
+        Returns:
+            Path to scene file needing polish, or None if all scenes are polished
+        """
         scenes_dir = self.repo_path / "choicescript_game" / "scenes"
+        
+        if not scenes_dir.exists():
+            print(f"❌ Error: Scenes directory not found at {scenes_dir}")
+            return None
         
         for scene_file in sorted(scenes_dir.glob("*.txt")):
             if "choicescript_stats" in scene_file.name:
                 continue
             
-            content = scene_file.read_text().lower()
+            try:
+                content = scene_file.read_text(encoding='utf-8').lower()
+            except Exception as e:
+                print(f"⚠️ Warning: Could not read {scene_file.name}: {e}")
+                continue
             
             # Look for scenes without taste or smell
             has_taste = any(word in content for word in ["taste", "tasted", "tasting", "flavor", "flavour"])
@@ -60,9 +86,21 @@ Output the COMPLETE polished scene with all original code intact."""
         
         return None
     
-    def polish_scene(self, scene_path):
-        """Polish a scene with AI"""
-        original_content = scene_path.read_text()
+    def polish_scene(self, scene_path: Path) -> bool:
+        """
+        Polish a scene with AI-powered enhancements.
+        
+        Args:
+            scene_path: Path to the scene file to polish
+            
+        Returns:
+            True if polishing succeeded, False otherwise
+        """
+        try:
+            original_content = scene_path.read_text(encoding='utf-8')
+        except Exception as e:
+            print(f"❌ Error reading {scene_path.name}: {e}")
+            return False
         
         # Don't polish very short scenes (under 500 chars) - they need writing, not polish
         if len(original_content) < 500:
@@ -86,13 +124,17 @@ Output the complete polished scene."""
 
         print(f"✨ Polishing {scene_path.name}...")
         
-        response = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
-            max_tokens=8000,
-            temperature=0.75,
-            system=self.SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": prompt}]
-        )
+        try:
+            response = self.client.messages.create(
+                model="claude-sonnet-4-20250514",
+                max_tokens=8000,
+                temperature=0.75,
+                system=self.SYSTEM_PROMPT,
+                messages=[{"role": "user", "content": prompt}]
+            )
+        except Exception as e:
+            print(f"❌ Error calling AI: {e}")
+            return False
         
         polished_content = response.content[0].text
         
@@ -111,7 +153,11 @@ Output the complete polished scene."""
             return False
         
         # Write polished version
-        scene_path.write_text(polished_content)
+        try:
+            scene_path.write_text(polished_content, encoding='utf-8')
+        except Exception as e:
+            print(f"❌ Error writing file: {e}")
+            return False
         
         # Show diff stats
         orig_lines = len(original_content.split('\n'))
@@ -120,8 +166,12 @@ Output the complete polished scene."""
         
         return True
     
-    def run(self):
-        """Main execution"""
+    def run(self) -> None:
+        """
+        Main execution method for the content polisher.
+        
+        Finds scenes needing polish and applies AI-powered enhancements.
+        """
         print("✨ Content Polisher Starting...")
         
         polish_type = os.environ.get("POLISH_TYPE", "sensory-details")

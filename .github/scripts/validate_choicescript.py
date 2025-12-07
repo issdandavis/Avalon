@@ -7,14 +7,27 @@ Checks for common syntax errors before committing
 import re
 import sys
 from pathlib import Path
+from typing import List, Tuple
 
-def validate_choicescript_file(file_path):
-    """Validate a single ChoiceScript file"""
-    errors = []
-    warnings = []
+def validate_choicescript_file(file_path: str) -> Tuple[List[str], List[str]]:
+    """
+    Validate a single ChoiceScript file for syntax errors.
+    
+    Args:
+        file_path: Path to the ChoiceScript file to validate
+        
+    Returns:
+        Tuple of (errors, warnings) where each is a list of issue strings
+    """
+    errors: List[str] = []
+    warnings: List[str] = []
     
     try:
-        content = Path(file_path).read_text()
+        content = Path(file_path).read_text(encoding='utf-8')
+    except FileNotFoundError:
+        return [f"ERROR: File not found: {file_path}"], []
+    except PermissionError:
+        return [f"ERROR: Permission denied reading file: {file_path}"], []
     except Exception as e:
         return [f"ERROR: Cannot read file: {e}"], []
     
@@ -94,8 +107,13 @@ def validate_choicescript_file(file_path):
     
     return errors, warnings
 
-def main():
-    """Validate all provided files"""
+def main() -> None:
+    """
+    Main entry point for the ChoiceScript validator.
+    
+    Validates all files provided as command-line arguments and exits with
+    code 0 if all files pass, or 1 if any errors are found.
+    """
     if len(sys.argv) < 2:
         print("Usage: validate_choicescript.py <file1.txt> [file2.txt ...]")
         sys.exit(1)
