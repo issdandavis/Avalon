@@ -69,6 +69,7 @@ pip install openai requests
 - `AI_PR_MAX_CONTENT_PER_FILE`: Maximum characters per file to analyze (default: 1000)
 - `AI_PR_TEMPERATURE`: OpenAI temperature setting for creativity (default: 0.3)
 - `AI_PR_MAX_TOKENS`: Maximum tokens in AI response (default: 2000)
+- `AI_PR_SYSTEM_PROMPT`: Custom system prompt for the AI reviewer (uses built-in default if not set)
 
 ### Integration with GitHub Actions
 

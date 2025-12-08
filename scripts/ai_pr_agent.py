@@ -31,6 +31,24 @@ except ImportError:
 MAX_CONTENT_LENGTH_PER_FILE = int(os.getenv('AI_PR_MAX_CONTENT_PER_FILE', '1000'))
 AI_TEMPERATURE = float(os.getenv('AI_PR_TEMPERATURE', '0.3'))
 AI_MAX_TOKENS = int(os.getenv('AI_PR_MAX_TOKENS', '2000'))
+TRUNCATION_MARKER = '...(truncated)'
+
+# AI System Prompt
+DEFAULT_SYSTEM_PROMPT = """You are an expert code reviewer specializing in:
+- ChoiceScript game development
+- Python automation scripts
+- GitHub Actions workflows
+- Game narrative and branching logic
+- Security best practices
+
+Provide constructive, actionable feedback focusing on:
+1. Code quality and maintainability
+2. Potential bugs or edge cases
+3. Security vulnerabilities
+4. Performance improvements
+5. Best practices and conventions
+6. ChoiceScript syntax and structure (if applicable)
+"""
 
 
 class AICodeReviewer:
@@ -97,26 +115,14 @@ class AICodeReviewer:
         
         try:
             # Use OpenAI's chat completion for code review
+            system_prompt = os.getenv('AI_PR_SYSTEM_PROMPT', DEFAULT_SYSTEM_PROMPT)
+            
             response = self.client.chat.completions.create(
                 model="gpt-4-turbo-preview",
                 messages=[
                     {
                         "role": "system",
-                        "content": """You are an expert code reviewer specializing in:
-                        - ChoiceScript game development
-                        - Python automation scripts
-                        - GitHub Actions workflows
-                        - Game narrative and branching logic
-                        - Security best practices
-                        
-                        Provide constructive, actionable feedback focusing on:
-                        1. Code quality and maintainability
-                        2. Potential bugs or edge cases
-                        3. Security vulnerabilities
-                        4. Performance improvements
-                        5. Best practices and conventions
-                        6. ChoiceScript syntax and structure (if applicable)
-                        """
+                        "content": system_prompt
                     },
                     {
                         "role": "user",
@@ -161,7 +167,7 @@ Additions: +{file['additions']} | Deletions: -{file['deletions']}
 
 Changes:
 {file['changes'][:MAX_CONTENT_LENGTH_PER_FILE]}
-{'...(truncated)' if len(file['changes']) > MAX_CONTENT_LENGTH_PER_FILE else ''}
+{TRUNCATION_MARKER if len(file['changes']) > MAX_CONTENT_LENGTH_PER_FILE else ''}
 
 """
         
