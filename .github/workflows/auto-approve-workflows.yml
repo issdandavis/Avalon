@@ -1,14 +1,13 @@
-name: Auto-Approve Enterprise Account Workflows
-
-# Automatically approves and enables workflow runs from all enterprise accounts
-# For multi-profile organizations where one person manages multiple accounts
+name: Auto-approve enterprise workflows
 
 on:
   workflow_run:
-    workflows: ["*"]
+    # Run for *any* workflow that hits the "needs approval" gate
+    # (wildcard pattern supported for workflow_run) 0
+    workflows: ["**"]
     types:
       - requested
-  
+
   pull_request_target:
     types:
       - opened
@@ -16,62 +15,84 @@ on:
       - reopened
 
 permissions:
-  actions: write
-  contents: write
-  pull-requests: write
-  checks: write
+  actions: write          # needed to approve workflow runs 1
+  contents: read
+  pull-requests: write    # needed to submit PR reviews
+  checks: read
 
 jobs:
   auto-approve:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'issdandavis' || github.actor == 'issdandavis' || github.event.workflow_run.actor.login == 'issdandavis'
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Auto-approve workflow runs from enterprise accounts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 1) Resolve *who* we are approving for, and check against your allow-list
+      - name: Check if actor is allow-listed
+        id: check-actor
         run: |
-          echo "🔓 Auto-approving workflows for enterprise account"
-          
-          # List of approved enterprise account usernames/emails
+          echo "Event name: ${{ github.event_name }}"
+
+          # Start from generic actor
+          ACTOR="${{ github.actor }}"
+
+          # Use the more specific fields when they exist
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            ACTOR="${{ github.event.workflow_run.actor.login }}"
+          elif [ "${{ github.event_name }}" = "pull_request_target" ]; then
+            ACTOR="${{ github.event.pull_request.user.login }}"
+          fi
+
+          echo "Resolved actor: $ACTOR"
+
+          # 🔓 Allow-listed accounts (add all your identities here)
           APPROVED_ACCOUNTS=(
             "issdandavis"
             "215328633+issdandavis@users.noreply.github.com"
           )
-          
-          ACTOR="${{ github.actor }}"
-          
-          # Check if actor is in approved list
+
           APPROVED=false
           for account in "${APPROVED_ACCOUNTS[@]}"; do
-            if [[ "$ACTOR" == "$account" ]]; then
+            if [ "$ACTOR" = "$account" ]; then
               APPROVED=true
               break
             fi
           done
-          
-          if [[ "$APPROVED" == "true" ]]; then
-            echo "✅ Account $ACTOR is approved for auto-workflow execution"
-            echo "approved=true" >> $GITHUB_OUTPUT
-          else
-            echo "⚠️ Account $ACTOR is not in approved list"
-            echo "approved=false" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: Enable workflow runs for PRs
-        if: github.event_name == 'pull_request_target'
+
+          echo "approved=$APPROVED" >> "$GITHUB_OUTPUT"
+          echo "actor=$ACTOR" >> "$GITHUB_OUTPUT"
+
+      # 2) Auto-approve the PR itself (so reviews don’t block you)
+      - name: Auto-approve PR (pull_request_target)
+        if: ${{ github.event_name == 'pull_request_target' && steps.check-actor.outputs.approved == 'true' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GitHub CLI uses GH_TOKEN in workflows 2
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          # Approve PR from enterprise account
-          gh pr review $PR_NUMBER --approve --body "✅ Auto-approved: Enterprise account workflow authorization"
-          echo "✅ PR #$PR_NUMBER auto-approved"
-      
-      - name: Set workflow approval status
+          echo "✅ Auto-approving PR #$PR_NUMBER for ${{ steps.check-actor.outputs.actor }}"
+          gh pr review "$PR_NUMBER" --approve --body "✅ Auto-approved: Enterprise account workflow authorization"
+
+      # 3) Auto-approve the *workflow run* from a fork
+      - name: Auto-approve workflow run (fork PR)
+        if: ${{ github.event_name == 'workflow_run' && steps.check-actor.outputs.approved == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          REPO: ${{ github.repository }}
         run: |
-          echo "Enterprise account auto-approval complete"
-          echo "All workflows from approved accounts will run automatically"
+          OWNER="${REPO%%/*}"
+          NAME="${REPO#*/}"
+
+          echo "🔓 Auto-approving workflow run $RUN_ID in $REPO for ${{ steps.check-actor.outputs.actor }}"
+
+          # REST: POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve 3
+          gh api \
+            --method POST \
+            "repos/$OWNER/$NAME/actions/runs/$RUN_ID/approve"
+
+          echo "✅ Workflow run approved"
+
+      - name: Summary
+        run: |
+          echo "Enterprise account auto-approval complete for event: ${{ github.event_name }}"
+          echo "Actor: ${{ steps.check-actor.outputs.actor }}"
+          echo "Approved: ${{ steps.check-actor.outputs.approved }}"
