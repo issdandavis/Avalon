@@ -24,17 +24,17 @@ permissions:
 jobs:
   auto-approve:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'issdandavis' || github.actor == 'issdandavis' || github.event.workflow_run.actor.login == 'issdandavis'
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Auto-approve workflow runs from enterprise accounts
+      - name: Validate actor and auto-approve workflow runs
+        id: validate
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "🔓 Auto-approving workflows for enterprise account"
+          echo "🔓 Validating actor for enterprise account auto-approval"
           
           # List of approved enterprise account usernames/emails
           APPROVED_ACCOUNTS=(
@@ -42,7 +42,17 @@ jobs:
             "215328633+issdandavis@users.noreply.github.com"
           )
           
-          ACTOR="${{ github.actor }}"
+          # Determine the actor based on event type
+          if [[ "${{ github.event_name }}" == "pull_request_target" ]]; then
+            ACTOR="${{ github.event.pull_request.user.login }}"
+          elif [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+            ACTOR="${{ github.event.workflow_run.actor.login }}"
+          else
+            ACTOR="${{ github.actor }}"
+          fi
+          
+          echo "Event: ${{ github.event_name }}"
+          echo "Actor: $ACTOR"
           
           # Check if actor is in approved list
           APPROVED=false
@@ -57,12 +67,13 @@ jobs:
             echo "✅ Account $ACTOR is approved for auto-workflow execution"
             echo "approved=true" >> $GITHUB_OUTPUT
           else
-            echo "⚠️ Account $ACTOR is not in approved list"
+            echo "⚠️ Account $ACTOR is not in approved list - skipping auto-approval"
             echo "approved=false" >> $GITHUB_OUTPUT
+            exit 0
           fi
       
       - name: Enable workflow runs for PRs
-        if: github.event_name == 'pull_request_target'
+        if: github.event_name == 'pull_request_target' && steps.validate.outputs.approved == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -72,6 +83,7 @@ jobs:
           echo "✅ PR #$PR_NUMBER auto-approved"
       
       - name: Set workflow approval status
+        if: steps.validate.outputs.approved == 'true'
         run: |
-          echo "Enterprise account auto-approval complete"
+          echo "✅ Enterprise account auto-approval complete"
           echo "All workflows from approved accounts will run automatically"

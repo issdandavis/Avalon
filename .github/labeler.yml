@@ -1,0 +1,18 @@
+# Configuration for PR labeler
+# Labels are applied based on the paths of files changed in the PR
+
+ci:
+  - changed-files:
+    - any-glob-to-any-file: '.github/**'
+
+game-assets:
+  - changed-files:
+    - any-glob-to-any-file: 'Aethromoor/Assets/**'
+
+project-files:
+  - changed-files:
+    - any-glob-to-any-file: 'Aethromoor/ProjectSettings/**'
+
+documentation:
+  - changed-files:
+    - any-glob-to-any-file: '**/*.md'

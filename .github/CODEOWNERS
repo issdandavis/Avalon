@@ -1,0 +1,19 @@
+# CODEOWNERS
+# This file defines the default code owners for the repository.
+# Code owners are automatically requested for review when someone opens a pull request.
+
+# Default owner for all files
+* @issdandavis
+
+# GitHub workflows and automation
+/.github/ @issdandavis
+
+# Game content and assets
+/game/ @issdandavis
+/choicescript_game/ @issdandavis
+/lore/ @issdandavis
+/writing_drafts/ @issdandavis
+
+# Documentation
+*.md @issdandavis
+/docs/ @issdandavis
