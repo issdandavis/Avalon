@@ -30,8 +30,15 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref || format('refs/pull/{0}/head', github.event.inputs.pr_number) }}
+          ref: ${{ github.event.pull_request.head.ref || github.event.pull_request.head.sha }}
           fetch-depth: 0
+      
+      - name: Fetch base branch (for workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          # For manual triggers, checkout the PR ref
+          git fetch origin +refs/pull/${{ github.event.inputs.pr_number }}/head:refs/remotes/origin/pr-${{ github.event.inputs.pr_number }}
+          git checkout origin/pr-${{ github.event.inputs.pr_number }}
       
       - name: Fetch base branch
         run: |

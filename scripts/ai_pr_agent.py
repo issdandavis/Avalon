@@ -36,9 +36,8 @@ class AIPRAgent:
         self.github_token = github_token
         self.repo_root = Path.cwd()
         
-        # Initialize OpenAI client
-        openai.api_key = openai_api_key
-        self.client = openai
+        # Initialize OpenAI client (using new client-based API)
+        self.client = openai.OpenAI(api_key=openai_api_key)
         
         # GitHub API setup
         self.github_api = "https://api.github.com"
@@ -88,9 +87,27 @@ class AIPRAgent:
     
     def _get_changed_files(self) -> List[str]:
         """Get list of changed files in PR"""
+        # Try multiple base branch names
+        base_branches = ['origin/main', 'origin/master', 'main', 'master']
+        
+        for base in base_branches:
+            try:
+                result = subprocess.run(
+                    ['git', 'diff', '--name-only', f'{base}...HEAD'],
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+                files = [f.strip() for f in result.stdout.split('\n') if f.strip()]
+                if files:  # Only return if we got files
+                    return files
+            except subprocess.CalledProcessError:
+                continue
+        
+        # Final fallback: compare with previous commit
         try:
             result = subprocess.run(
-                ['git', 'diff', '--name-only', 'origin/main...HEAD'],
+                ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'],
                 capture_output=True,
                 text=True,
                 check=True
@@ -98,41 +115,37 @@ class AIPRAgent:
             files = [f.strip() for f in result.stdout.split('\n') if f.strip()]
             return files
         except subprocess.CalledProcessError:
-            # Fallback method
+            return []
+    
+    def _get_pr_diff(self) -> str:
+        """Get the full diff for the PR"""
+        # Try multiple base branch names
+        base_branches = ['origin/main', 'origin/master', 'main', 'master']
+        
+        for base in base_branches:
             try:
                 result = subprocess.run(
-                    ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'],
+                    ['git', 'diff', f'{base}...HEAD'],
                     capture_output=True,
                     text=True,
                     check=True
                 )
-                files = [f.strip() for f in result.stdout.split('\n') if f.strip()]
-                return files
+                if result.stdout:
+                    return result.stdout
             except subprocess.CalledProcessError:
-                return []
-    
-    def _get_pr_diff(self) -> str:
-        """Get the full diff for the PR"""
+                continue
+        
+        # Final fallback: compare with previous commit
         try:
             result = subprocess.run(
-                ['git', 'diff', 'origin/main...HEAD'],
+                ['git', 'diff', 'HEAD^', 'HEAD'],
                 capture_output=True,
                 text=True,
                 check=True
             )
             return result.stdout
         except subprocess.CalledProcessError:
-            # Fallback
-            try:
-                result = subprocess.run(
-                    ['git', 'diff', 'HEAD^', 'HEAD'],
-                    capture_output=True,
-                    text=True,
-                    check=True
-                )
-                return result.stdout
-            except subprocess.CalledProcessError:
-                return ""
+            return ""
     
     def _generate_ai_review(self, pr_info: Dict, changed_files: List[str], diff_content: str) -> str:
         """Use OpenAI to generate a code review"""
@@ -142,7 +155,8 @@ class AIPRAgent:
         pr_description = pr_info.get('body', 'No description provided')
         
         # Truncate diff if too long (OpenAI has token limits)
-        max_diff_length = 8000
+        # GPT-4 has ~8K token context; conservatively use ~4K chars for diff (~1K tokens)
+        max_diff_length = 4000
         if len(diff_content) > max_diff_length:
             diff_content = diff_content[:max_diff_length] + "\n\n... (diff truncated for length)"
         
@@ -187,7 +201,16 @@ Provide a thorough but concise review."""
                 max_tokens=1500
             )
             
+            # Safely extract review text with validation
+            if not response.choices or len(response.choices) == 0:
+                raise ValueError("No response choices returned from OpenAI")
+            
+            if not hasattr(response.choices[0], 'message') or not response.choices[0].message:
+                raise ValueError("Response choice missing message")
+            
             review_text = response.choices[0].message.content
+            if not review_text:
+                raise ValueError("Response message content is empty")
             
             # Add metadata footer
             footer = f"\n\n---\n🤖 *AI-generated review using OpenAI GPT-4*\n📊 Files reviewed: {len(changed_files)}"
