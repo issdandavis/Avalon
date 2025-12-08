@@ -63,19 +63,39 @@
 
 **Protection**: Complete accountability and forensics capability
 
-## Vulnerabilities Identified & Fixed
+## Vulnerabilities Identified & Mitigated
 
 ### Critical: Untrusted Code Execution
 **CodeQL Alert**: `actions/untrusted-checkout/critical`
-**Status**: ✅ FIXED
+**Status**: ✅ MITIGATED
 **Fix**: Added security-check job to validate actor before execution
 **Verification**: Only trusted contributors can trigger workflow
+**Note**: CodeQL alert persists because the workflow pattern still checks out PR code, 
+but the security-check gate ensures only trusted actors (issdandavis) can trigger execution.
+This is an accepted risk for a single-maintainer repository where the owner trusts their own PRs.
+
+**Risk Level**: LOW (for single-maintainer repository)
+**Mitigation**: security-check job blocks untrusted actors from running workflow
+**Alternative**: For multi-contributor repos, use `pull_request_target` with limited permissions
 
 ### Medium: Shell Injection Risk
 **CodeQL Alert**: Shell command usage in Python scripts
 **Status**: ✅ FIXED
 **Fix**: Replaced shell `date` with Python `datetime` module
 **Verification**: No shell commands used for dynamic data
+
+## Why CodeQL Alerts Remain
+
+The CodeQL alerts for "untrusted-checkout" will continue to appear because:
+
+1. **Pattern Detection**: CodeQL detects the pattern of checking out PR code in a privileged workflow
+2. **Security-Check Mitigation**: Our security-check job validates the actor BEFORE checkout happens
+3. **Single-Maintainer Context**: This repository is maintained by one person (issdandavis)
+4. **Trusted Actor Only**: The workflow will only run for PRs from issdandavis
+
+**For Multi-Contributor Repositories**: If this repository becomes multi-contributor, 
+consider switching to `pull_request_target` event with read-only checkout, or implement 
+a separate approval workflow.
 
 ## Security Best Practices Followed
 
