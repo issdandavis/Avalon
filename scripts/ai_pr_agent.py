@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import argparse
+import base64
 from datetime import datetime
 from typing import Dict, List, Optional
 
@@ -25,6 +26,11 @@ except ImportError:
     print("Error: 'openai' package not found.")
     print("Please install it with: pip install openai")
     sys.exit(1)
+
+# Configuration constants
+MAX_CONTENT_LENGTH_PER_FILE = int(os.getenv('AI_PR_MAX_CONTENT_PER_FILE', '1000'))
+AI_TEMPERATURE = float(os.getenv('AI_PR_TEMPERATURE', '0.3'))
+AI_MAX_TOKENS = int(os.getenv('AI_PR_MAX_TOKENS', '2000'))
 
 
 class AICodeReviewer:
@@ -63,7 +69,6 @@ class AICodeReviewer:
             return None
         response.raise_for_status()
         
-        import base64
         content = response.json().get('content', '')
         if content:
             return base64.b64decode(content).decode('utf-8')
@@ -118,8 +123,8 @@ class AICodeReviewer:
                         "content": prompt
                     }
                 ],
-                temperature=0.3,
-                max_tokens=2000
+                temperature=AI_TEMPERATURE,
+                max_tokens=AI_MAX_TOKENS
             )
             
             ai_feedback = response.choices[0].message.content
@@ -155,8 +160,8 @@ Status: {file['status']}
 Additions: +{file['additions']} | Deletions: -{file['deletions']}
 
 Changes:
-{file['changes'][:1000]}  # Limit to first 1000 chars per file
-{'...(truncated)' if len(file['changes']) > 1000 else ''}
+{file['changes'][:MAX_CONTENT_LENGTH_PER_FILE]}
+{'...(truncated)' if len(file['changes']) > MAX_CONTENT_LENGTH_PER_FILE else ''}
 
 """
         

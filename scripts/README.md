@@ -65,6 +65,11 @@ pip install openai requests
 - `GITHUB_TOKEN`: GitHub personal access token with repo permissions
 - `OPENAI_API_KEY`: OpenAI API key for GPT-4 access
 
+**Optional Configuration:**
+- `AI_PR_MAX_CONTENT_PER_FILE`: Maximum characters per file to analyze (default: 1000)
+- `AI_PR_TEMPERATURE`: OpenAI temperature setting for creativity (default: 0.3)
+- `AI_PR_MAX_TOKENS`: Maximum tokens in AI response (default: 2000)
+
 ### Integration with GitHub Actions
 
 The AI PR Agent is automatically triggered via GitHub Actions workflow (`.github/workflows/ai-pr-agent.yml`) when pull requests are created or updated.
