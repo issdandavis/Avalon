@@ -57,7 +57,7 @@ python .github/scripts/agent_orchestrator.py
 
 ---
 
-## 🤖 The 6 AI Agents
+## 🤖 The 7 AI Agents
 
 ### 1. Scene Writer 🎭
 - **What:** Writes narrative ChoiceScript scenes
@@ -98,13 +98,21 @@ python .github/scripts/agent_orchestrator.py
 - **Script:** `.github/scripts/ai_autonomous_worker.py`
 - **Branch:** `ai-autonomous-work`
 
-### 6. Agent Manager 🎯 (NEW!)
+### 6. Agent Manager 🎯
 - **What:** Coordinates all other workers
 - **When:** Twice daily (6 AM, 6 PM UTC)
 - **Output:** Health reports and recommendations
 - **Workflow:** `.github/workflows/agent-management.yml`
 - **Script:** `.github/scripts/agent_orchestrator.py`
 - **Agent:** `.github/agents/agent-manager.agent.md`
+
+### 7. AI PR Agent 🧠 (NEW!)
+- **What:** Advanced AI-powered code review using OpenAI GPT-4
+- **When:** On every pull request (opened, updated, reopened)
+- **Output:** Intelligent code analysis and recommendations
+- **Workflow:** `.github/workflows/ai-pr-agent.yml`
+- **Script:** `scripts/ai_pr_agent.py`
+- **Documentation:** `scripts/README.md`
 
 ---
 

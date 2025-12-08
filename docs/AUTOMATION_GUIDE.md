@@ -20,12 +20,28 @@ The repository now includes automated workflows that handle inter-account commun
 - ✅ Quality checks and validation
 - ✅ Metrics collection and reporting
 - ✅ Daily maintenance and cleanup
+- ✅ **AI-powered PR reviews** (NEW!)
 
 **User Notifications Only For:**
 - ❗ Build failures
 - ❗ Security alerts
 - ❗ Major releases
 - ❗ Critical errors
+
+### AI PR Agent (NEW!)
+
+**Advanced Code Review with OpenAI GPT-4:**
+- 🧠 Intelligent code analysis and recommendations
+- 🎯 Context-aware suggestions
+- 🔍 Deep semantic understanding
+- 📚 Game development expertise
+- 🎮 ChoiceScript narrative analysis
+
+**Location:** `scripts/ai_pr_agent.py`  
+**Workflow:** `.github/workflows/ai-pr-agent.yml`  
+**Documentation:** `scripts/README.md`
+
+The AI PR Agent runs automatically on every pull request, providing advanced analysis beyond standard syntax checking. It complements the existing auto-review-fix-merge system.
 
 ### Quick Setup
 1. Review `config/automation-settings.json` for preferences

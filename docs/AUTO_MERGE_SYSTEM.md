@@ -14,6 +14,13 @@ The Auto-Review-Fix-Merge system is a fully autonomous GitHub automation that au
 - ✅ Posts detailed review comments
 - ✅ Auto-approves if all checks pass
 
+### 1.5 **AI PR Agent** (advanced review)
+- 🧠 Deep AI analysis using OpenAI GPT-4
+- 🎯 Intelligent code recommendations
+- 🔍 Advanced pattern recognition
+- 📚 Context-aware suggestions
+- 🎮 Game development expertise
+
 ### 2. **Auto-Fix** (automatic when issues found)
 - 🔧 Resolves merge conflicts using AI
 - 🔧 Fixes ChoiceScript syntax errors
@@ -381,7 +388,44 @@ Potential improvements:
 - [ ] Slack/Discord notifications
 - [ ] Advanced analytics dashboard
 
+## 🧠 AI PR Agent Integration
+
+### Enhanced Review with OpenAI GPT-4
+
+The repository now includes an **AI PR Agent** that provides advanced code review using OpenAI's GPT-4 model:
+
+**Location:** `scripts/ai_pr_agent.py`  
+**Workflow:** `.github/workflows/ai-pr-agent.yml`  
+**Documentation:** `scripts/README.md`
+
+**Features:**
+- 🧠 Deep semantic code analysis
+- 🎯 Intelligent, context-aware recommendations
+- 🔍 Advanced pattern recognition beyond syntax
+- 📚 Domain expertise in ChoiceScript and game development
+- 🎮 Narrative flow and branching logic analysis
+
+**How It Works:**
+1. Runs automatically on every PR alongside auto-review
+2. Analyzes code changes with GPT-4
+3. Posts detailed AI-generated review comments
+4. Adds `ai-reviewed` label on success
+5. Complements the existing auto-review system
+
+**Setup Requirements:**
+- OpenAI API key in GitHub Secrets as `OPENAI_API_KEY`
+- See `scripts/README.md` for full documentation
+
+**Skipping AI Review:**
+Add the `skip-ai-review` label to any PR to disable AI review for that PR.
+
 ## 📝 Change Log
+
+### Version 1.1 (AI Enhancement)
+- ✅ AI PR Agent integration with OpenAI GPT-4
+- ✅ Advanced semantic code analysis
+- ✅ Intelligent recommendations
+- ✅ Standalone scripts directory
 
 ### Version 1.0 (Initial Release)
 - ✅ Auto-review functionality
@@ -394,5 +438,6 @@ Potential improvements:
 ---
 
 **Created:** 2024-12-07  
-**Version:** 1.0  
+**Updated:** 2025-12-08  
+**Version:** 1.1  
 **Status:** Active
