@@ -86,12 +86,11 @@ jobs:
             POLISHED=$(git diff --name-only | head -1 | xargs basename)
             git add choicescript_game/scenes/*.txt
 
-            git commit -m "[AI-POLISH] Enhanced $POLISHED with sensory details
-
-- Added taste/smell descriptions
-- Enriched atmospheric writing
-- Preserved character voices
-- Maintained ChoiceScript syntax"
+            git commit -m "[AI-POLISH] Enhanced $POLISHED with sensory details" \
+              -m "- Added taste/smell descriptions" \
+              -m "- Enriched atmospheric writing" \
+              -m "- Preserved character voices" \
+              -m "- Maintained ChoiceScript syntax"
 
             git push origin ai-content-polish --force-with-lease
             echo "✅ Polished and pushed $POLISHED"

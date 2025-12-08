@@ -1,0 +1,27 @@
+{
+  "total_workflows": 13,
+  "validated": 13,
+  "critical_issues": 0,
+  "warnings": 3,
+  "issues": [],
+  "warning_list": [
+    "agent-management.yml: ANTHROPIC_API_KEY used without conditional check",
+    "ai-automation.yml: Unknown secret reference: DISCORD_WEBHOOK",
+    "ai-automation.yml: Unknown secret reference: ZAPIER_WEBHOOK"
+  ],
+  "validated_workflows": [
+    "agent-management.yml",
+    "ai-automation.yml",
+    "ai-autonomous-worker.yml",
+    "ai-content-polish.yml",
+    "ai-game-tester.yml",
+    "ai-scene-writer.yml",
+    "ai-stat-balancer.yml",
+    "auto-approve-workflows.yml",
+    "auto-review-fix-merge.yml",
+    "choicescript-tests.yml",
+    "enterprise-monitoring.yml",
+    "inbox-management.yml",
+    "jekyll-docker.yml"
+  ]
+}
