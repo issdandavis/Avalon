@@ -60,12 +60,12 @@ jobs:
           if [[ -n $(git status --porcelain) ]]; then
             git add choicescript_game/scenes/*.txt docs/balance-reports/
             
-            git commit -m "[AI-BALANCE] Automated stat balancing
-
-- Analyzed stat progression across all scenes
-- Balanced collaboration stat opportunities
-- Ensured fair relationship progression
-- Updated balance report"
+            git commit -m "[AI-BALANCE] Automated stat balancing" \
+              -m "" \
+              -m "- Analyzed stat progression across all scenes" \
+              -m "- Balanced collaboration stat opportunities" \
+              -m "- Ensured fair relationship progression" \
+              -m "- Updated balance report"
             
             git push origin ai-stat-balance --force-with-lease
           fi
