@@ -2,6 +2,10 @@ name: 🤖 Autonomous PR Review, Fix & Merge
 
 # This workflow automatically reviews, fixes, and merges pull requests
 # with intelligent risk assessment and safety controls
+#
+# SECURITY: This workflow includes a security gate that only allows
+# trusted contributors to trigger auto-review, auto-fix, and auto-merge.
+# Untrusted contributors' PRs will require manual approval before processing.
 
 on:
   pull_request:
@@ -25,13 +29,65 @@ permissions:
   statuses: write
 
 jobs:
-  auto-review:
-    name: 🔍 Auto-Review PR
+  # Security gate: Only run for trusted contributors or after approval
+  security-check:
+    name: 🔒 Security Check
     runs-on: ubuntu-latest
     if: |
       github.event_name == 'pull_request' || 
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/auto-review'))
+    
+    outputs:
+      approved: ${{ steps.check.outputs.approved }}
+    
+    steps:
+      - name: Check if actor is trusted
+        id: check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # List of trusted contributors (repository collaborators)
+          TRUSTED_USERS=(
+            "issdandavis"
+            "215328633+issdandavis@users.noreply.github.com"
+          )
+          
+          ACTOR="${{ github.actor }}"
+          
+          # Check if actor is in trusted list
+          APPROVED=false
+          for user in "${TRUSTED_USERS[@]}"; do
+            if [[ "$ACTOR" == "$user" ]]; then
+              APPROVED=true
+              break
+            fi
+          done
+          
+          # For issue_comment events, check the commenter
+          if [[ "${{ github.event_name }}" == "issue_comment" ]]; then
+            COMMENTER="${{ github.event.comment.user.login }}"
+            for user in "${TRUSTED_USERS[@]}"; do
+              if [[ "$COMMENTER" == "$user" ]]; then
+                APPROVED=true
+                break
+              fi
+            done
+          fi
+          
+          echo "approved=$APPROVED" >> $GITHUB_OUTPUT
+          
+          if [[ "$APPROVED" == "true" ]]; then
+            echo "✅ Actor $ACTOR is trusted"
+          else
+            echo "⚠️ Actor $ACTOR requires approval"
+          fi
+
+  auto-review:
+    name: 🔍 Auto-Review PR
+    runs-on: ubuntu-latest
+    needs: security-check
+    if: needs.security-check.outputs.approved == 'true'
     
     outputs:
       needs_fixes: ${{ steps.review.outputs.needs_fixes }}
@@ -56,11 +112,12 @@ jobs:
           echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
           echo "Processing PR #$PR_NUMBER"
       
-      - name: Checkout PR branch
+      - name: Checkout PR branch (read-only for security)
         uses: actions/checkout@v4
         with:
           ref: refs/pull/${{ steps.pr_info.outputs.pr_number }}/head
           fetch-depth: 0
+          persist-credentials: false  # Security: Don't persist credentials
       
       - name: Setup Python
         uses: actions/setup-python@v4
