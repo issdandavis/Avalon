@@ -50,7 +50,7 @@ This document summarizes the comprehensive GitHub Actions automation suite that 
 #### `.github/workflows/release-drafter.yml`
 - **Purpose**: Automatically draft release notes
 - **Configuration**: Uses `.github/release-drafter.yml` for release note formatting
-- **Triggers**: On push to main, PR events, and manual dispatch
+- **Triggers**: On push to main and manual dispatch (runs after PRs are merged, not on PR events)
 
 ### 3. Configuration Files
 
