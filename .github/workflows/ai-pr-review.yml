@@ -1,0 +1,66 @@
+name: AI PR Review (OpenAI)
+
+# This workflow uses OpenAI GPT-4 to provide intelligent PR reviews
+# Complements the existing auto-review-fix-merge system
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to review'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  ai-review:
+    name: OpenAI Code Review
+    runs-on: ubuntu-latest
+    
+    # Only run if OPENAI_API_KEY is configured
+    if: ${{ secrets.OPENAI_API_KEY != '' }}
+    
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || format('refs/pull/{0}/head', github.event.inputs.pr_number) }}
+          fetch-depth: 0
+      
+      - name: Fetch base branch
+        run: |
+          git fetch origin main:main
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install openai requests
+      
+      - name: Run AI PR Review
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+        run: |
+          python scripts/ai_pr_agent.py
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "## 🤖 AI PR Review Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "AI-powered review posted to PR #${{ github.event.pull_request.number || github.event.inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Model**: OpenAI GPT-4" >> $GITHUB_STEP_SUMMARY
+          echo "**Review Type**: Deep semantic and contextual analysis" >> $GITHUB_STEP_SUMMARY
