@@ -8,7 +8,7 @@ on:
     workflows: ["*"]
     types:
       - requested
-  
+
   pull_request_target:
     types:
       - opened
@@ -35,15 +35,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "🔓 Auto-approving workflows for enterprise account"
-          
+
           # List of approved enterprise account usernames/emails
           APPROVED_ACCOUNTS=(
             "issdandavis"
             "215328633+issdandavis@users.noreply.github.com"
           )
-          
+
           ACTOR="${{ github.actor }}"
-          
+
           # Check if actor is in approved list
           APPROVED=false
           for account in "${APPROVED_ACCOUNTS[@]}"; do
@@ -52,7 +52,7 @@ jobs:
               break
             fi
           done
-          
+
           if [[ "$APPROVED" == "true" ]]; then
             echo "✅ Account $ACTOR is approved for auto-workflow execution"
             echo "approved=true" >> $GITHUB_OUTPUT
@@ -60,7 +60,7 @@ jobs:
             echo "⚠️ Account $ACTOR is not in approved list"
             echo "approved=false" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Enable workflow runs for PRs
         if: github.event_name == 'pull_request_target'
         env:
@@ -70,7 +70,7 @@ jobs:
           # Approve PR from enterprise account
           gh pr review $PR_NUMBER --approve --body "✅ Auto-approved: Enterprise account workflow authorization"
           echo "✅ PR #$PR_NUMBER auto-approved"
-      
+
       - name: Set workflow approval status
         run: |
           echo "Enterprise account auto-approval complete"

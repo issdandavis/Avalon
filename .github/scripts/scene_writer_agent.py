@@ -8,7 +8,13 @@ import os
 import sys
 import re
 from pathlib import Path
-import anthropic
+
+try:
+    import anthropic
+except ImportError:
+    print("❌ Error: anthropic package not installed")
+    print("Install with: pip install anthropic")
+    sys.exit(1)
 
 class SceneWriterAgent:
     """Writes complete ChoiceScript scenes with proper voice and structure"""
@@ -39,7 +45,12 @@ You will be given:
 Produce complete, ready-to-use ChoiceScript code."""
 
     def __init__(self):
-        self.client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            print("⚠️ Warning: ANTHROPIC_API_KEY not set")
+            print("This script requires an API key to function.")
+            sys.exit(1)
+        self.client = anthropic.Anthropic(api_key=api_key)
         self.repo_path = Path.cwd()
     
     def read_file_safe(self, path):

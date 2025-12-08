@@ -7,7 +7,7 @@ on:
   # Run every 6 hours (adjust as needed)
   schedule:
     - cron: '0 */6 * * *'
-  
+
   # Allow manual triggering
   workflow_dispatch:
     inputs:
@@ -26,35 +26,35 @@ on:
 jobs:
   autonomous-development:
     runs-on: ubuntu-latest
-    
+
     # Only run if API key is configured
     if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           pip install anthropic GitPython
-      
+
       - name: Configure Git
         run: |
           git config --global user.name "SpiralVerse AI Worker"
           git config --global user.email "ai-worker@spiralverse.dev"
-      
+
       - name: Create or switch to AI work branch
         run: |
           git checkout ai-autonomous-work 2>/dev/null || git checkout -b ai-autonomous-work
-      
+
       - name: Run AI Worker
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -62,7 +62,7 @@ jobs:
           TASK_PRIORITY: ${{ github.event.inputs.task_priority || '1' }}
         run: |
           python .github/scripts/ai_autonomous_worker.py
-      
+
       - name: Push changes if any
         run: |
           if [[ -n $(git status --porcelain) ]]; then
@@ -72,7 +72,7 @@ jobs:
           else
             echo "ℹ️ No changes made by AI worker this run"
           fi
-      
+
       - name: Create PR if needed
         if: github.event_name == 'schedule'
         env:
@@ -80,7 +80,7 @@ jobs:
         run: |
           # Check if PR already exists
           PR_EXISTS=$(gh pr list --head ai-autonomous-work --json number --jq length)
-          
+
           if [ "$PR_EXISTS" -eq 0 ] && [ -n "$(git log origin/main..ai-autonomous-work --oneline)" ]; then
             gh pr create \
               --title "[AI-AUTO] Autonomous development progress" \
@@ -91,7 +91,7 @@ jobs:
               --label "needs-review"
             echo "✅ Created PR for AI work"
           fi
-      
+
       - name: Report status
         if: always()
         run: |
@@ -101,7 +101,7 @@ jobs:
           echo "- **Priority:** P${{ github.event.inputs.task_priority || '1' }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Timestamp:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           if [[ -n $(git status --porcelain) ]]; then
             echo "✅ Changes were made and committed" >> $GITHUB_STEP_SUMMARY
           else

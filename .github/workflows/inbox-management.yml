@@ -559,7 +559,7 @@ jobs:
   uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
   with:
     # Terraform or Terragrunt subcommand to execute.
-    tf_actions_subcommand: 
+    tf_actions_subcommand:
     # Binary to use. Terraform or Terragrunt
     tf_actions_binary: # optional, default is terragrunt
     # Terraform version to install.
@@ -576,4 +576,4 @@ jobs:
     tf_actions_working_dir: # optional, default is .
     # Write Terragrunt fmt changes to source files.
     tf_actions_fmt_write: # optional
-          
+

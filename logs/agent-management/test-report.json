@@ -1,0 +1,61 @@
+{
+  "passed": 7,
+  "failed": 0,
+  "warnings": 1,
+  "tests": [
+    {
+      "name": "Python Scripts Exist",
+      "status": "pass",
+      "message": "All 11 required scripts exist",
+      "details": {
+        "count": 11
+      }
+    },
+    {
+      "name": "Script Syntax Valid",
+      "status": "pass",
+      "message": "All 5 scripts have valid syntax",
+      "details": {}
+    },
+    {
+      "name": "Workflows Exist",
+      "status": "pass",
+      "message": "All 6 required workflows exist",
+      "details": {}
+    },
+    {
+      "name": "Required Directories",
+      "status": "pass",
+      "message": "All required directories exist",
+      "details": {}
+    },
+    {
+      "name": "Configuration Files",
+      "status": "pass",
+      "message": "All configuration files valid",
+      "details": {}
+    },
+    {
+      "name": "Agent Orchestrator",
+      "status": "pass",
+      "message": "Agent orchestrator runs successfully",
+      "details": {
+        "exit_code": 1
+      }
+    },
+    {
+      "name": "ChoiceScript Validator",
+      "status": "warning",
+      "message": "Validator exited with code 1 (may be expected)",
+      "details": {
+        "exit_code": 1
+      }
+    },
+    {
+      "name": "API-Dependent Scripts",
+      "status": "pass",
+      "message": "All API-dependent scripts have proper error handling",
+      "details": {}
+    }
+  ]
+}

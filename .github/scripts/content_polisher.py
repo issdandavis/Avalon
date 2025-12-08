@@ -7,7 +7,14 @@ Actually improves content quality
 import os
 import re
 from pathlib import Path
-import anthropic
+import sys
+
+try:
+    import anthropic
+except ImportError:
+    print("❌ Error: anthropic package not installed")
+    print("Install with: pip install anthropic")
+    sys.exit(1)
 
 class ContentPolisher:
     """Polishes existing scenes by adding sensory details and improving prose"""
@@ -38,7 +45,12 @@ You DO:
 Output the COMPLETE polished scene with all original code intact."""
 
     def __init__(self):
-        self.client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            print("⚠️ Warning: ANTHROPIC_API_KEY not set")
+            print("This script requires an API key to function.")
+            sys.exit(1)
+        self.client = anthropic.Anthropic(api_key=api_key)
         self.repo_path = Path.cwd()
     
     def find_scene_needing_polish(self, polish_type="sensory-details"):
