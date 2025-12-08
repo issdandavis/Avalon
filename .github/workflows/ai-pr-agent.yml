@@ -1,0 +1,118 @@
+name: AI PR Agent Review
+
+# Advanced AI-powered code review using OpenAI GPT-4
+# This workflow provides deep analysis and intelligent feedback on pull requests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to review'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  ai-review:
+    name: AI-Powered Code Review
+    runs-on: ubuntu-latest
+    
+    # Skip if PR is from bot or has 'skip-ai-review' label
+    if: |
+      github.actor != 'dependabot[bot]' &&
+      !contains(github.event.pull_request.labels.*.name, 'skip-ai-review')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install openai requests
+      
+      - name: Get PR number
+        id: pr
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "number=${{ github.event.inputs.pr_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Run AI PR Agent
+        id: ai_review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/ai_pr_agent.py \
+            --repo ${{ github.repository }} \
+            --pr ${{ steps.pr.outputs.number }} \
+            --output ai-review-results.json
+        continue-on-error: true
+      
+      - name: Upload review results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-review-results
+          path: ai-review-results.json
+          retention-days: 30
+      
+      - name: Add label on success
+        if: steps.ai_review.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.pr.outputs.number }},
+              labels: ['ai-reviewed']
+            })
+      
+      - name: Comment on failure
+        if: steps.ai_review.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.pr.outputs.number }},
+              body: '⚠️ **AI Review Failed**\n\nThe AI-powered review encountered an error. This may be due to:\n- OpenAI API rate limits\n- API key issues\n- Network connectivity\n\nThe PR will still be reviewed by the standard auto-review system.'
+            })
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "## AI PR Agent Review Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **PR Number**: #${{ steps.pr.outputs.number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ steps.ai_review.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.ai_review.outcome }}" = "success" ]; then
+            echo "✅ AI review completed successfully" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Review feedback has been posted to the PR." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ AI review failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Check the workflow logs for details." >> $GITHUB_STEP_SUMMARY
+          fi
