@@ -102,8 +102,17 @@ def main():
         sys.exit(1)
     
     # Parse repository name
-    repo = repo_full.split("/")[1]
-    pr_number = int(pr_number_str)
+    repo_parts = repo_full.split("/")
+    if len(repo_parts) != 2:
+        print(f"❌ Error: Invalid repository format '{repo_full}'. Expected 'owner/repo'")
+        sys.exit(1)
+    repo = repo_parts[1]
+    
+    try:
+        pr_number = int(pr_number_str)
+    except ValueError:
+        print(f"❌ Error: Invalid PR number '{pr_number_str}'. Must be an integer")
+        sys.exit(1)
     
     print(f"🔍 Fetching PR #{pr_number} diff from {owner}/{repo}...")
     
@@ -146,7 +155,17 @@ def main():
     )
 
     # Extract the review text from results
-    review_text = result.final_output_text  # see docs for exact property name
+    # The openai-agents SDK Result object may use different property names
+    # Try common variants to ensure compatibility
+    if hasattr(result, 'final_output_text'):
+        review_text = result.final_output_text
+    elif hasattr(result, 'output'):
+        review_text = result.output
+    elif hasattr(result, 'text'):
+        review_text = result.text
+    else:
+        print("⚠️  Warning: Unable to extract review text from result object")
+        review_text = str(result)
 
     # Format as a nice GitHub comment
     markdown_body = f"""## 🤖 AI Code Review
