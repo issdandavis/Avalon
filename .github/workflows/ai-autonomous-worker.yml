@@ -4,11 +4,8 @@ name: AI Autonomous Worker (Demo)
 # To activate: Add ANTHROPIC_API_KEY to repository secrets
 
 on:
-  # Run every 6 hours (adjust as needed)
   schedule:
     - cron: '0 */6 * * *'
-  
-  # Allow manual triggering
   workflow_dispatch:
     inputs:
       task_priority:
@@ -24,11 +21,27 @@ on:
           - '5'
 
 jobs:
+  # First job: Check if the API key secret exists
+  check-api-key:
+    runs-on: ubuntu-latest
+    outputs:
+      has-key: ${{ steps.check.outputs.has_key }}
+    steps:
+      - id: check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "has_key=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_key=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  # Main job: Only runs if API key exists
   autonomous-development:
     runs-on: ubuntu-latest
-    
-    # Only run if API key is configured
-    if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    needs: check-api-key
+    if: needs.check-api-key.outputs.has-key == 'true'
     
     steps:
       - name: Checkout repository
@@ -99,7 +112,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Branch:** ai-autonomous-work" >> $GITHUB_STEP_SUMMARY
           echo "- **Priority:** P${{ github.event.inputs.task_priority || '1' }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Timestamp:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp:** $(date -u +\"%Y-%m-%d %H:%M:%S UTC\")" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
           if [[ -n $(git status --porcelain) ]]; then
