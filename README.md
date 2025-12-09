@@ -277,12 +277,14 @@ This project uses the **Codex Connector** - a coordinated multi-AI workflow syst
 ### 🚀 Quick Start
 **Want to use multiple AIs on this project?**
 
-👉 **Read: [CODEX_CONNECTOR_USAGE.md](CODEX_CONNECTOR_USAGE.md)** - 30-second setup guide
+👉 **Usage Guide:** [CODEX_CONNECTOR_USAGE.md](CODEX_CONNECTOR_USAGE.md) - 30-second setup  
+👉 **Example Workflow:** [CODEX_CONNECTOR_EXAMPLE.md](CODEX_CONNECTOR_EXAMPLE.md) - See it in action
 
 This system lets you assign specialized roles to different AIs, and they'll coordinate automatically through shared context files.
 
 ### For AI Assistants Working on This Project
 - **🆕 Usage Guide:** [CODEX_CONNECTOR_USAGE.md](CODEX_CONNECTOR_USAGE.md) - How to use the Codex Connector
+- **📘 Example:** [CODEX_CONNECTOR_EXAMPLE.md](CODEX_CONNECTOR_EXAMPLE.md) - Real workflow demonstration
 - **Complete Guide:** [MULTI_AI_COLLABORATION_GUIDE.md](MULTI_AI_COLLABORATION_GUIDE.md) - Full workflow details
 - **Quick Reference:** [QUICK_COLLAB_REF.md](QUICK_COLLAB_REF.md) - One-page overview
 - **Current Status:** [STATUS_CONTEXT.md](STATUS_CONTEXT.md) - What's happening now

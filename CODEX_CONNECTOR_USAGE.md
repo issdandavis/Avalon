@@ -4,6 +4,8 @@
 
 The **Codex Connector** is the multi-AI collaboration system that enables different AI assistants to work together seamlessly on **The Avalon Codex** project. Think of it as a "handoff protocol" that lets multiple AIs coordinate without stepping on each other's work.
 
+**💡 Want to see it in action?** → [CODEX_CONNECTOR_EXAMPLE.md](CODEX_CONNECTOR_EXAMPLE.md) - Real workflow example
+
 ---
 
 ## 🚀 Quick Start (30 seconds)
