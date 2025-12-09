@@ -138,7 +138,7 @@ def main():
 
 ---
 
-*Generated automatically by ai_pr_agent.py • {Path(__file__).name}*
+*Generated automatically by {Path(__file__).name}*
 """
 
     try:
