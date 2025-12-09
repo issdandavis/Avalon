@@ -69,7 +69,14 @@ Avalon/
 
 If you're here because you need to manage the autonomous AI workers:
 
-**→ Go to: [AGENT_START_HERE.md](AGENT_START_HERE.md)**
+**→ First time? Start with: [UNDERSTANDING_AI_SERVICES.md](UNDERSTANDING_AI_SERVICES.md)**
+
+This explains:
+- What AI services are being used (ChatGPT vs Claude vs GitHub Copilot)
+- Who pays for what
+- How to set up your API keys
+
+**→ Then go to: [AGENT_START_HERE.md](AGENT_START_HERE.md)**
 
 This covers:
 - Verifying your closed PRs worked ✅

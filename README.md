@@ -40,6 +40,10 @@ This repository features AI-powered automation for inter-account communications 
 - ✅ **Multi-platform monitoring** (GitHub, GitLab, Bitbucket, 2FA)
 - ✅ **Security validation** and integration status
 
+**🔑 NEW: API Key Setup Guides:**
+- **[UNDERSTANDING_AI_SERVICES.md](UNDERSTANDING_AI_SERVICES.md)** - ⭐ **Start here!** Explains which AI services are used
+- **[API_KEYS_SETUP.md](API_KEYS_SETUP.md)** - Step-by-step guide to add your API keys
+
 **Quick Start Guides:**
 - **[AI Employees Guide](docs/AI_EMPLOYEES_GUIDE.md)** - 5-minute setup for inbox management
 - **[Inbox Management](docs/INBOX_MANAGEMENT.md)** - Complete documentation
@@ -73,6 +77,10 @@ See **[PLAY_THE_GAME.md](PLAY_THE_GAME.md)** for detailed instructions.
 ## 🤖 NEW: AI Autonomous Development System
 
 **Game development on autopilot!**
+
+> **⚠️ FIRST TIME SETUP:** Don't know where to add your API keys? Start here:
+> - **[UNDERSTANDING_AI_SERVICES.md](UNDERSTANDING_AI_SERVICES.md)** - Which AI service to use (ChatGPT vs Claude)
+> - **[API_KEYS_SETUP.md](API_KEYS_SETUP.md)** - Step-by-step setup instructions
 
 This repository now includes a complete **AI autonomous workflow system** that:
 - ✨ Writes ChoiceScript scenes automatically (every 3 hours)
