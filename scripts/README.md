@@ -6,7 +6,7 @@ This directory contains standalone utility scripts for repository automation and
 
 ### Overview
 
-The AI PR Review Agent (`ai_pr_agent.py`) provides automated code reviews for pull requests using OpenAI's GPT-4 model. It fetches the PR diff, analyzes the changes, and posts a structured review comment.
+The AI PR Review Agent (`ai_pr_agent.py`) provides automated code reviews for pull requests using OpenAI's GPT-4o-mini model. It fetches the PR diff, analyzes the changes, and posts a structured review comment.
 
 ### Features
 
