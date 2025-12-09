@@ -270,25 +270,33 @@ Avalon/
 
 ---
 
-## 🤖 Multi-AI Collaboration System
+## 🔌 Codex Connector - Multi-AI Collaboration System
 
-This project uses a coordinated multi-AI workflow to ensure quality and consistency across all content.
+This project uses the **Codex Connector** - a coordinated multi-AI workflow system that enables different AI assistants to work together seamlessly on The Avalon Codex.
+
+### 🚀 Quick Start
+**Want to use multiple AIs on this project?**
+
+👉 **Read: [CODEX_CONNECTOR_USAGE.md](CODEX_CONNECTOR_USAGE.md)** - 30-second setup guide
+
+This system lets you assign specialized roles to different AIs, and they'll coordinate automatically through shared context files.
 
 ### For AI Assistants Working on This Project
-- **Start Here:** [MULTI_AI_COLLABORATION_GUIDE.md](MULTI_AI_COLLABORATION_GUIDE.md) - Complete workflow guide
+- **🆕 Usage Guide:** [CODEX_CONNECTOR_USAGE.md](CODEX_CONNECTOR_USAGE.md) - How to use the Codex Connector
+- **Complete Guide:** [MULTI_AI_COLLABORATION_GUIDE.md](MULTI_AI_COLLABORATION_GUIDE.md) - Full workflow details
 - **Quick Reference:** [QUICK_COLLAB_REF.md](QUICK_COLLAB_REF.md) - One-page overview
 - **Current Status:** [STATUS_CONTEXT.md](STATUS_CONTEXT.md) - What's happening now
 - **Scene Tracking:** [SCENE_PARITY_CHECKLIST.md](SCENE_PARITY_CHECKLIST.md) - Conversion progress
 - **Balance Data:** [STATS_MATRIX.md](STATS_MATRIX.md) - Choice impact tracking
 
-### AI Roles
-1. **Lore Curator** - Validates narrative consistency
-2. **Conversion Engineer** - HTML → ChoiceScript translation
-3. **Structural Reviewer** - Ensures scene parity
-4. **Quality Balancer** - Stat difficulty tuning
-5. **Automation Planner** - Workflow documentation
+### The Five AI Roles
+1. **🎨 Lore Curator** - Validates narrative consistency
+2. **💻 Conversion Engineer** - HTML → ChoiceScript translation
+3. **🔍 Structural Reviewer** - Ensures scene parity
+4. **⚖️ Quality Balancer** - Stat difficulty tuning
+5. **📋 Automation Planner** - Workflow documentation
 
-All AIs share context through tracked files to maintain consistency and enable seamless handoffs.
+All AIs share context through tracked files (`STATUS_CONTEXT.md`, `SCENE_PARITY_CHECKLIST.md`, `STATS_MATRIX.md`) to maintain consistency and enable seamless handoffs.
 
 ---
 

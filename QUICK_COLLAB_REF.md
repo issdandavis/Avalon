@@ -1,6 +1,8 @@
 # QUICK COLLABORATION REFERENCE
 ## One-Page Guide for AI Assistants
 
+**🆕 NEW TO THE CODEX CONNECTOR?** → Read [CODEX_CONNECTOR_USAGE.md](CODEX_CONNECTOR_USAGE.md) first!
+
 ---
 
 ## 🎯 Three Essential Files

@@ -1,6 +1,8 @@
 # MULTI-AI COLLABORATION GUIDE
 ## Avalon Project Coordination System
 
+**🆕 NEW USER? START HERE:** [CODEX_CONNECTOR_USAGE.md](CODEX_CONNECTOR_USAGE.md) - 30-second quick start
+
 **Purpose:** Enable multiple AI assistants to work together effectively on the Avalon Codex project  
 **Last Updated:** 2025-11-25  
 **Status:** ✅ System Initialized

@@ -79,4 +79,18 @@ This covers:
 
 ---
 
+## 🔌 Using the Codex Connector?
+
+If you want multiple AI assistants to collaborate on this project:
+
+**→ Go to: [CODEX_CONNECTOR_USAGE.md](CODEX_CONNECTOR_USAGE.md)**
+
+This explains:
+- What the Codex Connector is
+- How to coordinate multiple AIs (30 seconds)
+- The 5 specialized AI roles
+- Shared context files that enable seamless handoffs
+
+---
+
 **The game is ready to play. Just find `game/index.html` and open it!**
