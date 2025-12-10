@@ -1,8 +1,5 @@
 name: Auto-Review, Fix & Merge PRs
 
-# This workflow automatically reviews, fixes, and merges pull requests
-# when they are safe to merge based on risk assessment and validation
-
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -15,216 +12,170 @@ on:
         required: true
         type: string
 
-permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-  checks: read
+permissions: {}
 
 jobs:
   auto-review:
     name: Auto-Review PR
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
-    
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+
     outputs:
       approved: ${{ steps.review.outputs.approved }}
       risk_level: ${{ steps.review.outputs.risk_level }}
       can_auto_merge: ${{ steps.review.outputs.can_auto_merge }}
-    
+
     steps:
+      - name: Set PR Ref
+        id: vars
+        run: |
+          echo "ref=${{ github.event.pull_request.head.ref || format('refs/pull/${{ github.event.inputs.pr_number }}/head') }}" >> $GITHUB_OUTPUT
+          echo "pr_number=${{ github.event.pull_request.number || github.event.inputs.pr_number }}" >> $GITHUB_OUTPUT
+
       - name: Checkout PR
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref || format('refs/pull/{0}/head', github.event.inputs.pr_number) }}
+          ref: ${{ steps.vars.outputs.ref }}
           fetch-depth: 0
-      
+
       - name: Fetch base branch
-        run: |
-          git fetch origin main:main
-      
+        run: git fetch origin main:main
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
-      - name: Install dependencies
+
+      - name: Install Dependencies
         run: |
           pip install pyyaml
           sudo apt-get update && sudo apt-get install -y jq
-      
-      - name: Make scripts executable
-        run: |
-          chmod +x .github/scripts/auto_reviewer.py
-          chmod +x .github/scripts/auto_fixer.py
-          chmod +x .github/scripts/auto_merger.py
-          chmod +x .github/scripts/conflict_resolver.py
-      
+
+      - name: Make Scripts Executable
+        run: chmod +x .github/scripts/*.py
+
       - name: Run Auto-Reviewer
         id: review
         env:
-          PR_NUMBER: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+          PR_NUMBER: ${{ steps.vars.outputs.pr_number }}
         run: |
-          # Run the reviewer
           python3 .github/scripts/auto_reviewer.py "$PR_NUMBER" || true
-          
-          # Read results
+
           if [ -f /tmp/review_result.json ]; then
-            APPROVED=$(jq -r '.approved' /tmp/review_result.json 2>/dev/null || echo "false")
-            RISK_LEVEL=$(jq -r '.risk_level' /tmp/review_result.json 2>/dev/null || echo "unknown")
-            CAN_AUTO_MERGE=$(jq -r '.can_auto_merge' /tmp/review_result.json 2>/dev/null || echo "false")
-            
-            echo "approved=$APPROVED" >> $GITHUB_OUTPUT
-            echo "risk_level=$RISK_LEVEL" >> $GITHUB_OUTPUT
-            echo "can_auto_merge=$CAN_AUTO_MERGE" >> $GITHUB_OUTPUT
-            
-            # Add to job summary
+            jq -r '.approved, .risk_level, .can_auto_merge' /tmp/review_result.json | {
+              read approved
+              read risk_level
+              read can_auto_merge
+
+              echo "approved=$approved" >> $GITHUB_OUTPUT
+              echo "risk_level=$risk_level" >> $GITHUB_OUTPUT
+              echo "can_auto_merge=$can_auto_merge" >> $GITHUB_OUTPUT
+            }
+
             echo "## 🔍 Auto-Review Results" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- **Approved:** $APPROVED" >> $GITHUB_STEP_SUMMARY
-            echo "- **Risk Level:** $RISK_LEVEL" >> $GITHUB_STEP_SUMMARY
-            echo "- **Can Auto-Merge:** $CAN_AUTO_MERGE" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "approved=false" >> $GITHUB_OUTPUT
-            echo "risk_level=unknown" >> $GITHUB_OUTPUT
-            echo "can_auto_merge=false" >> $GITHUB_OUTPUT
+            jq -r '"- **Approved:** \(.approved)\n- **Risk Level:** \(.risk_level)\n- **Can Auto-Merge:** \(.can_auto_merge)"' /tmp/review_result.json >> $GITHUB_STEP_SUMMARY
           fi
-      
+
+      - name: Upload Review Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-result
+          path: /tmp/review_result.json
+
       - name: Post Review Comment
         if: always()
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            
-            // Get PR number from either event type
-            const prNumber = context.payload.pull_request?.number || 
-                           parseInt('${{ github.event.inputs.pr_number }}') || 
-                           null;
-            
-            if (!prNumber) {
-              console.log('No PR number available, skipping comment');
-              return;
-            }
-            
+            const prNumber = context.payload.pull_request?.number || parseInt('${{ steps.vars.outputs.pr_number }}');
+            if (!prNumber) return;
+
             try {
               const reviewData = JSON.parse(fs.readFileSync('/tmp/review_result.json', 'utf8'));
-              
               let comment = '## 🤖 Auto-Review Results\n\n';
               comment += `**Risk Level:** ${reviewData.risk_level.toUpperCase()}\n\n`;
-              
-              if (reviewData.errors.length > 0) {
-                comment += '### ❌ Errors\n';
-                reviewData.errors.forEach(error => {
-                  comment += `- ${error}\n`;
-                });
-                comment += '\n';
-              }
-              
-              if (reviewData.warnings.length > 0) {
-                comment += '### ⚠️ Warnings\n';
-                reviewData.warnings.forEach(warning => {
-                  comment += `- ${warning}\n`;
-                });
-                comment += '\n';
-              }
-              
-              if (reviewData.suggestions.length > 0) {
-                comment += '### 💡 Suggestions\n';
-                reviewData.suggestions.forEach(suggestion => {
-                  comment += `- ${suggestion}\n`;
-                });
-                comment += '\n';
-              }
-              
-              if (reviewData.approved) {
-                comment += '\n✅ **APPROVED** - No blocking issues found\n';
-              } else {
-                comment += '\n❌ **CHANGES REQUESTED** - Please fix errors before merging\n';
-              }
-              
-              if (reviewData.can_auto_merge) {
-                comment += '🤖 **AUTO-MERGE ELIGIBLE**\n';
-              }
-              
+
+              if (reviewData.errors.length)
+                comment += '### ❌ Errors\n' + reviewData.errors.map(e => `- ${e}`).join('\n') + '\n\n';
+              if (reviewData.warnings.length)
+                comment += '### ⚠️ Warnings\n' + reviewData.warnings.map(w => `- ${w}`).join('\n') + '\n\n';
+              if (reviewData.suggestions.length)
+                comment += '### 💡 Suggestions\n' + reviewData.suggestions.map(s => `- ${s}`).join('\n') + '\n\n';
+
+              comment += reviewData.approved
+                ? '✅ **APPROVED** - No blocking issues found\n'
+                : '❌ **CHANGES REQUESTED** - Please fix errors before merging\n';
+
+              if (reviewData.can_auto_merge) comment += '🤖 **AUTO-MERGE ELIGIBLE**\n';
+
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: prNumber,
                 body: comment
               });
-            } catch (error) {
-              console.log('Could not post review comment:', error.message);
+            } catch (e) {
+              console.log('Comment posting failed:', e.message);
             }
-      
-      - name: Approve PR if passing
+
+      - name: Auto-Approve PR
         if: steps.review.outputs.approved == 'true'
         uses: actions/github-script@v7
         with:
           script: |
-            // Get PR number from either event type
-            const prNumber = context.payload.pull_request?.number || 
-                           parseInt('${{ github.event.inputs.pr_number }}') || 
-                           null;
-            
-            if (!prNumber) {
-              console.log('No PR number available, skipping approval');
-              return;
-            }
-            
-            try {
-              await github.rest.pulls.createReview({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber,
-                event: 'APPROVE',
-                body: '✅ Auto-approved by automated review system'
-              });
-            } catch (error) {
-              console.log('Could not approve PR:', error.message);
-            }
-  
+            const prNumber = context.payload.pull_request?.number || parseInt('${{ steps.vars.outputs.pr_number }}');
+            if (!prNumber) return;
+
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              event: 'APPROVE',
+              body: '✅ Auto-approved by automated review system'
+            })
+
   auto-fix:
     name: Auto-Fix Issues
     runs-on: ubuntu-latest
     needs: auto-review
     if: needs.auto-review.outputs.approved == 'false'
-    
+    permissions:
+      contents: write
+      pull-requests: write
+
     steps:
       - name: Checkout PR
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref || format('refs/pull/{0}/head', github.event.inputs.pr_number) }}
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
+
+      - name: Download Review Results
+        uses: actions/download-artifact@v4
+        with:
+          name: review-result
+
       - name: Configure Git
         run: |
           git config --global user.name "Auto-Fix Bot"
           git config --global user.email "noreply@github.com"
-      
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
-      - name: Make scripts executable
-        run: |
-          chmod +x .github/scripts/auto_fixer.py
-      
-      - name: Resolve Conflicts
-        run: |
-          chmod +x .github/scripts/conflict_resolver.py
-          python3 .github/scripts/conflict_resolver.py || true
-      
+
       - name: Run Auto-Fixer
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
         run: |
-          # Copy review results from previous job
-          # In real scenario, this would be uploaded as artifact
-          python3 .github/scripts/auto_fixer.py "$PR_NUMBER" || true
-      
+          chmod +x .github/scripts/auto_fixer.py .github/scripts/conflict_resolver.py
+          python3 .github/scripts/conflict_resolver.py || true
+          python3 .github/scripts/auto_fixer.py "${{ github.event.pull_request.number }}" || true
+
       - name: Push Fixes
         run: |
           if git diff-index --quiet HEAD --; then
@@ -232,172 +183,99 @@ jobs:
           else
             git push origin HEAD || echo "Could not push fixes"
           fi
-      
+
       - name: Comment on Fixes
         if: always()
         uses: actions/github-script@v7
         with:
           script: |
-            // Get PR number from either event type
-            const prNumber = context.payload.pull_request?.number || 
-                           parseInt('${{ github.event.inputs.pr_number }}') || 
-                           null;
-            
-            if (!prNumber) {
-              console.log('No PR number available, skipping comment');
-              return;
-            }
-            
+            const prNumber = context.payload.pull_request?.number;
+            if (!prNumber) return;
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
               body: '🔧 Auto-fix attempted. Please review the changes.'
             });
-  
+
   auto-merge:
     name: Auto-Merge PR
     runs-on: ubuntu-latest
     needs: auto-review
     if: needs.auto-review.outputs.can_auto_merge == 'true' && !contains(github.event.pull_request.labels.*.name, 'no-auto-merge')
-    
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: read
+      issues: write
+
     steps:
-      - name: Checkout PR
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0
-      
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      
-      - name: Wait for CI
+      - name: Wait for CI to Finish
+        id: wait
         uses: actions/github-script@v7
-        id: wait-for-ci
         with:
           script: |
-            // Get PR number and SHA from either event type
-            const prNumber = context.payload.pull_request?.number || 
-                           parseInt('${{ github.event.inputs.pr_number }}') || 
-                           null;
-            const sha = context.payload.pull_request?.head?.sha || null;
-            
-            if (!prNumber || !sha) {
-              console.log('No PR number or SHA available');
-              return 'success';  // Proceed anyway
-            }
-            
-            const maxWait = 300000; // 5 minutes
-            const interval = 10000; // 10 seconds
+            const pr = context.payload.pull_request;
+            const sha = pr?.head?.sha;
+            const maxWait = 300_000;
+            const interval = 10_000;
             let elapsed = 0;
-            
+
             while (elapsed < maxWait) {
-              const { data: checks } = await github.rest.checks.listForRef({
+              const checks = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: sha
               });
-              
-              const relevantChecks = checks.check_runs.filter(check => 
-                check.name !== 'Auto-Merge PR'
-              );
-              
-              if (relevantChecks.length === 0) {
-                console.log('No CI checks found, proceeding with merge');
-                return 'success';
-              }
-              
-              const allComplete = relevantChecks.every(check => 
-                check.status === 'completed'
-              );
-              
+              const checkRuns = checks.data.check_runs.filter(c => c.name !== 'Auto-Merge PR');
+              const allComplete = checkRuns.every(c => c.status === 'completed');
               if (allComplete) {
-                const allPassed = relevantChecks.every(check => 
-                  check.conclusion === 'success' || check.conclusion === 'skipped'
-                );
-                
-                return allPassed ? 'success' : 'failed';
+                const allPassed = checkRuns.every(c => ['success', 'skipped'].includes(c.conclusion));
+                core.setOutput('result', allPassed ? 'success' : 'failed');
+                return;
               }
-              
-              await new Promise(resolve => setTimeout(resolve, interval));
+              await new Promise(res => setTimeout(res, interval));
               elapsed += interval;
             }
-            
-            return 'timeout';
-      
+
+            core.setOutput('result', 'timeout');
+
       - name: Merge PR
-        if: steps.wait-for-ci.outputs.result == 'success'
+        if: steps.wait.outputs.result == 'success'
         uses: actions/github-script@v7
         with:
           script: |
-            // Get PR number from either event type
-            const prNumber = context.payload.pull_request?.number || 
-                           parseInt('${{ github.event.inputs.pr_number }}') || 
-                           null;
-            
-            if (!prNumber) {
-              console.log('No PR number available, cannot merge');
-              return;
-            }
-            
+            const pr = context.payload.pull_request;
+            const prNumber = pr?.number;
             const riskLevel = '${{ needs.auto-review.outputs.risk_level }}';
-            
-            // Determine merge method
-            const mergeMethod = riskLevel === 'low' ? 'rebase' : 'squash';
-            
-            try {
-              await github.rest.pulls.merge({
+            const method = riskLevel === 'low' ? 'rebase' : 'squash';
+
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              merge_method: method,
+              commit_title: `Auto-merge: PR #${prNumber}`,
+              commit_message: 'Automatically merged by auto-merge system'
+            });
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `✅ **Auto-merged** using ${method} merge strategy\n\nRisk Level: ${riskLevel}`
+            });
+
+            if (pr.head.repo.full_name === `${context.repo.owner}/${context.repo.repo}`) {
+              await github.rest.git.deleteRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: prNumber,
-                merge_method: mergeMethod,
-                commit_title: `Auto-merge: PR #${prNumber}`,
-                commit_message: 'Automatically merged by auto-merge system'
-              });
-              
-              console.log(`✅ Successfully merged PR #${prNumber} using ${mergeMethod}`);
-              
-              // Add comment
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: prNumber,
-                body: `✅ **Auto-merged** using ${mergeMethod} merge strategy\n\nRisk Level: ${riskLevel}`
-              });
-              
-              // Delete branch if from this repo (not a fork)
-              if (context.payload.pull_request?.head?.repo?.full_name === context.repo.owner + '/' + context.repo.repo) {
-                try {
-                  const branchRef = context.payload.pull_request.head.ref;
-                  await github.rest.git.deleteRef({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    ref: `heads/${branchRef}`
-                  });
-                  console.log('Deleted merged branch');
-                } catch (error) {
-                  console.log('Could not delete branch:', error.message);
-                }
-              }
-              
-            } catch (error) {
-              console.log('❌ Failed to merge:', error.message);
-              
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: prNumber,
-                body: `❌ **Auto-merge failed**: ${error.message}\n\nPlease merge manually.`
+                ref: `heads/${pr.head.ref}`
               });
             }
-      
+
       - name: Report Status
         if: always()
         run: |
           echo "## 🤖 Auto-Merge Status" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **PR:** #${{ github.event.pull_request.number }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Risk Level:** ${{ needs.auto-review.outputs.risk_level }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **CI Status:** ${{ steps.wait-for-ci.outputs.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **CI Status:** ${{ steps.wait.outputs.result }}" >> $GITHUB_STEP_SUMMARY
