@@ -65,7 +65,7 @@
 
 ```bash
 # Navigate to repository
-cd /home/runner/work/Aethromoor/Aethromoor
+cd /path/to/your/Aethromoor  # or: cd $(git rev-parse --show-toplevel)
 
 # Remove the file from git history
 git filter-branch --force --index-filter \
@@ -128,7 +128,7 @@ ANTHROPIC_API_KEY=sk-ant-api03-YOUR_NEW_KEY_HERE
 
 ```bash
 # Search for common secret patterns
-cd /home/runner/work/Aethromoor/Aethromoor
+cd /path/to/your/Aethromoor  # or: cd $(git rev-parse --show-toplevel)
 
 # Check current files
 grep -r -iE "sk-[a-zA-Z0-9-]+" . --exclude-dir=.git | grep -v ".md:"

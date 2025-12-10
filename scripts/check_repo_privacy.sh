@@ -53,7 +53,9 @@ elif command -v curl &> /dev/null; then
     echo "Public repositories for $USERNAME:"
     echo "----------------------------------"
     
-    curl -s "https://api.github.com/users/$USERNAME/repos?per_page=100" | \
+    REPOS_JSON=$(curl -s "https://api.github.com/users/$USERNAME/repos?per_page=100")
+    
+    echo "$REPOS_JSON" | \
         jq -r '.[] | "\(.name): 🌐 PUBLIC - \(.html_url)"' 2>/dev/null || {
             echo "Error: Failed to fetch repositories"
             echo "This could mean:"
@@ -64,7 +66,7 @@ elif command -v curl &> /dev/null; then
         }
     
     echo ""
-    PUBLIC_COUNT=$(curl -s "https://api.github.com/users/$USERNAME/repos?per_page=100" | jq '. | length')
+    PUBLIC_COUNT=$(echo "$REPOS_JSON" | jq '. | length')
     echo -e "${GREEN}Public repositories found: $PUBLIC_COUNT${NC}"
     echo -e "${YELLOW}Private repositories: Not visible via public API${NC}"
     echo ""

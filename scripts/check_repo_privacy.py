@@ -96,7 +96,7 @@ def check_repo_privacy(username="issdandavis"):
             print(f"    Visit: https://github.com/{repo_path}/settings")
             print(f"    Look for: 'Danger Zone' → 'Change repository visibility'")
             print()
-    except:
+    except (subprocess.CalledProcessError, FileNotFoundError, Exception) as e:
         print("  Not in a git repository or git not available")
         print()
     
