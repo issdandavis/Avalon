@@ -79,4 +79,14 @@ This covers:
 
 ---
 
+## 🔒 Repository Privacy Check
+
+**Wondering if your repositories are public or private?**
+
+**→ Quick Answer: [ARE_MY_REPOS_PRIVATE.md](ARE_MY_REPOS_PRIVATE.md)**
+
+Or check online now: **[Your GitHub Repositories](https://github.com/issdandavis?tab=repositories)**
+
+---
+
 **The game is ready to play. Just find `game/index.html` and open it!**
