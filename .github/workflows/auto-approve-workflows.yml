@@ -61,15 +61,16 @@ jobs:
             echo "approved=false" >> $GITHUB_OUTPUT
           fi
       
-      - name: Enable workflow runs for PRs
+      - name: Add approval comment for PRs
         if: github.event_name == 'pull_request_target'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          # Approve PR from enterprise account
-          gh pr review $PR_NUMBER --approve --body "✅ Auto-approved: Enterprise account workflow authorization"
-          echo "✅ PR #$PR_NUMBER auto-approved"
+          # Note: GitHub Actions cannot formally approve PRs
+          # Post a comment indicating enterprise account authorization instead
+          gh pr comment $PR_NUMBER --body "✅ **Enterprise Account Verified**: Workflows from approved enterprise account are authorized to run automatically"
+          echo "✅ PR #$PR_NUMBER - Enterprise account authorization comment posted"
       
       - name: Set workflow approval status
         run: |

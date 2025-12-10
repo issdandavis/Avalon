@@ -157,32 +157,8 @@ jobs:
               console.log('Could not post review comment:', error.message);
             }
       
-      - name: Approve PR if passing
-        if: steps.review.outputs.approved == 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            // Get PR number from either event type
-            const prNumber = context.payload.pull_request?.number || 
-                           parseInt('${{ github.event.inputs.pr_number }}') || 
-                           null;
-            
-            if (!prNumber) {
-              console.log('No PR number available, skipping approval');
-              return;
-            }
-            
-            try {
-              await github.rest.pulls.createReview({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber,
-                event: 'APPROVE',
-                body: '✅ Auto-approved by automated review system'
-              });
-            } catch (error) {
-              console.log('Could not approve PR:', error.message);
-            }
+      # Note: GitHub Actions cannot formally approve PRs due to GitHub restrictions
+      # The review comment posted above already indicates approval status
   
   auto-fix:
     name: Auto-Fix Issues
