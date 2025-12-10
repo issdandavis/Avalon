@@ -87,14 +87,22 @@ def check_repo_privacy(username="issdandavis"):
         )
         origin_url = result.stdout.strip()
         
-        # Extract repo path from URL
-        if 'github.com' in origin_url:
-            repo_path = origin_url.split('github.com')[-1].strip('/:').replace('.git', '')
+        # Extract repo path from URL - using more secure pattern matching
+        import re
+        # Match github.com at the start (after protocol) or after @ (for SSH)
+        github_pattern = r'(?:https?://github\.com/|git@github\.com:)([^/\s]+/[^/\s]+?)(?:\.git)?$'
+        match = re.search(github_pattern, origin_url)
+        
+        if match:
+            repo_path = match.group(1)
             print(f"  📁 Current repository: {repo_path}")
             print()
             print(f"  To check privacy status:")
             print(f"    Visit: https://github.com/{repo_path}/settings")
             print(f"    Look for: 'Danger Zone' → 'Change repository visibility'")
+            print()
+        else:
+            print(f"  Not a GitHub repository: {origin_url}")
             print()
     except (subprocess.CalledProcessError, FileNotFoundError, Exception) as e:
         print("  Not in a git repository or git not available")
