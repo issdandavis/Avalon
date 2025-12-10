@@ -1,5 +1,22 @@
 # Are All My Repos Private? - Quick Answer Guide
 
+## 🚨 CRITICAL SECURITY ALERT
+
+**⚠️ EXPOSED API KEYS DETECTED IN THIS REPOSITORY**
+
+File `archive/Open Ai and Claudie.txt` contains:
+- OpenAI API Key
+- Anthropic API Key
+
+**→ IMMEDIATE ACTION REQUIRED: [SECURITY_ALERT_EXPOSED_KEYS.md](SECURITY_ALERT_EXPOSED_KEYS.md)**
+
+If this repository is public, these keys are compromised. You MUST:
+1. Revoke both API keys immediately
+2. Check for unauthorized usage
+3. Create new keys and store securely
+
+---
+
 ## 🔍 Quick Answer
 
 **This repository (Aethromoor) appears to be PUBLIC** based on the fact that:
