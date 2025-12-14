@@ -157,7 +157,7 @@ jobs:
               console.log('Could not post review comment:', error.message);
             }
       
-      - name: Approve PR if passing
+      - name: Add approval comment to PR
         if: steps.review.outputs.approved == 'true'
         uses: actions/github-script@v7
         with:
@@ -168,20 +168,23 @@ jobs:
                            null;
             
             if (!prNumber) {
-              console.log('No PR number available, skipping approval');
+              console.log('No PR number available, skipping approval comment');
               return;
             }
             
+            // NOTE: GitHub Actions GITHUB_TOKEN cannot approve PRs (results in HTTP 422)
+            // Instead, we post a comment indicating the review passed
+            // To enable actual PR approval, add a PAT to secrets and use it here
             try {
-              await github.rest.pulls.createReview({
+              await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: prNumber,
-                event: 'APPROVE',
-                body: '✅ Auto-approved by automated review system'
+                issue_number: prNumber,
+                body: '✅ **Automated Review: APPROVED**\n\nAll automated checks passed. This PR is ready for review/merge.\n\n⚠️ Note: This workflow cannot programmatically approve PRs using GITHUB_TOKEN. To enable automatic approval, configure a Personal Access Token in repository secrets.'
               });
+              console.log('Posted approval comment to PR');
             } catch (error) {
-              console.log('Could not approve PR:', error.message);
+              console.log('Could not post approval comment:', error.message);
             }
   
   auto-fix:

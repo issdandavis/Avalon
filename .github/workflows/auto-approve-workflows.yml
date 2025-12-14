@@ -67,9 +67,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          # Approve PR from enterprise account
-          gh pr review $PR_NUMBER --approve --body "✅ Auto-approved: Enterprise account workflow authorization"
-          echo "✅ PR #$PR_NUMBER auto-approved"
+          # NOTE: GitHub Actions GITHUB_TOKEN cannot approve PRs (HTTP 422)
+          # Using comment instead to indicate approval
+          gh pr comment $PR_NUMBER --body "✅ **Auto-approval check passed**: Enterprise account workflow authorization
+          
+          This PR is from an approved enterprise account (@issdandavis) and workflows will run automatically.
+          
+          ⚠️ Note: GitHub Actions cannot programmatically approve PRs. Manual approval may be required if branch protection rules enforce reviews."
+          echo "✅ PR #$PR_NUMBER marked as approved via comment"
       
       - name: Set workflow approval status
         run: |
