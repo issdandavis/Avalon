@@ -48,6 +48,7 @@ This repository features AI-powered automation for inter-account communications 
 **Documentation:**
 - **[ACCOUNTS_README.md](ACCOUNTS_README.md)** - Complete account automation setup guide
 - **[docs/AUTOMATION_GUIDE.md](docs/AUTOMATION_GUIDE.md)** - Integration workflows
+- **[docs/pipedream_team_setup_workflows.md](docs/pipedream_team_setup_workflows.md)** - Two Pipedream flows for team onboarding and daily ops digests
 - **Configuration:** `config/automation-settings.json`, `config/enterprise-settings.json`
 
 ## Security
