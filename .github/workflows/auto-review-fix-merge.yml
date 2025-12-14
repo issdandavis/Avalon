@@ -22,6 +22,18 @@ permissions:
   checks: read
 
 jobs:
+  add-to-project:
+    name: Add to Project
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Add PR to project
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/users/issdandavis/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+  
   auto-review:
     name: Auto-Review PR
     runs-on: ubuntu-latest
