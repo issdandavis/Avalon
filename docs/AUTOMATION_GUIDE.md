@@ -20,6 +20,7 @@ The repository now includes automated workflows that handle inter-account commun
 - ✅ Quality checks and validation
 - ✅ Metrics collection and reporting
 - ✅ Daily maintenance and cleanup
+- ✅ **Auto-add PRs and issues to GitHub Projects** (NEW)
 
 **User Notifications Only For:**
 - ❗ Build failures
@@ -72,7 +73,7 @@ For complete setup instructions, see [ACCOUNTS_README.md](../ACCOUNTS_README.md#
 
 ### **Project Management:**
 - **Trello/Asana** - Task tracking
-- **GitHub Projects** - Development roadmap
+- **GitHub Projects** - Development roadmap (auto-populated via workflows)
 - **Discord** - Community & beta testing
 
 ### **Game Development:**
