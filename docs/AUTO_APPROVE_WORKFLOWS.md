@@ -23,8 +23,10 @@ The following accounts are automatically approved to run all workflows:
 
 3. **Actions Taken**
    - Approves workflow runs automatically
-   - Approves pull requests from enterprise accounts
+   - Comments on pull requests from enterprise accounts (manual approval still required)
    - Enables all workflow actions without manual approval
+
+**Note:** GitHub Actions GITHUB_TOKEN cannot approve pull requests. The workflow posts informative comments instead.
 
 ## Security
 
