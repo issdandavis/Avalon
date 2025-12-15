@@ -1,0 +1,61 @@
+*comment Cooperative Scholar Campaign arc
+
+*label start
+
+[b]== THE COOPERATIVE SCHOLAR CAMPAIGN ==[/b]
+
+*line_break
+
+You claim an abandoned tower suite and turn it into a shared laboratory—whiteboards, glowing sigils, and hammocks for all-nighters. Six classmates sign on immediately.
+
+*page_break
+
+Every week in Year Two becomes a symposium. You facilitate rituals that blend half a dozen magical philosophies, publishing under the banner [i]The Accord[/i].
+
+*line_break
+
+*set collaborative_magic +10
+*set cooperative_accord +10
+*set collaboration +5
+
+*page_break
+
+[b]== YEAR THREE: COLLECTIVE MASTERY ==[/b]
+
+*line_break
+
+By now, the Accord has its own crest. You rotate leadership, teach democratic spell design, and invite even rival cohorts to contribute. Aria grudgingly admits your experiments are accelerating research without sacrificing safety.
+
+*line_break
+
+*set knowledge +10
+*set empathy +5
+*set fame +5
+
+*page_break
+
+[b]== YEAR FOUR: THE SHARED THESIS ==[/b]
+
+*line_break
+
+Instead of a solo thesis, you propose a [i]joint[/i] dimensional weave that lets multiple mages anchor a spell simultaneously. Faculty resist—until Izack sees the stability metrics.
+
+*line_break
+
+*set cooperative_accord +10
+*set dimensional_magic +5
+*set campaign_route "cooperative_arc"
+
+*page_break
+
+[i]"You've turned collaboration into infrastructure,"[/i] Polly whispers. [i]"If anyone can save Avalon together, it's you."[/i]
+
+*line_break
+
+[b]A crisis alarm ripples across the campus.[/b]
+
+*page_break
+
+*finish The Cooperative Accord answers the call
+
+*goto_scene year_two_crisis

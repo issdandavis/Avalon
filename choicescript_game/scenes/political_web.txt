@@ -1,0 +1,62 @@
+*comment Political manipulator arc
+
+*label start
+
+[b]== THE POLITICAL WEB ==[/b]
+
+*line_break
+
+You begin Year Two in council galleries instead of classrooms. You learn who controls scholarship budgets, which ambassadors feud in private, and how to trade favors without leaving fingerprints.
+
+*page_break
+
+Quiet meetings replace sparring matches. You orchestrate seating charts that keep rivals apart and allies aligned, all while drafting memos that steer policy toward stability.
+
+*line_break
+
+*set manipulation_network +10
+*set empathy +5
+*set communication_vs_domination -5
+*set fame +5
+
+*page_break
+
+[b]== YEAR THREE: THREADS AND LEVERS ==[/b]
+
+*line_break
+
+You broker clandestine pacts between student factions, slipping protection clauses into inter-realm treaties. Izack starts asking for your read before major votes.
+
+*line_break
+
+*set manipulation_network +10
+*set knowledge +5
+*set collaboration +5
+
+*page_break
+
+[b]== YEAR FOUR: SHADOW COUNCIL ==[/b]
+
+*line_break
+
+By fourth year, you're effectively running Avalon's unofficial agenda—balancing ethical compromises with necessary manipulations. One wrong whisper could topple the whole design.
+
+*line_break
+
+*set campaign_route "political_arc"
+*set stress +5
+*set fame +10
+
+*page_break
+
+[i]"Power doesn't have to shout,"[/i] Polly notes. [i]"But it does have to choose when to speak."[/i]
+
+*line_break
+
+An alarm shreds the quiet council chamber. The crisis will test whether your web can hold.
+
+*page_break
+
+*finish The political web is summoned to act
+
+*goto_scene year_two_crisis

@@ -1,0 +1,61 @@
+*comment Rivalry-driven power seeker arc
+
+*label start
+
+[b]== THE RIVALRY ASCENT ==[/b]
+
+*line_break
+
+Zara hangs a dueling ladder in the Grand Hall with your name at the top—provisional, challenged weekly. The entire academy watches your every move.
+
+*page_break
+
+Year Two is a blur of sanctioned duels, speed-research contests, and late-night training. You learn to turn spite into fuel and to study opponents as carefully as spells.
+
+*line_break
+
+*set rivalry_heat +10
+*set power +10
+*set confidence +5
+
+*page_break
+
+[b]== YEAR THREE: THE EDGE HARDENS ==[/b]
+
+*line_break
+
+Your rivals adapt. Grey turns diplomatic techniques into feints; Aria's protégés copy your spell forms. You respond with unexpected collaborations—brief alliances that leave opponents off-balance.
+
+*line_break
+
+*set collaboration +5
+*set boundary_magic +5
+*set fame +10
+
+*page_break
+
+[b]== YEAR FOUR: TITLE ON THE LINE ==[/b]
+
+*line_break
+
+A formal tournament is announced: winner earns an invitation to Avalon’s strategic council. Every victory heightens the pressure; every failure would topple your legend.
+
+*line_break
+
+*set rivalry_heat +15
+*set campaign_route "rivalry_arc"
+*set stress +5
+
+*page_break
+
+[i]"Be careful, ${name},"[/i] Polly warns. [i]"When everyone wants to beat you, they might forget the bigger threat."[/i]
+
+*line_break
+
+The crisis alarm interrupts the next challenge. Every rival stares at you, waiting to see if competition yields to survival.
+
+*page_break
+
+*finish The rivalry pauses for the crisis
+
+*goto_scene year_two_crisis

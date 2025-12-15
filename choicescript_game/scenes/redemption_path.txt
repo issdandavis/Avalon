@@ -1,0 +1,62 @@
+*comment Redemption arc
+
+*label start
+
+[b]== THE REDEMPTION ARC ==[/b]
+
+*line_break
+
+Aria's ledger lists forgotten promises: a library wing needing restoration, a small realm still scarred from a failed experiment, a student you once slighted. You sign your name beside each debt.
+
+*page_break
+
+Year Two becomes repair work. You mend rifts, apologize publicly, and study healing magic until your hands tremble from exertion.
+
+*line_break
+
+*set redemption_oath true
+*set empathy +10
+*set living_magic +5
+*set stress +5
+
+*page_break
+
+[b]== YEAR THREE: ATONEMENT IN ACTION ==[/b]
+
+*line_break
+
+You volunteer for hazardous rituals, taking risks others refuse. The faculty begin to trust you with classified errands; Zara quietly sends you to evacuate a collapsing pocket realm.
+
+*line_break
+
+*set close_calls +1
+*set power +5
+*set fame +5
+
+*page_break
+
+[b]== YEAR FOUR: TURNING SHAME INTO SHIELD ==[/b]
+
+*line_break
+
+You design a ward that converts excess guilt into stabilizing mana. It's experimental, but it keeps a dozen apprentices safe during a training mishap.
+
+*line_break
+
+*set redemption_oath true
+*set campaign_route "redemption_arc"
+*set collaboration +5
+
+*page_break
+
+[i]"You're rewriting your own story,"[/i] Polly murmurs. [i]"Maybe Avalon's too."[/i]
+
+*line_break
+
+The crisis alarm rings. Another chance to make things right.
+
+*page_break
+
+*finish The redemption arc races to the World Tree
+
+*goto_scene year_two_crisis

@@ -39,6 +39,112 @@ But even they're struggling.
 
 *page_break
 
+*comment Alternate campaign climaxes
+*if campaign_route = "cooperative_arc"
+  *goto cooperative_crisis
+*if campaign_route = "rivalry_arc"
+  *goto rivalry_crisis
+*if campaign_route = "redemption_arc"
+  *goto redemption_crisis
+*if campaign_route = "political_arc"
+  *goto political_crisis
+
+*label cooperative_crisis
+
+[b]== THE ACCORD HOLDS THE LINE ==[/b]
+
+*line_break
+
+You deploy the shared thesis weave from the Dimensional Loom, linking every volunteer into one stabilizing net around the Spiral Spire.
+
+*page_break
+
+The hostile entities slam against it, but your Accord adapts—rotating mana flow, swapping casters, keeping the lattice intact.
+
+*line_break
+
+*set collaboration +10
+*set cooperative_accord +5
+*set campaign_finale "cooperative_mastery"
+
+*page_break
+
+When the final tear seals, cheers ripple through the network. Avalon stands because you proved collaboration could be infrastructure.
+
+*goto_scene endings
+
+*label rivalry_crisis
+
+[b]== THE FINAL DUEL ==[/b]
+
+*line_break
+
+One entity steps forward, mirroring your own aura. The academy watches as you accept its challenge, rivalry distilled into a single duel for Avalon's fate.
+
+*page_break
+
+You outmaneuver it with every trick learned from years of competition. Grey and the others watch silently, grudging respect shining when your final strike shatters the invader.
+
+*line_break
+
+*set rivalry_heat +10
+*set power +10
+*set campaign_finale "rivalry_champion"
+
+*page_break
+
+Avalon survives because you were willing to stake everything on your own edge—and win.
+
+*goto_scene endings
+
+*label redemption_crisis
+
+[b]== MAKING IT RIGHT ==[/b]
+
+*line_break
+
+You anchor the damaged sections of Avalon with your guilt-ward, absorbing the backlash yourself. Each pulse hurts, but the cracks knit closed.
+
+*page_break
+
+Aria channels extra power into you; Izack steadies the flow. Together, you convert every ounce of remorse into protection for the academy.
+
+*line_break
+
+*set redemption_oath true
+*set empathy +5
+*set campaign_finale "redemption_guardian"
+
+*page_break
+
+Avalon endures. The ledger in your mind finally feels lighter.
+
+*goto_scene endings
+
+*label political_crisis
+
+[b]== THE PACT ACTIVATES ==[/b]
+
+*line_break
+
+You unleash the emergency mutual-aid pact. Portals bloom as allied envoys arrive, adding their magic to Avalon's defense while you negotiate a cease-fire with the leading entity.
+
+*page_break
+
+Your careful leverage pays off: the attackers stand down, unwilling to face a united multiverse and impressed by your honor-bound diplomacy.
+
+*line_break
+
+*set manipulation_network +10
+*set collaboration +5
+*set campaign_finale "political_weaver"
+
+*page_break
+
+Avalon is saved not by force, but by the alliances you wove in secret.
+
+*goto_scene endings
+
 *choice
   #Lead the collaborative defense - unite everyone's magic
     *if collaborative_magic >= 70
