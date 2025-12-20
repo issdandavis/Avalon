@@ -158,7 +158,7 @@ jobs:
           cat /tmp/sync_manifest.json
       
       - name: Sync to external platforms (silent)
-        if: steps.changes.outputs.game_changed > 0
+        if: steps.changes.outputs.game_changed != '0'
         continue-on-error: true
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -167,7 +167,7 @@ jobs:
           echo "🔄 Syncing to external platforms (silent mode)..."
           
           # Discord notification (if webhook configured and changes significant)
-          if [ -n "$DISCORD_WEBHOOK" ] && [ "${{ steps.changes.outputs.game_changed }}" -gt "5" ]; then
+          if [ -n "$DISCORD_WEBHOOK" ] && [ "${{ steps.changes.outputs.game_changed }}" -gt 5 ]; then
             COMMIT_MSG=$(git log -1 --pretty=%B)
             curl -X POST "$DISCORD_WEBHOOK" \
               -H "Content-Type: application/json" \
