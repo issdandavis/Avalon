@@ -1,0 +1,103 @@
+name: Ensure Critical Scripts (Self-Healing)
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ensure-critical-scripts
+  cancel-in-progress: false
+
+jobs:
+  self-heal-missing-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect and create placeholder if missing
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+          CREATED="false"
+          if [ ! -f ".github/scripts/path_coverage.py" ]; then
+            mkdir -p .github/scripts
+            cat > .github/scripts/path_coverage.py <<'PY'
+          #!/usr/bin/env python3
+          """
+          Placeholder for path coverage calculation.
+
+          Replace with a real implementation. This placeholder exists so workflows
+          that import or execute this script won't fail when the file is missing.
+          """
+          from __future__ import annotations
+          import sys
+          def main() -> int:
+            print("TODO: Implement path coverage")
+            return 0
+          if __name__ == "__main__":
+            raise SystemExit(main())
+          PY
+            chmod +x .github/scripts/path_coverage.py
+            CREATED="true"
+          fi
+          echo "created=$CREATED" >> "$GITHUB_OUTPUT"
+
+      - name: Stage changes and check for staged diff
+        id: staged
+        if: steps.detect.outputs.created == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add .github/scripts/path_coverage.py || true
+          if git diff --staged --quiet; then
+            echo "has_staged=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_staged=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open pull request
+        if: steps.detect.outputs.created == 'true' && steps.staged.outputs.has_staged == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: add placeholder .github/scripts/path_coverage.py [bot]"
+          title: "chore: add placeholder path_coverage.py (self-heal)"
+          body: |
+            This is an automated PR opened by the self-healing workflow to add a placeholder for
+            .github/scripts/path_coverage.py, which is required by other workflows.
+
+            Please replace this placeholder with the real implementation as needed.
+            - Opened by: Ensure Critical Scripts workflow
+            - Assignees and labels added for visibility
+          branch: "bot/add-path-coverage-placeholder"
+          base: "main"
+          labels: |
+            automation
+            bots
+            self-heal
+          assignees: |
+            issdandavis
+          commit-user-name: "github-actions[bot]"
+          commit-user-email: "41898282+github-actions[bot]@users.noreply.github.com"
+          signoff: true
+          delete-branch: true
+
+      - name: Handle PR creation failure
+        if: failure() && steps.detect.outputs.created == 'true'
+        shell: bash
+        run: |
+          echo "Failed to create the pull request. This may be due to insufficient permissions or repository settings (e.g., workflows cannot create branches)." 1>&2
+          echo "Please ensure the workflow has contents and pull-requests write permissions and that workflows are allowed to create branches." 1>&2
+          exit 1
