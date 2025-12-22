@@ -59,7 +59,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add .github/scripts/path_coverage.py || true
+          # Stage the file - may already be tracked, so we allow failure here
+          git add .github/scripts/path_coverage.py 2>&1 || echo "Note: File may already be staged"
+          # Check if there are actual staged changes
           if git diff --staged --quiet; then
             echo "has_staged=false" >> "$GITHUB_OUTPUT"
           else
