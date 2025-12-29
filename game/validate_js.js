@@ -40,9 +40,9 @@ function validateJavaScript(filePath) {
 }
 
 function main() {
-    console.log('=' .repeat(60));
+    console.log('='.repeat(60));
     console.log('🎮 JavaScript Validator');
-    console.log('=' .repeat(60));
+    console.log('='.repeat(60));
     
     const files = [
         path.join(__dirname, 'game.js'),

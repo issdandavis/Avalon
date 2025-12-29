@@ -1259,7 +1259,10 @@ const domCache = {
     collabValue: null,
     izackRel: null,
     ariaRel: null,
-    zaraRel: null
+    zaraRel: null,
+    storyText: null,
+    choices: null,
+    restartBtn: null
 };
 
 // UI Update Functions
@@ -1305,16 +1308,22 @@ function displayNode(nodeId) {
             relationships: { ...gameState.relationships }
         });
 
-        // Display story text
-        document.getElementById('story-text').innerHTML = node.text;
+        // Initialize cache on first call
+        if (!domCache.storyText) {
+            domCache.storyText = document.getElementById('story-text');
+            domCache.choices = document.getElementById('choices');
+            domCache.restartBtn = document.getElementById('restart-btn');
+        }
+
+        // Display story text (note: node.text contains HTML with formatting and spans)
+        domCache.storyText.innerHTML = node.text;
 
         // Display choices using DocumentFragment for better performance
-        const choicesDiv = document.getElementById('choices');
-        choicesDiv.innerHTML = '';
+        domCache.choices.innerHTML = '';
 
         if (node.choices.length === 0) {
             // This is an ending
-            document.getElementById('restart-btn').style.display = 'block';
+            domCache.restartBtn.style.display = 'block';
             traceEvent('ending_reached', {
                 ending: nodeId,
                 collaborationScore: gameState.collaborationScore,
@@ -1331,7 +1340,7 @@ function displayNode(nodeId) {
                 button.onclick = () => makeChoice(choice);
                 fragment.appendChild(button);
             });
-            choicesDiv.appendChild(fragment);
+            domCache.choices.appendChild(fragment);
         }
 
         // Scroll to top
@@ -1387,7 +1396,11 @@ function restartGame() {
     };
     gameState.choices = [];
 
-    document.getElementById('restart-btn').style.display = 'none';
+    if (domCache.restartBtn) {
+        domCache.restartBtn.style.display = 'none';
+    } else {
+        document.getElementById('restart-btn').style.display = 'none';
+    }
     updateStats();
     displayNode('start');
     traceEvent('game_restarted', {});
