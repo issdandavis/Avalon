@@ -1251,7 +1251,6 @@ const storyNodes = {
         `,
         choices: []
     }
-}
 };
 
 // Cache DOM elements for better performance
@@ -1293,48 +1292,51 @@ function updateStats() {
 }
 
 function displayNode(nodeId) {
-    const node = storyNodes[nodeId];
-    if (!node) return;
+    // Wrap in performance measurement
+    (window.measurePerformance || ((l, fn) => fn()))('node_render', () => {
+        const node = storyNodes[nodeId];
+        if (!node) return;
 
-    gameState.currentNode = nodeId;
+        gameState.currentNode = nodeId;
 
-    traceEvent('node_displayed', {
-        node: nodeId,
-        collaborationScore: gameState.collaborationScore,
-        relationships: { ...gameState.relationships }
-    });
-
-    // Display story text
-    document.getElementById('story-text').innerHTML = node.text;
-
-    // Display choices using DocumentFragment for better performance
-    const choicesDiv = document.getElementById('choices');
-    choicesDiv.innerHTML = '';
-
-    if (node.choices.length === 0) {
-        // This is an ending
-        document.getElementById('restart-btn').style.display = 'block';
-        traceEvent('ending_reached', {
-            ending: nodeId,
+        traceEvent('node_displayed', {
+            node: nodeId,
             collaborationScore: gameState.collaborationScore,
-            relationships: { ...gameState.relationships },
-            path: gameState.choices.slice()
+            relationships: { ...gameState.relationships }
         });
-    } else {
-        // Use DocumentFragment to batch DOM updates
-        const fragment = document.createDocumentFragment();
-        node.choices.forEach((choice, index) => {
-            const button = document.createElement('button');
-            button.className = 'choice-btn';
-            button.textContent = choice.text;
-            button.onclick = () => makeChoice(choice);
-            fragment.appendChild(button);
-        });
-        choicesDiv.appendChild(fragment);
-    }
 
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Display story text
+        document.getElementById('story-text').innerHTML = node.text;
+
+        // Display choices using DocumentFragment for better performance
+        const choicesDiv = document.getElementById('choices');
+        choicesDiv.innerHTML = '';
+
+        if (node.choices.length === 0) {
+            // This is an ending
+            document.getElementById('restart-btn').style.display = 'block';
+            traceEvent('ending_reached', {
+                ending: nodeId,
+                collaborationScore: gameState.collaborationScore,
+                relationships: { ...gameState.relationships },
+                path: gameState.choices.slice()
+            });
+        } else {
+            // Use DocumentFragment to batch DOM updates
+            const fragment = document.createDocumentFragment();
+            node.choices.forEach((choice, index) => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.textContent = choice.text;
+                button.onclick = () => makeChoice(choice);
+                fragment.appendChild(button);
+            });
+            choicesDiv.appendChild(fragment);
+        }
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 }
 
 function makeChoice(choice) {
@@ -1400,4 +1402,9 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionId: window.gameTrace && window.gameTrace.sessionId,
         startNode: gameState.currentNode
     });
+    
+    // Expose performance stats to console for debugging
+    console.log('🎮 Polly\'s Wingscroll loaded');
+    console.log('💡 Use getPerformanceStats() to view performance metrics');
+    console.log('📊 Use exportTrace() to export analytics data');
 });
