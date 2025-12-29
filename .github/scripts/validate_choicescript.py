@@ -8,6 +8,10 @@ import re
 import sys
 from pathlib import Path
 
+# Pre-compile regex patterns for better performance
+GOTO_PATTERN = re.compile(r'\*goto(?:_scene)?\s+(\w+)')
+SET_PATTERN = re.compile(r'\*set\s+\w+\s+')
+
 def validate_choicescript_file(file_path):
     """Validate a single ChoiceScript file"""
     errors = []
@@ -49,7 +53,7 @@ def validate_choicescript_file(file_path):
         
         # 3. Goto references
         if '*goto ' in stripped or '*goto_scene ' in stripped:
-            match = re.search(r'\*goto(?:_scene)?\s+(\w+)', stripped)
+            match = GOTO_PATTERN.search(stripped)
             if match:
                 gotos.append((match.group(1), i))
         

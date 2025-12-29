@@ -8,6 +8,9 @@ import re
 from pathlib import Path
 from collections import defaultdict
 
+# Pre-compile regex for better performance
+SET_COMMAND_PATTERN = re.compile(r'\*set\s+(\w+)\s+([+-]?\d+|true|false)')
+
 def analyze_stats():
     """Analyze stat changes across all scenes"""
     repo_path = Path.cwd()
@@ -28,8 +31,8 @@ def analyze_stats():
         content = scene_file.read_text()
         scene_name = scene_file.stem
         
-        # Find all *set commands
-        set_commands = re.findall(r'\*set\s+(\w+)\s+([+-]?\d+|true|false)', content)
+        # Find all *set commands using pre-compiled pattern
+        set_commands = SET_COMMAND_PATTERN.findall(content)
         
         if set_commands:
             scenes_with_stats.append(scene_name)

@@ -1254,11 +1254,29 @@ const storyNodes = {
 }
 };
 
+// Cache DOM elements for better performance
+const domCache = {
+    collabBar: null,
+    collabValue: null,
+    izackRel: null,
+    ariaRel: null,
+    zaraRel: null
+};
+
 // UI Update Functions
 function updateStats() {
+    // Initialize cache on first call
+    if (!domCache.collabBar) {
+        domCache.collabBar = document.getElementById('collaboration-bar');
+        domCache.collabValue = document.getElementById('collaboration-value');
+        domCache.izackRel = document.getElementById('izack-rel');
+        domCache.ariaRel = document.getElementById('aria-rel');
+        domCache.zaraRel = document.getElementById('zara-rel');
+    }
+
     const collabPercent = Math.max(0, Math.min(100, 50 + (gameState.collaborationScore * 10)));
-    document.getElementById('collaboration-bar').style.width = collabPercent + '%';
-    document.getElementById('collaboration-value').textContent = gameState.collaborationScore;
+    domCache.collabBar.style.width = collabPercent + '%';
+    domCache.collabValue.textContent = gameState.collaborationScore;
 
     // Update relationship displays
     const getEmoji = (value) => {
@@ -1269,9 +1287,9 @@ function updateStats() {
         return '😐';
     };
 
-    document.getElementById('izack-rel').textContent = `Izack: ${getEmoji(gameState.relationships.izack)}`;
-    document.getElementById('aria-rel').textContent = `Aria: ${getEmoji(gameState.relationships.aria)}`;
-    document.getElementById('zara-rel').textContent = `Zara: ${getEmoji(gameState.relationships.zara)}`;
+    domCache.izackRel.textContent = `Izack: ${getEmoji(gameState.relationships.izack)}`;
+    domCache.ariaRel.textContent = `Aria: ${getEmoji(gameState.relationships.aria)}`;
+    domCache.zaraRel.textContent = `Zara: ${getEmoji(gameState.relationships.zara)}`;
 }
 
 function displayNode(nodeId) {
@@ -1289,7 +1307,7 @@ function displayNode(nodeId) {
     // Display story text
     document.getElementById('story-text').innerHTML = node.text;
 
-    // Display choices
+    // Display choices using DocumentFragment for better performance
     const choicesDiv = document.getElementById('choices');
     choicesDiv.innerHTML = '';
 
@@ -1303,13 +1321,16 @@ function displayNode(nodeId) {
             path: gameState.choices.slice()
         });
     } else {
+        // Use DocumentFragment to batch DOM updates
+        const fragment = document.createDocumentFragment();
         node.choices.forEach((choice, index) => {
             const button = document.createElement('button');
             button.className = 'choice-btn';
-            button.innerHTML = choice.text;
+            button.textContent = choice.text;
             button.onclick = () => makeChoice(choice);
-            choicesDiv.appendChild(button);
+            fragment.appendChild(button);
         });
+        choicesDiv.appendChild(fragment);
     }
 
     // Scroll to top

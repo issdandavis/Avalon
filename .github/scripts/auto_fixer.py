@@ -19,6 +19,7 @@ class AutoFixer:
         self.pr_number = pr_number
         self.repo_root = Path.cwd()
         self.fixes_applied = []
+        self._file_cache = {}  # Cache for file lookups
         
     def fix_issues(self, review: Dict) -> bool:
         """Attempt to fix issues found in review"""
@@ -79,7 +80,13 @@ class AutoFixer:
         pass
     
     def _find_file(self, filename: str) -> Path:
-        """Find a file in the repository"""
+        """Find a file in the repository (with caching)"""
+        # Check cache first
+        if filename in self._file_cache:
+            cached_path = self._file_cache[filename]
+            if cached_path and cached_path.exists():
+                return cached_path
+        
         # Try common locations
         candidates = [
             self.repo_root / filename,
@@ -90,12 +97,15 @@ class AutoFixer:
         
         for candidate in candidates:
             if candidate.exists():
+                self._file_cache[filename] = candidate
                 return candidate
         
-        # Search recursively
+        # Search recursively as fallback (expensive)
         for path in self.repo_root.rglob(filename):
+            self._file_cache[filename] = path
             return path
         
+        self._file_cache[filename] = None
         return None
     
     def _fix_unclosed_quote(self, file_path: Path, line_num: int):

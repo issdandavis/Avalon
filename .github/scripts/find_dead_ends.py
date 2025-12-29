@@ -6,6 +6,12 @@ Find dead ends - scenes that don't properly terminate
 import re
 from pathlib import Path
 
+# Pre-compile regex patterns for better performance
+FINISH_PATTERN = re.compile(r'\*finish\s*$', re.MULTILINE)
+GOTO_PATTERN = re.compile(r'\*goto(?:_scene)?\s+\w+')
+CHOICE_PATTERN = re.compile(r'\*choice(.*?)(?=\*(?:choice|label|finish|goto_scene)|$)', re.DOTALL)
+OPTION_PATTERN = re.compile(r'#[^\n]+')
+
 def find_dead_ends():
     """Find scenes that might be dead ends"""
     scenes_dir = Path("choicescript_game/scenes")
@@ -17,17 +23,17 @@ def find_dead_ends():
         
         content = scene_file.read_text()
         
-        # Check if scene ends properly
-        has_finish = bool(re.search(r'\*finish\s*$', content, re.MULTILINE))
-        has_goto = bool(re.search(r'\*goto(?:_scene)?\s+\w+', content))
+        # Check if scene ends properly using pre-compiled patterns
+        has_finish = bool(FINISH_PATTERN.search(content))
+        has_goto = bool(GOTO_PATTERN.search(content))
         
         if not has_finish and not has_goto:
             issues.append(f"⚠️ {scene_file.name}: No *finish or *goto found - potential dead end")
         
-        # Check for choices without outcomes
-        choice_blocks = re.findall(r'\*choice(.*?)(?=\*(?:choice|label|finish|goto_scene)|$)', content, re.DOTALL)
+        # Check for choices without outcomes using pre-compiled patterns
+        choice_blocks = CHOICE_PATTERN.findall(content)
         for i, block in enumerate(choice_blocks):
-            options = re.findall(r'#[^\n]+', block)
+            options = OPTION_PATTERN.findall(block)
             if len(options) < 2:
                 issues.append(f"⚠️ {scene_file.name}: Choice block {i+1} has fewer than 2 options")
     
