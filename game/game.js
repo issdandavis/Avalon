@@ -1,3 +1,15 @@
+/**
+ * Polly's Wingscroll: The First Thread
+ * Game Logic Implementation
+ * 
+ * Copyright (c) 2025 Avalon Codex Authors
+ * Licensed under MIT License (see LICENSE file)
+ * 
+ * This file contains the core game logic for the HTML version of
+ * Polly's Wingscroll, including story nodes, choice handling, and
+ * state management.
+ */
+
 // Game State
 // Tracing helper (defined in tracing.js). If absent, provide no-op.
 const traceEvent = window.traceEvent || function(){};

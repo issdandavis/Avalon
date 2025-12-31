@@ -307,6 +307,29 @@ All AIs share context through tracked files to maintain consistency and enable s
 
 ---
 
+## 📄 License & Copyright
+
+### Software License
+The technical implementation (code) is licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for full details.
+
+### Content Copyright
+The narrative content, characters, worldbuilding, and story of "Polly's Wingscroll: The First Thread" and "The Avalon Codex" are original creative works. **All rights reserved** by the original author(s).
+
+Game content is protected by copyright and is provided for personal, non-commercial use. Commercial distribution rights are being pursued through authorized channels (Hosted Games by Choice of Games LLC).
+
+### Disclaimer
+This software and content are provided "AS IS" without warranty. See [DISCLAIMER.md](DISCLAIMER.md) for full legal terms.
+
+### Usage Rights
+- ✅ **Personal use** - Play, enjoy, and share with friends
+- ✅ **Educational use** - Study the code for learning purposes
+- ✅ **Contributions** - Submit improvements via pull requests
+- ❌ **Commercial redistribution** - Requires explicit permission
+- ❌ **Derivative works** - Story content may not be repurposed without permission
+
+---
+
 ## 🎮 Ready to Play?
 
 **👉 Open [PLAY_THE_GAME.md](PLAY_THE_GAME.md) or just double-click `game/index.html`**
@@ -317,5 +340,11 @@ Welcome to Avalon. 🌟
 
 ---
 
-*"I've watched Avalon Academy for three hundred years. Your story is about to begin."*
+*"I've watched Avalon Academy for three hundred years. Your story is about to begin."*  
 *— Polly (Polymnia Aetheris)*
+
+---
+
+**Repository:** Aethromoor (The Avalon Codex)  
+**Copyright © 2025 Avalon Codex Authors**  
+**Version:** 1.0 - Ready for Publication

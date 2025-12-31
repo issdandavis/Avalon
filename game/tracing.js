@@ -1,5 +1,13 @@
-// Lightweight tracing module for Polly's Wingscroll HTML version
-// Captures user path, stat evolution, and endings for analytics or AI agent review.
+/**
+ * Polly's Wingscroll: The First Thread
+ * Gameplay Tracing Module
+ * 
+ * Copyright (c) 2025 Avalon Codex Authors
+ * Licensed under MIT License (see LICENSE file)
+ * 
+ * Lightweight tracing module for capturing user paths, stat evolution,
+ * and endings for analytics and development review.
+ */
 
 (function(){
   const trace = {
