@@ -2,6 +2,9 @@
 *comment POLLY'S WINGSCROLL: THE FIRST THREAD
 *comment A Choice-Based Adventure in Avalon Academy
 *comment Based on The Spiral of Pollyoneth universe
+*comment 
+*comment Copyright (c) 2025 Avalon Codex Authors
+*comment All Rights Reserved
 *comment ================================================
 
 *title Polly's Wingscroll: The First Thread

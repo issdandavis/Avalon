@@ -1,0 +1,74 @@
+# Git Attributes Configuration for Avalon Codex
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Source code
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Scripts
+*.sh text eol=lf
+*.bash text eol=lf
+*.py text eol=lf
+
+# Documentation
+*.markdown text eol=lf
+README text eol=lf
+LICENSE text eol=lf
+CHANGELOG text eol=lf
+
+# Configuration
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.env.example text eol=lf
+
+# Windows-specific files
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+
+# Archives
+*.7z binary
+*.jar binary
+*.rar binary
+*.tar.gz binary
+*.tgz binary
+
+# Game-specific files (treat as text)
+choicescript_game/scenes/*.txt text eol=lf
+game/scenes/*.txt text eol=lf
+*.agent.md text eol=lf
+
+# Exclude from exports
+.github export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+archive export-ignore
+logs export-ignore
+tmp export-ignore
+node_modules export-ignore
+
+# Language statistics (for GitHub)
+*.txt linguist-language=ChoiceScript
+choicescript_game/scenes/*.txt linguist-language=ChoiceScript
+game/scenes/*.txt linguist-language=ChoiceScript
+*.agent.md linguist-documentation=true
+docs/** linguist-documentation=true
+archive/** linguist-vendored=true
