@@ -1,0 +1,33 @@
+{
+  "name": "@spiralverse/scbe-envelope",
+  "version": "2.0.0",
+  "description": "Secure Chaos-Based Encryption Envelope - Immutable security envelope with deterministic verification and fail-to-noise protection",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/security-tests.js",
+    "test:watch": "nodemon tests/security-tests.js"
+  },
+  "keywords": [
+    "security",
+    "encryption",
+    "chaos",
+    "envelope",
+    "verification",
+    "post-quantum",
+    "fail-to-noise",
+    "trust",
+    "swarm"
+  ],
+  "author": "Spiralverse Security Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/issdandavis/aethromoor-novel.git",
+    "directory": "security/scbe"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
