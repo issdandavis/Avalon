@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SCBE v2.0 Lambda API - Manifold-gated dual-lane key schedule demo
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: nodejs18.x
+    Environment:
+      Variables:
+        NODE_ENV: production
+
+Resources:
+  ScbeApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: lambda/handler.handler
+      Description: SCBE v2.0 API with brain and oversight lanes
+      Events:
+        RootGet:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+        HealthCheck:
+          Type: Api
+          Properties:
+            Path: /api/health
+            Method: GET
+        Metrics:
+          Type: Api
+          Properties:
+            Path: /api/metrics
+            Method: GET
+        BrainLane:
+          Type: Api
+          Properties:
+            Path: /api/brain-lane
+            Method: POST
+        OversightLane:
+          Type: Api
+          Properties:
+            Path: /api/oversight-lane
+            Method: POST
+        Verify:
+          Type: Api
+          Properties:
+            Path: /api/verify
+            Method: POST
+
+Outputs:
+  ScbeApi:
+    Description: "API Gateway endpoint URL for SCBE API"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  ScbeApiFunction:
+    Description: "SCBE Lambda Function ARN"
+    Value: !GetAtt ScbeApiFunction.Arn
+  ScbeApiFunctionIamRole:
+    Description: "Implicit IAM Role created for SCBE function"
+    Value: !GetAtt ScbeApiFunctionRole.Arn
