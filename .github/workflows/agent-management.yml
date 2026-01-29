@@ -94,7 +94,8 @@ jobs:
                 
                 # Get recent runs for this workflow (last 5 runs)
                 # SAFETY: Handle empty API responses gracefully
-                RECENT_RUNS=$(gh api "repos/:owner/:repo/actions/workflows/${workflow_name}/runs?per_page=5" \
+                # NOTE: Using workflow path (not basename) for API call
+                RECENT_RUNS=$(gh api "repos/:owner/:repo/actions/workflows/$workflow_path/runs?per_page=5" \
                   --jq '.workflow_runs[] | "\(.id)|\(.status)|\(.conclusion)|\(.created_at)"' 2>/dev/null || echo "")
                 
                 echo "### $workflow_name" >> /tmp/workflow_summary.md
@@ -119,16 +120,18 @@ jobs:
                   done <<< "$RECENT_RUNS"
                   
                   # Detect output formatting issues (grep/wc failures)
+                  # NOTE: This checks job steps, not just names, for actual error content
                   if [ "$RUN_FAILED" = true ]; then
-                    # Check if failure was due to output issues
+                    # Check if failure was due to output issues by examining job steps
                     LATEST_FAILED=$(echo "$RECENT_RUNS" | grep "failure" | head -1 | cut -d'|' -f1)
                     if [ -n "$LATEST_FAILED" ]; then
-                      # Get job logs to check for output-related errors
-                      JOB_LOGS=$(gh api "repos/:owner/:repo/actions/runs/${LATEST_FAILED}/jobs" \
-                        --jq '.jobs[] | select(.conclusion=="failure") | .name' 2>/dev/null || echo "")
+                      # Get job details to check for output-related errors
+                      OUTPUT_ERROR=$(gh api "repos/:owner/:repo/actions/runs/${LATEST_FAILED}/jobs" \
+                        --jq '.jobs[] | select(.conclusion=="failure") | .steps[] | select(.conclusion=="failure") | .name' 2>/dev/null \
+                        | grep -iE "output|variable|detect.*change|calculate.*metric" || echo "")
                       
-                      if echo "$JOB_LOGS" | grep -qi "output\|variable\|grep\|wc"; then
-                        echo "  - ⚠️  **Possible output formatting issue detected**" >> /tmp/workflow_summary.md
+                      if [ -n "$OUTPUT_ERROR" ]; then
+                        echo "  - ⚠️  **Possible output formatting issue detected in failed steps**" >> /tmp/workflow_summary.md
                       fi
                     fi
                   fi
@@ -149,6 +152,14 @@ jobs:
           SUCCESS_WORKFLOWS=${SUCCESS_WORKFLOWS:-0}
           
           # Add summary statistics
+          # Calculate success rate with division-by-zero protection
+          TOTAL_RUNS=$((SUCCESS_WORKFLOWS + FAILED_WORKFLOWS))
+          if [ $TOTAL_RUNS -gt 0 ]; then
+            SUCCESS_RATE=$(( (SUCCESS_WORKFLOWS * 100) / TOTAL_RUNS ))
+          else
+            SUCCESS_RATE=100
+          fi
+          
           cat >> /tmp/workflow_summary.md << EOF
           
           ---
@@ -158,7 +169,7 @@ jobs:
           - **Total Workflows Monitored:** $TOTAL_WORKFLOWS
           - **Successful Runs:** $SUCCESS_WORKFLOWS
           - **Failed Runs:** $FAILED_WORKFLOWS
-          - **Success Rate:** $(( TOTAL_WORKFLOWS > 0 ? (SUCCESS_WORKFLOWS * 100) / (SUCCESS_WORKFLOWS + FAILED_WORKFLOWS) : 100 ))%
+          - **Success Rate:** ${SUCCESS_RATE}%
           
           EOF
           
@@ -271,19 +282,19 @@ jobs:
           ## Workflow Output Safety Pattern
           
           To prevent workflow failures from empty outputs, all bash commands that feed into
-          \`$GITHUB_OUTPUT\` or job outputs should use the safety pattern:
+          $GITHUB_OUTPUT or job outputs should use the safety pattern:
           
-          \`\`\`bash
+          ```bash
           # SAFETY: Apply fallback to prevent empty output
           VAR=$(command | grep something || echo "0")
           VAR=${VAR:-0}
           echo "var=$VAR" >> $GITHUB_OUTPUT
-          \`\`\`
+          ```
           
           This ensures:
           1. Command failures don't leave variables empty
-          2. The \`|| echo "0"\` provides first-level fallback
-          3. The \`${VAR:-0}\` provides second-level fallback
+          2. The || echo "0" provides first-level fallback
+          3. The ${VAR:-0} provides second-level fallback
           4. Output is always valid for workflow processing
           
           ---
@@ -381,8 +392,12 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           
           if [ -f "/tmp/recommendations.md" ]; then
-            # Extract just the action items section
-            sed -n '/^## Action Items/,/^---/p' /tmp/recommendations.md | grep -v "^---" >> $GITHUB_STEP_SUMMARY
+            # Extract just the action items section, handling edge cases
+            if grep -q "^## Action Items" /tmp/recommendations.md; then
+              sed -n '/^## Action Items/,/^---/p' /tmp/recommendations.md | grep -v "^---" | grep -v "^## Action Items" >> $GITHUB_STEP_SUMMARY || echo "- ✅ System operating normally" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- ✅ System operating normally" >> $GITHUB_STEP_SUMMARY
+            fi
           else
             echo "- ✅ System operating normally" >> $GITHUB_STEP_SUMMARY
           fi

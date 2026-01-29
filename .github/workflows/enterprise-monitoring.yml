@@ -50,7 +50,8 @@ jobs:
           
           # Check all workflows
           # SAFETY: Ensure wc -l output defaults to 0 for valid output variables
-          WORKFLOW_COUNT=$(find .github/workflows -name "*.yml" -o -name "*.yaml" 2>/dev/null | wc -l)
+          # NOTE: Proper grouping of find -name expressions to scope OR operator
+          WORKFLOW_COUNT=$(find .github/workflows \( -name "*.yml" -o -name "*.yaml" \) 2>/dev/null | wc -l)
           WORKFLOW_COUNT=${WORKFLOW_COUNT:-0}
           echo "Found $WORKFLOW_COUNT workflows"
           

@@ -44,7 +44,8 @@ jobs:
           
           # Word count for game content
           # SAFETY: Use fallback to ensure non-empty output for GITHUB_OUTPUT
-          GAME_WORDS=$(find game choicescript_game -name "*.txt" -o -name "*.js" -o -name "*.html" | xargs wc -w 2>/dev/null | tail -1 | awk '{print $1}')
+          # NOTE: Proper grouping of find -name expressions with parentheses
+          GAME_WORDS=$(find game choicescript_game \( -name "*.txt" -o -name "*.js" -o -name "*.html" \) 2>/dev/null | xargs wc -w 2>/dev/null | tail -1 | awk '{print $1}')
           GAME_WORDS=${GAME_WORDS:-0}
           
           # Scene count
