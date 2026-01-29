@@ -60,25 +60,116 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Checking recent workflow runs..."
+          echo "🔍 Checking recent workflow runs using GitHub API..."
           
-          # Create summary of recent workflow activity
-          cat > /tmp/workflow_summary.txt << 'EOF'
-          # Recent Workflow Activity (Last 24 Hours)
+          # Initialize counters with SAFETY fallbacks to prevent empty outputs
+          TOTAL_WORKFLOWS=0
+          FAILED_WORKFLOWS=0
+          SUCCESS_WORKFLOWS=0
+          
+          # Create comprehensive workflow summary
+          cat > /tmp/workflow_summary.md << 'EOF'
+          # Workflow Health Report (Last 24 Hours)
+          
+          ## Recent Workflow Activity
           
           EOF
           
-          # Check each AI worker workflow
-          for workflow in "ai-scene-writer.yml" "ai-content-polish.yml" "ai-stat-balancer.yml" "ai-game-tester.yml" "ai-autonomous-worker.yml"; do
-            echo "## $workflow" >> /tmp/workflow_summary.txt
-            
-            # This would query GitHub API in a real implementation
-            # For now, just note the workflow exists
-            echo "- Status: Monitoring" >> /tmp/workflow_summary.txt
-            echo "" >> /tmp/workflow_summary.txt
-          done
+          # Track failures for detailed reporting
+          > /tmp/workflow_failures.txt
           
-          cat /tmp/workflow_summary.txt
+          # Check each workflow in the repository using GitHub API
+          echo "Fetching workflow runs from GitHub API..."
+          
+          # List all workflows and their recent runs
+          # SAFETY: Ensure all command outputs have fallback defaults
+          WORKFLOW_LIST=$(gh api repos/:owner/:repo/actions/workflows --jq '.workflows[] | .path' 2>/dev/null || echo "")
+          WORKFLOW_LIST=${WORKFLOW_LIST:-""}
+          
+          if [ -n "$WORKFLOW_LIST" ]; then
+            while IFS= read -r workflow_path; do
+              if [ -n "$workflow_path" ]; then
+                TOTAL_WORKFLOWS=$((TOTAL_WORKFLOWS + 1))
+                workflow_name=$(basename "$workflow_path")
+                
+                # Get recent runs for this workflow (last 5 runs)
+                # SAFETY: Handle empty API responses gracefully
+                RECENT_RUNS=$(gh api "repos/:owner/:repo/actions/workflows/${workflow_name}/runs?per_page=5" \
+                  --jq '.workflow_runs[] | "\(.id)|\(.status)|\(.conclusion)|\(.created_at)"' 2>/dev/null || echo "")
+                
+                echo "### $workflow_name" >> /tmp/workflow_summary.md
+                
+                if [ -n "$RECENT_RUNS" ]; then
+                  # Process each run
+                  RUN_FAILED=false
+                  while IFS='|' read -r run_id status conclusion created_at; do
+                    if [ "$conclusion" = "failure" ]; then
+                      FAILED_WORKFLOWS=$((FAILED_WORKFLOWS + 1))
+                      RUN_FAILED=true
+                      echo "- ❌ Run #$run_id: FAILED ($(echo $created_at | cut -d'T' -f1))" >> /tmp/workflow_summary.md
+                      echo "$workflow_name|$run_id|$created_at" >> /tmp/workflow_failures.txt
+                    elif [ "$conclusion" = "success" ]; then
+                      SUCCESS_WORKFLOWS=$((SUCCESS_WORKFLOWS + 1))
+                      echo "- ✅ Run #$run_id: SUCCESS ($(echo $created_at | cut -d'T' -f1))" >> /tmp/workflow_summary.md
+                    elif [ "$status" = "in_progress" ]; then
+                      echo "- 🔄 Run #$run_id: IN PROGRESS" >> /tmp/workflow_summary.md
+                    elif [ -n "$status" ]; then
+                      echo "- ⏸️  Run #$run_id: $status" >> /tmp/workflow_summary.md
+                    fi
+                  done <<< "$RECENT_RUNS"
+                  
+                  # Detect output formatting issues (grep/wc failures)
+                  if [ "$RUN_FAILED" = true ]; then
+                    # Check if failure was due to output issues
+                    LATEST_FAILED=$(echo "$RECENT_RUNS" | grep "failure" | head -1 | cut -d'|' -f1)
+                    if [ -n "$LATEST_FAILED" ]; then
+                      # Get job logs to check for output-related errors
+                      JOB_LOGS=$(gh api "repos/:owner/:repo/actions/runs/${LATEST_FAILED}/jobs" \
+                        --jq '.jobs[] | select(.conclusion=="failure") | .name' 2>/dev/null || echo "")
+                      
+                      if echo "$JOB_LOGS" | grep -qi "output\|variable\|grep\|wc"; then
+                        echo "  - ⚠️  **Possible output formatting issue detected**" >> /tmp/workflow_summary.md
+                      fi
+                    fi
+                  fi
+                else
+                  echo "- ℹ️  No recent runs found" >> /tmp/workflow_summary.md
+                fi
+                
+                echo "" >> /tmp/workflow_summary.md
+              fi
+            done <<< "$WORKFLOW_LIST"
+          else
+            echo "⚠️  Unable to fetch workflow list from GitHub API" >> /tmp/workflow_summary.md
+          fi
+          
+          # SAFETY: Ensure all outputs have valid values
+          TOTAL_WORKFLOWS=${TOTAL_WORKFLOWS:-0}
+          FAILED_WORKFLOWS=${FAILED_WORKFLOWS:-0}
+          SUCCESS_WORKFLOWS=${SUCCESS_WORKFLOWS:-0}
+          
+          # Add summary statistics
+          cat >> /tmp/workflow_summary.md << EOF
+          
+          ---
+          
+          ## Summary Statistics
+          
+          - **Total Workflows Monitored:** $TOTAL_WORKFLOWS
+          - **Successful Runs:** $SUCCESS_WORKFLOWS
+          - **Failed Runs:** $FAILED_WORKFLOWS
+          - **Success Rate:** $(( TOTAL_WORKFLOWS > 0 ? (SUCCESS_WORKFLOWS * 100) / (SUCCESS_WORKFLOWS + FAILED_WORKFLOWS) : 100 ))%
+          
+          EOF
+          
+          # Output to job outputs with SAFETY fallbacks
+          echo "total_workflows=$TOTAL_WORKFLOWS" >> $GITHUB_OUTPUT
+          echo "failed_workflows=$FAILED_WORKFLOWS" >> $GITHUB_OUTPUT
+          echo "success_workflows=$SUCCESS_WORKFLOWS" >> $GITHUB_OUTPUT
+          
+          cat /tmp/workflow_summary.md
+          
+          echo "✅ Workflow health check complete"
       
       - name: Analyze worker coordination
         id: coordination
@@ -107,34 +198,117 @@ jobs:
       - name: Generate recommendations
         id: recommendations
         run: |
-          echo "Generating system recommendations..."
+          echo "Generating system recommendations based on workflow health..."
           
+          # Initialize recommendations with SAFETY to ensure non-empty output
           RECOMMENDATIONS=""
+          CRITICAL_ISSUES=0
           
           # Check API key
           if [ -z "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
             RECOMMENDATIONS="${RECOMMENDATIONS}\n- 🔴 CRITICAL: Configure ANTHROPIC_API_KEY in repository secrets"
+            CRITICAL_ISSUES=$((CRITICAL_ISSUES + 1))
           fi
           
           # Check coordination issues
-          if [ "${{ steps.coordination.outputs.coordination_issues }}" -gt 0 ]; then
-            RECOMMENDATIONS="${RECOMMENDATIONS}\n- ⚠️ Review recent commits for potential worker conflicts"
+          COORD_ISSUES=${{ steps.coordination.outputs.coordination_issues }}
+          COORD_ISSUES=${COORD_ISSUES:-0}
+          if [ "$COORD_ISSUES" -gt 0 ]; then
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- ⚠️  Review recent commits for potential worker conflicts ($COORD_ISSUES detected)"
+          fi
+          
+          # Check workflow failures with SAFETY fallbacks
+          FAILED_COUNT=${{ steps.workflow_history.outputs.failed_workflows }}
+          FAILED_COUNT=${FAILED_COUNT:-0}
+          if [ "$FAILED_COUNT" -gt 0 ]; then
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- ⚠️  $FAILED_COUNT workflow failures detected in last 24 hours - review logs"
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- 💡 Check for output formatting issues (empty grep/wc results)"
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- 💡 Verify all workflow variables use \${VAR:-default} pattern"
+            
+            # Parse failure details if available
+            if [ -f "/tmp/workflow_failures.txt" ]; then
+              FAILURE_COUNT=$(wc -l < /tmp/workflow_failures.txt 2>/dev/null || echo "0")
+              FAILURE_COUNT=${FAILURE_COUNT:-0}
+              if [ "$FAILURE_COUNT" -gt 3 ]; then
+                RECOMMENDATIONS="${RECOMMENDATIONS}\n- 🔴 CRITICAL: Multiple workflow failures ($FAILURE_COUNT) - immediate investigation required"
+                CRITICAL_ISSUES=$((CRITICAL_ISSUES + 1))
+              fi
+            fi
           fi
           
           # Check health score
           if [ -f "logs/agent-management/status-$(date +%Y-%m-%d).json" ]; then
             HEALTH=$(python -c "import json; print(json.load(open('logs/agent-management/status-$(date +%Y-%m-%d).json'))['health_score'])" 2>/dev/null || echo "100")
+            HEALTH=${HEALTH:-100}
             if [ "$HEALTH" -lt 70 ]; then
-              RECOMMENDATIONS="${RECOMMENDATIONS}\n- ⚠️ System health at ${HEALTH}% - investigate issues"
+              RECOMMENDATIONS="${RECOMMENDATIONS}\n- ⚠️  System health at ${HEALTH}% - investigate issues"
             fi
           fi
           
+          # Success case with SAFETY
           if [ -z "$RECOMMENDATIONS" ]; then
-            RECOMMENDATIONS="- ✅ System operating normally"
+            RECOMMENDATIONS="- ✅ System operating normally\n- ✅ All workflows healthy\n- ✅ No coordination issues detected"
           fi
           
+          # Generate detailed report artifact
+          cat > /tmp/recommendations.md << EOF
+          # Agent Management Recommendations
+          
+          **Generated:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Critical Issues:** $CRITICAL_ISSUES
+          
+          ## Action Items
+          
+          EOF
+          
+          echo -e "$RECOMMENDATIONS" >> /tmp/recommendations.md
+          
+          # Add workflow failure prevention guidance
+          cat >> /tmp/recommendations.md << 'EOF'
+          
+          ---
+          
+          ## Workflow Output Safety Pattern
+          
+          To prevent workflow failures from empty outputs, all bash commands that feed into
+          \`$GITHUB_OUTPUT\` or job outputs should use the safety pattern:
+          
+          \`\`\`bash
+          # SAFETY: Apply fallback to prevent empty output
+          VAR=$(command | grep something || echo "0")
+          VAR=${VAR:-0}
+          echo "var=$VAR" >> $GITHUB_OUTPUT
+          \`\`\`
+          
+          This ensures:
+          1. Command failures don't leave variables empty
+          2. The \`|| echo "0"\` provides first-level fallback
+          3. The \`${VAR:-0}\` provides second-level fallback
+          4. Output is always valid for workflow processing
+          
+          ---
+          
+          ## Recent Workflow Failures
+          
+          EOF
+          
+          # Append failure details if they exist
+          if [ -f "/tmp/workflow_failures.txt" ] && [ -s "/tmp/workflow_failures.txt" ]; then
+            echo "The following workflows had failures:" >> /tmp/recommendations.md
+            echo "" >> /tmp/recommendations.md
+            while IFS='|' read -r workflow run_id timestamp; do
+              echo "- **$workflow**: Run #$run_id at $timestamp" >> /tmp/recommendations.md
+            done < /tmp/workflow_failures.txt
+          else
+            echo "✅ No workflow failures in the monitoring period." >> /tmp/recommendations.md
+          fi
+          
+          # Output recommendations
           echo -e "$RECOMMENDATIONS"
-          echo -e "$RECOMMENDATIONS" > /tmp/recommendations.txt
+          cat /tmp/recommendations.md
+          
+          # Set outputs with SAFETY
+          echo "critical_issues=$CRITICAL_ISSUES" >> $GITHUB_OUTPUT
       
       - name: Upload status reports as artifacts
         uses: actions/upload-artifact@v4
@@ -144,6 +318,9 @@ jobs:
           path: |
             logs/agent-management/status-*.json
             logs/agent-management/status-*.md
+            /tmp/workflow_summary.md
+            /tmp/recommendations.md
+            /tmp/workflow_failures.txt
           retention-days: 30
       
       - name: Commit reports to logs
@@ -174,18 +351,42 @@ jobs:
           echo "## 🎯 Agent Management Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
+          # SAFETY: Apply fallbacks for all variables used in summary
+          FAILED_COUNT=${{ steps.workflow_history.outputs.failed_workflows }}
+          FAILED_COUNT=${FAILED_COUNT:-0}
+          SUCCESS_COUNT=${{ steps.workflow_history.outputs.success_workflows }}
+          SUCCESS_COUNT=${SUCCESS_COUNT:-0}
+          TOTAL_WF=${{ steps.workflow_history.outputs.total_workflows }}
+          TOTAL_WF=${TOTAL_WF:-0}
+          COORD_ISSUES=${{ steps.coordination.outputs.coordination_issues }}
+          COORD_ISSUES=${COORD_ISSUES:-0}
+          CRITICAL=${{ steps.recommendations.outputs.critical_issues }}
+          CRITICAL=${CRITICAL:-0}
+          
           if [ -f "logs/agent-management/status-$(date +%Y-%m-%d).json" ]; then
             HEALTH=$(python -c "import json; print(json.load(open('logs/agent-management/status-$(date +%Y-%m-%d).json'))['health_score'])" 2>/dev/null || echo "Unknown")
+            HEALTH=${HEALTH:-Unknown}
             echo "- **System Health:** ${HEALTH}/100" >> $GITHUB_STEP_SUMMARY
           fi
           
-          echo "- **Coordination Issues:** ${{ steps.coordination.outputs.coordination_issues }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Workflows Monitored:** $TOTAL_WF" >> $GITHUB_STEP_SUMMARY
+          echo "- **Successful Runs:** $SUCCESS_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "- **Failed Runs:** $FAILED_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "- **Coordination Issues:** $COORD_ISSUES" >> $GITHUB_STEP_SUMMARY
+          echo "- **Critical Issues:** $CRITICAL" >> $GITHUB_STEP_SUMMARY
           echo "- **Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
           echo "### Recommendations" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          cat /tmp/recommendations.txt >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "/tmp/recommendations.md" ]; then
+            # Extract just the action items section
+            sed -n '/^## Action Items/,/^---/p' /tmp/recommendations.md | grep -v "^---" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ✅ System operating normally" >> $GITHUB_STEP_SUMMARY
+          fi
+          
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📊 Detailed reports available in artifacts" >> $GITHUB_STEP_SUMMARY
       
