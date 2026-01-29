@@ -43,17 +43,26 @@ jobs:
           echo "Calculating repository metrics..."
           
           # Word count for game content
-          GAME_WORDS=$(find game choicescript_game -name "*.txt" -o -name "*.js" -o -name "*.html" | xargs wc -w | tail -1 | awk '{print $1}')
+          # SAFETY: Use fallback to ensure non-empty output for GITHUB_OUTPUT
+          GAME_WORDS=$(find game choicescript_game -name "*.txt" -o -name "*.js" -o -name "*.html" | xargs wc -w 2>/dev/null | tail -1 | awk '{print $1}')
+          GAME_WORDS=${GAME_WORDS:-0}
           
           # Scene count
+          # SAFETY: Default to 0 if no scenes found
           SCENE_COUNT=$(find choicescript_game/scenes -name "*.txt" 2>/dev/null | wc -l)
+          SCENE_COUNT=${SCENE_COUNT:-0}
           
           # Recent commits
+          # SAFETY: Default to 0 if no commits in timeframe
           COMMIT_COUNT=$(git log --since="24 hours ago" --oneline | wc -l)
+          COMMIT_COUNT=${COMMIT_COUNT:-0}
           
           # LOC changes
+          # SAFETY: Use fallback pattern to ensure valid integer output even if grep finds nothing
           LOC_ADDED=$(git diff --shortstat HEAD~1 2>/dev/null | grep -oP '\d+(?= insertion)' || echo "0")
+          LOC_ADDED=${LOC_ADDED:-0}
           LOC_REMOVED=$(git diff --shortstat HEAD~1 2>/dev/null | grep -oP '\d+(?= deletion)' || echo "0")
+          LOC_REMOVED=${LOC_REMOVED:-0}
           
           echo "game_words=$GAME_WORDS" >> $GITHUB_OUTPUT
           echo "scene_count=$SCENE_COUNT" >> $GITHUB_OUTPUT
@@ -122,13 +131,19 @@ jobs:
           echo "Detecting changes in content files..."
           
           # Check for lore updates
+          # SAFETY: grep -c can return empty on error; use ${VAR:-0} to ensure valid integer
           LORE_CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -c "^lore/" || echo "0")
+          LORE_CHANGED=${LORE_CHANGED:-0}
           
           # Check for game updates
+          # SAFETY: Ensure GAME_CHANGED is always a valid integer for job outputs
           GAME_CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -c "^game/\|^choicescript_game/" || echo "0")
+          GAME_CHANGED=${GAME_CHANGED:-0}
           
           # Check for documentation updates
+          # SAFETY: Apply fallback to prevent empty output in GITHUB_OUTPUT
           DOCS_CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -c "^docs/\|\.md$" || echo "0")
+          DOCS_CHANGED=${DOCS_CHANGED:-0}
           
           echo "lore_changed=$LORE_CHANGED" >> $GITHUB_OUTPUT
           echo "game_changed=$GAME_CHANGED" >> $GITHUB_OUTPUT

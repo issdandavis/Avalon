@@ -49,7 +49,9 @@ jobs:
           echo "🔍 Validating GitHub Enterprise Functions..."
           
           # Check all workflows
-          WORKFLOW_COUNT=$(find .github/workflows -name "*.yml" -o -name "*.yaml" | wc -l)
+          # SAFETY: Ensure wc -l output defaults to 0 for valid output variables
+          WORKFLOW_COUNT=$(find .github/workflows -name "*.yml" -o -name "*.yaml" 2>/dev/null | wc -l)
+          WORKFLOW_COUNT=${WORKFLOW_COUNT:-0}
           echo "Found $WORKFLOW_COUNT workflows"
           
           # Validate each workflow
@@ -151,7 +153,9 @@ jobs:
           fi
           
           # Check email templates
+          # SAFETY: Default to 0 if no templates found to prevent empty output
           TEMPLATE_COUNT=$(find config/email-templates -name "*.txt" 2>/dev/null | wc -l)
+          TEMPLATE_COUNT=${TEMPLATE_COUNT:-0}
           echo "📧 Email templates found: $TEMPLATE_COUNT"
           
           if [ $TEMPLATE_COUNT -ge 4 ]; then

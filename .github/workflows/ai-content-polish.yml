@@ -51,11 +51,16 @@ jobs:
           echo "Analyzing content for quality issues..."
           
           # Find scenes without sensory details
+          # SAFETY: Ensure wc -l output defaults to 0 for valid job outputs
           SCENES_NO_TASTE=$(grep -L "taste\|tasted\|tasting" choicescript_game/scenes/*.txt 2>/dev/null | wc -l)
+          SCENES_NO_TASTE=${SCENES_NO_TASTE:-0}
           SCENES_NO_SMELL=$(grep -L "smell\|scent\|aroma\|odor" choicescript_game/scenes/*.txt 2>/dev/null | wc -l)
+          SCENES_NO_SMELL=${SCENES_NO_SMELL:-0}
           
           # Find scenes with very short descriptions
-          SHORT_SCENES=$(find choicescript_game/scenes -name "*.txt" -size -2k | wc -l)
+          # SAFETY: Default to 0 if no short scenes found
+          SHORT_SCENES=$(find choicescript_game/scenes -name "*.txt" -size -2k 2>/dev/null | wc -l)
+          SHORT_SCENES=${SHORT_SCENES:-0}
           
           echo "scenes_no_taste=$SCENES_NO_TASTE" >> $GITHUB_OUTPUT
           echo "scenes_no_smell=$SCENES_NO_SMELL" >> $GITHUB_OUTPUT

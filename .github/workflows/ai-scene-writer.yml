@@ -56,11 +56,15 @@ jobs:
           echo "Analyzing scenes for completion status..."
           
           # Count scenes with placeholder content
+          # SAFETY: Ensure grep output defaults to 0 for valid GITHUB_OUTPUT
           PLACEHOLDER_COUNT=$(grep -r "PLACEHOLDER\|TODO\|STUB" choicescript_game/scenes/*.txt 2>/dev/null | wc -l)
+          PLACEHOLDER_COUNT=${PLACEHOLDER_COUNT:-0}
           echo "placeholder_count=$PLACEHOLDER_COUNT" >> $GITHUB_OUTPUT
           
           # Count total scenes
+          # SAFETY: Default to 0 if scenes directory is empty
           TOTAL_SCENES=$(ls -1 choicescript_game/scenes/*.txt 2>/dev/null | wc -l)
+          TOTAL_SCENES=${TOTAL_SCENES:-0}
           echo "total_scenes=$TOTAL_SCENES" >> $GITHUB_OUTPUT
           
           # Find scene with least content (prioritize incomplete work)
