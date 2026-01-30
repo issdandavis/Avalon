@@ -17,6 +17,43 @@ Set these in Pipedream (Secrets or Environment Variables):
 
 ---
 
+## Pipedream setup walkthrough
+1. **Create a Data Store** named to match `PD_DATASTORE` (e.g., `team_setup_store`).
+2. **Add secrets** in Pipedream (Settings → Environment Variables / Secrets) for the items listed above.
+3. **Create Workflow 1** with an HTTP trigger and paste the code steps below in order.
+4. **Create Workflow 2** with a scheduled trigger and paste the digest steps below.
+5. **Test end-to-end** with a sample payload before turning on invites.
+
+### Sample payload (use in Pipedream HTTP trigger tests)
+```json
+{
+  "email": "newhire@example.com",
+  "name": "New Hire",
+  "github": "newhire-gh",
+  "team": "core",
+  "role": "writer"
+}
+```
+
+### Example curl test
+```bash
+curl -X POST "$PIPEDREAM_URL" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"newhire@example.com","name":"New Hire","github":"newhire-gh","team":"core","role":"writer"}'
+```
+
+### Required app scopes
+- **GitHub token**: `admin:org`, `repo` (classic PAT) to create teams and add members.
+- **Slack bot**: `channels:manage`, `chat:write`, `users:read.email` (optionally `conversations:write` depending on Slack app).
+- **Notion**: database write access to the target DB.
+
+### Pipedream package notes
+Each Node.js step uses lightweight imports. If a package is not available by default, add it in the step’s **npm** settings:
+- `axios`
+- `uuid`
+
+---
+
 ## Workflow 1: "Team Intake & Provisioning"
 Use this to turn a form submission or Slack slash command into a fully provisioned teammate (GitHub team membership, Slack channel, Notion log, welcome email).
 
