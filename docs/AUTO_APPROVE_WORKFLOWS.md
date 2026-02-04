@@ -23,8 +23,10 @@ The following accounts are automatically approved to run all workflows:
 
 3. **Actions Taken**
    - Approves workflow runs automatically
-   - Approves pull requests from enterprise accounts
+   - Comments on pull requests from enterprise accounts (manual approval still required)
    - Enables all workflow actions without manual approval
+
+**Note:** GitHub Actions GITHUB_TOKEN cannot approve pull requests. The workflow posts informative comments instead.
 
 ## Security
 
@@ -92,9 +94,19 @@ This auto-approval system works with:
 - ✅ AI Game Tester (daily + PRs)
 - ✅ AI Autonomous Worker (every 6 hours)
 - ✅ Agent Management Dashboard (2x daily)
+- ✅ Auto-Add to Project (automatically adds PRs/issues to GitHub Projects)
 - ✅ Any custom workflows you add
 
 **All your accounts can now trigger these workflows automatically!**
+
+### Auto-Add to Project Feature
+
+Workflows now automatically add pull requests and issues to your GitHub Project board:
+- **Project URL:** `https://github.com/users/issdandavis/projects/1`
+- **Triggers:** Pull request opened, issues created
+- **Action:** `actions/add-to-project@v1.0.2`
+
+This helps with automatic project management and tracking of all work items.
 
 ## Monitoring
 

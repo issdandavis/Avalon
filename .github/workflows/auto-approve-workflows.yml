@@ -21,6 +21,18 @@ permissions:
   checks: read
 
 jobs:
+  add-to-project:
+    name: Add to Project
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target'
+    
+    steps:
+      - name: Add PR to project
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/users/issdandavis/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+  
   auto-approve:
     runs-on: ubuntu-latest
 
@@ -63,6 +75,17 @@ jobs:
       # 2) Auto-approve the PR itself (so reviews don’t block you)
       - name: Auto-approve PR (pull_request_target)
         if: ${{ github.event_name == 'pull_request_target' && steps.check-actor.outputs.approved == 'true' }}
+          
+          if [[ "$APPROVED" == "true" ]]; then
+            echo "✅ Account $ACTOR is approved for auto-workflow execution"
+            echo "approved=true" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ Account $ACTOR is not in approved list"
+            echo "approved=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Comment on enterprise account PR
+        if: github.event_name == 'pull_request_target'
         env:
           # GitHub CLI uses GH_TOKEN in workflows 2
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -92,6 +115,11 @@ jobs:
           echo "✅ Workflow run approved"
 
       - name: Summary
+          # Comment on PR from enterprise account (cannot approve via GitHub Actions)
+          gh pr comment $PR_NUMBER --body "✅ **Enterprise account verified** - Workflow authorization confirmed for approved account.\n\n_Note: Manual approval required as GitHub Actions cannot approve PRs._"
+          echo "✅ PR #$PR_NUMBER comment posted"
+      
+      - name: Set workflow approval status
         run: |
           echo "Enterprise account auto-approval complete for event: ${{ github.event_name }}"
           echo "Actor: ${{ steps.check-actor.outputs.actor }}"

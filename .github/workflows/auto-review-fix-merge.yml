@@ -22,6 +22,18 @@ permissions:
   checks: read
 
 jobs:
+  add-to-project:
+    name: Add to Project
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Add PR to project
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/users/issdandavis/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+  
   auto-review:
     name: Auto-Review PR
     runs-on: ubuntu-latest
@@ -158,6 +170,8 @@ jobs:
             }
 
       - name: Approve PR if passing
+      
+      - name: Comment on passing review
         if: steps.review.outputs.approved == 'true'
         uses: actions/github-script@v7
         with:
@@ -168,20 +182,19 @@ jobs:
                            null;
 
             if (!prNumber) {
-              console.log('No PR number available, skipping approval');
+              console.log('No PR number available, skipping comment');
               return;
             }
 
             try {
-              await github.rest.pulls.createReview({
+              await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: prNumber,
-                event: 'APPROVE',
-                body: '✅ Auto-approved by automated review system'
+                issue_number: prNumber,
+                body: '✅ **Auto-review passed** - This PR has been reviewed and meets quality standards.\n\n_Note: GitHub Actions cannot approve PRs automatically. Please approve manually if needed._'
               });
             } catch (error) {
-              console.log('Could not approve PR:', error.message);
+              console.log('Could not post comment:', error.message);
             }
 
   auto-fix:

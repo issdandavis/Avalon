@@ -34,6 +34,18 @@ permissions:
   contents: read
 
 jobs:
+  add-to-project:
+    name: Add to Project
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.event_name == 'issues'
+    
+    steps:
+      - name: Add item to project
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/users/issdandavis/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+  
   categorize-and-respond:
     name: Categorize & Auto-Respond
     runs-on: ubuntu-latest
