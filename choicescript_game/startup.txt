@@ -27,6 +27,10 @@
   year_one_trial
   year_two_start
   path_selection
+  collaborative_mastery
+  rivalry_path
+  redemption_path
+  political_web
   research_path
   combat_path
   diplomatic_path
@@ -221,10 +225,16 @@
 
 *comment Path Tracking
 *create chosen_path "none"
+*create campaign_route "standard"
 *create expedition_choice "none"
 *create artifact_earned "none"
 *create secret_paths_found 0
 *create hidden_lore_discovered 0
+*create cooperative_accord 0
+*create rivalry_heat 0
+*create redemption_oath false
+*create manipulation_network 0
+*create campaign_finale ""
 
 *comment Failure & Consequence Tracking
 *create failures 0

@@ -11,6 +11,16 @@
 
 All senior students must complete one final expedition before graduation.
 
+*comment Alternate campaign finales
+*if campaign_route = "cooperative_arc"
+  *goto cooperative_final_expedition
+*if campaign_route = "rivalry_arc"
+  *goto rivalry_final_expedition
+*if campaign_route = "redemption_arc"
+  *goto redemption_final_expedition
+*if campaign_route = "political_arc"
+  *goto political_final_expedition
+
 *page_break
 
 [i]"This isn't like your first-year field trips. This is master-level. The danger is real."[/i]
@@ -20,6 +30,106 @@ All senior students must complete one final expedition before graduation.
 You have a choice of destinations:
 
 *page_break
+
+*label cooperative_final_expedition
+
+[b]== THE ACCORD'S FINAL FIELD TEST ==[/b]
+
+*line_break
+
+You petition Izack for permission to take your entire Accord into the Dimensional Loom—a realm that mirrors the caster's teamwork. The Loom accepts only linked groups.
+
+*page_break
+
+Inside, spells only function when woven together. You coordinate triads, rotating leaders every minute. When the Loom throws paradox storms, your shared thesis weave holds.
+
+*line_break
+
+*set collaboration +10
+*set cooperative_accord +10
+*set fame +10
+*set campaign_finale "cooperative_mastery"
+
+*page_break
+
+You emerge with a lattice of shimmering thread—a physical proof that collective casting can stabilize any anchor. The council cannot ignore it.
+
+*goto_scene avalon_crisis
+
+*label rivalry_final_expedition
+
+[b]== THE CHAMPION'S GAUNTLET ==[/b]
+
+*line_break
+
+Zara arranges a sanctioned gauntlet in the Dimensional Fringe: mirrored constructs built from every rival's best spell. Beat them all, and you become Avalon's strategic champion.
+
+*page_break
+
+You duel reflections of Grey's subtle wards, Aria's razor equations, and your own ambition made manifest. Each victory sharpens your focus and your fame.
+
+*line_break
+
+*set rivalry_heat +10
+*set power +10
+*set fame +10
+*set campaign_finale "rivalry_champion"
+
+*page_break
+
+When the final mirror bows, the title is yours—and with it, responsibility for Avalon's front line.
+
+*goto_scene avalon_crisis
+
+*label redemption_final_expedition
+
+[b]== THE DEBT RECKONING ==[/b]
+
+*line_break
+
+You return to the scarred pocket realm you once destabilized. This time, you bring the guilt-ward, allies, and a resolve forged by years of atonement.
+
+*page_break
+
+You anchor the realm's heart, absorbing backlash that would have shattered the team. The land steadies; grateful spirits whisper forgiveness.
+
+*line_break
+
+*set redemption_oath true
+*set empathy +5
+*set living_magic +5
+*set campaign_finale "redemption_guardian"
+
+*page_break
+
+You leave the realm whole, carrying a promise: Avalon will not repeat its mistakes.
+
+*goto_scene avalon_crisis
+
+*label political_final_expedition
+
+[b]== THE QUIET SUMMIT ==[/b]
+
+*line_break
+
+You organize a clandestine summit in a neutral pocket dimension, inviting rival ambassadors to sign an emergency mutual-aid pact for Avalon.
+
+*page_break
+
+Negotiations are tense. You deploy secrets, favors, and carefully timed gestures until signatures flow.
+
+*line_break
+
+*set manipulation_network +10
+*set collaboration +5
+*set fame +10
+*set campaign_finale "political_weaver"
+
+*page_break
+
+The pact grants Avalon reinforcements the moment the crisis hits.
+
+*goto_scene avalon_crisis
 
 *choice
   #Return to the location you visited in Year 1 (advanced challenges)

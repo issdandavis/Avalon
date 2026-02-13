@@ -136,6 +136,50 @@ All three of your mentors, working in crisis mode.
 
   *goto crisis_coordination
 
+*if campaign_route = "cooperative_arc"
+  You rally your Accord members without even being asked, slotting them into Aria's perimeter, Zara's shield wall, and Izack's command post simultaneously.
+
+  *set path_contribution_bonus +12
+  *set cooperative_accord +5
+  *set collaboration_check true
+
+  Izack looks relieved. [b]"Your network is exactly what we need. Keep them synced."[/b]
+
+  *goto crisis_cooperative
+
+*if campaign_route = "rivalry_arc"
+  Rivals swarm the courtyard. They expected to outdo you—now they expect you to lead. Zara jerks her chin toward the cracking bark.
+
+  *set path_contribution_bonus +8
+  *set rivalry_heat +5
+  *set confidence +3
+
+  [b]"Beat this,"[/b] one of your challengers mutters. Fine. You will.
+
+  *goto crisis_rivalry
+
+*if campaign_route = "redemption_arc"
+  The ledger of debts flashes in your mind. If Avalon falls, you never make things right.
+
+  *set path_contribution_bonus +10
+  *set redemption_oath true
+  *set empathy +3
+
+  Aria's eyes soften. [b]"Use that guilt. Channel it into the anchor, ${name}."[/b]
+
+  *goto crisis_redemption
+
+*if campaign_route = "political_arc"
+  You scan the chaos like a council chamber—mapping influence networks, assigning tasks to those who will listen.
+
+  *set path_contribution_bonus +10
+  *set manipulation_network +5
+  *set collaboration +3
+
+  Izack meets your gaze. [b]"You take the northern teams. Make sure they're actually sharing information."[/b]
+
+  *goto crisis_political
+
 *comment ================================================
 *comment PATH-SPECIFIC CONTRIBUTIONS
 *comment ================================================
@@ -441,6 +485,86 @@ The fate of Avalon rests on this choice.
 *comment ================================================
 *comment THE CHOICE - BRANCH POINT 2
 *comment ================================================
+
+*label crisis_cooperative
+
+[b]COOPERATIVE RESPONSE[/b]
+
+*line_break
+
+Your Accord members form triads, sharing mana and tasks mid-spell. The flow of information stabilizes the panicking crowd as much as your shields.
+
+*line_break
+
+*set collaborative_magic +5
+*set communication_vs_domination +5
+
+*page_break
+
+When Zara barks for reinforcements, your network answers before she finishes the sentence. When Aria needs data, three students provide it in unison.
+
+*line_break
+
+The crisis stops feeling like chaos; it becomes choreography.
+
+*goto crisis_choice
+
+*label crisis_rivalry
+
+[b]RIVALRY RESPONSE[/b]
+
+*line_break
+
+You bark orders like challenges. "Grey, prove you can match my barrier control! Alaric, unless you want second place forever, reinforce the eastern root!"
+
+*line_break
+
+*set power +5
+*set rivalry_heat +5
+
+*page_break
+
+Your rivals grit their teeth and comply, eager to outperform you—and in doing so, they stabilize whole sections of the courtyard. The competition becomes a weapon against the collapse.
+
+*goto crisis_choice
+
+*label crisis_redemption
+
+[b]REDEMPTION RESPONSE[/b]
+
+*line_break
+
+You kneel by the cracked bark, pressing the guilt-ward you designed into the fissure. It glows, absorbing ambient despair from the crowd and turning it into stabilizing energy.
+
+*line_break
+
+*set empathy +5
+*set redemption_oath true
+
+*page_break
+
+"I'm sorry," you whisper to the World Tree—and feel it steady beneath your palm. Aria nods once, trusting you with a section of the anchor.
+
+*goto crisis_choice
+
+*label crisis_political
+
+[b]POLITICAL RESPONSE[/b]
+
+*line_break
+
+You pair students from rival factions together, forcing cooperation where none existed. You draft a quick charter—authority to make emergency calls—and get Izack to sign it mid-cast.
+
+*line_break
+
+*set manipulation_network +5
+*set collaboration +5
+
+*page_break
+
+With hierarchy clarified, panic ebbs. Teams report efficiently, and the worst rumors die before they spread.
+
+*goto crisis_choice
 
 *label crisis_choice
 

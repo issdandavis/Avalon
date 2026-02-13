@@ -15,6 +15,86 @@ The Spiral Spire gleams above you, its impossible geometry catching the afternoo
 *comment DETERMINE ENDING BASED ON STATS AND CHOICES
 *comment ================================================
 
+*if campaign_finale = "cooperative_mastery"
+  *goto cooperative_arc_finale
+
+*if campaign_finale = "rivalry_champion"
+  *goto rivalry_arc_finale
+
+*if campaign_finale = "redemption_guardian"
+  *goto redemption_arc_finale
+
+*if campaign_finale = "political_weaver"
+  *goto political_arc_finale
+
+*comment ================================================
+*comment CAMPAIGN ARC ENDINGS
+*comment ================================================
+
+*label cooperative_arc_finale
+
+[b]== LEGACY OF THE ACCORD ==[/b]
+
+*line_break
+
+The Hall of Threads hums with shared magic. Your lattice from the Loom now reinforces Avalon's anchor permanently, credits etched with every Accord member's name beside yours.
+
+*line_break
+
+Izack announces a new department dedicated to collective casting. [i]"${name} proved collaboration isn't a tactic—it's infrastructure."[/i]
+
+*line_break
+
+*finish
+
+*label rivalry_arc_finale
+
+[b]== THE UNDISPUTED CHAMPION ==[/b]
+
+*line_break
+
+The gauntlet trophy rests in the Spiral Spire, its plaque reading: [i]"Victory keeps Avalon alive."[/i] Rivals nod respectfully as you pass; competition became protection under your lead.
+
+*line_break
+
+Zara offers you a post as strategic duelist-in-residence. You accept—with conditions that future ladders serve Avalon's safety, not ego.
+
+*line_break
+
+*finish
+
+*label redemption_arc_finale
+
+[b]== GUARDIAN OF SECOND CHANCES ==[/b]
+
+*line_break
+
+The ledger of debts is sealed with a final rune. Students whisper about the mage who turned remorse into power and rebuilt what others broke.
+
+*line_break
+
+Aria hands you the key to the new Restoration Annex. [i]"Lead them,"[/i] she says. [i]"Teach them that repair is as heroic as discovery."[/i]
+
+*line_break
+
+*finish
+
+*label political_arc_finale
+
+[b]== WEAVER OF COUNCILS ==[/b]
+
+*line_break
+
+Ambassadors crowd the courtyard, each bound by the pact you brokered. Avalon's first standing council of realms convenes with you at its head, a silver signet glinting on your finger.
+
+*line_break
+
+Izack smiles quietly. [i]"You made Avalon not just a school, but a promised ally."[/i]
+
+*line_break
+
+*finish
+
 *comment Highest tier endings - Partnership and Mastery
 *if (artifact_earned = "Glacier Partnership") and (collaboration > 80)
   *goto collaborative_master

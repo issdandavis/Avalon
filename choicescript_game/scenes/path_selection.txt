@@ -235,8 +235,201 @@ Which door do you approach?
   #The Diplomatic Path—I want to bridge worlds and prevent conflicts through understanding.
     *goto confirm_diplomatic
 
+  #The Cooperative Scholar Campaign—lead a coalition of peers to reinvent collaborative magic.
+    *goto cooperative_pitch
+
+  #The Rivalry Ascent—pit yourself against Avalon's best and let competition forge your legend.
+    *goto rivalry_pitch
+
+  #The Redemption Arc—prove that mistakes can become miracles by taking on Avalon's most dangerous debts.
+    *goto redemption_pitch
+
+  #The Political Web—quietly shape councils and treaties to secure power through influence.
+    *goto manipulator_pitch
+
   #I need more information before deciding.
     *goto more_information
+
+*comment ================================================
+*comment ALTERNATE CAMPAIGN ROUTES
+*comment ================================================
+
+*label cooperative_pitch
+
+Aria raises an eyebrow as you study the three doors, then look past them at the faculty table itself. "You want something beyond the usual?"
+
+*page_break
+
+"I want to build a [i]team[/i]," you say. "A cohort that lives in the labs, shares theories, and treats collaboration as the entire curriculum." Izack's eyes brighten.
+
+*line_break
+
+This campaign would mean convening monthly symposiums, designing shared rituals, and publishing as a collective. It would also mean owning the consequences together.
+
+*page_break
+
+*choice
+  #Yes. I want to lead the Cooperative Scholar Campaign.
+    *set chosen_path "Cooperative Scholar"
+    *set campaign_route "cooperative_arc"
+    *set cooperative_accord +15
+    *set collaboration +10
+    *set knowledge +5
+    *goto cooperative_commitment
+
+  #Actually, I need to reconsider.
+    *goto reflection_moment
+
+*label cooperative_commitment
+
+Izack presses a shimmering sigil into your palm. [b]"Then convene the Accord,"[/b] he says. [b]"You'll have access to unused tower space and peer stipends. Make something new."[/b]
+
+*line_break
+
+*set aria_relationship +5
+*set izack_relationship +5
+
+*page_break
+
+[i]"A study group on steroids,"[/i] Polly muses. [i]"Or the birth of a scholarly faction. Either way, you're about to live in the Archives."[/i]
+
+*page_break
+
+*finish To be continued in: Cooperative Scholar Campaign
+
+*goto_scene collaborative_mastery
+
+*label rivalry_pitch
+
+Zara notices the way you size up the other students—Grey, Alaric, the prodigies who think they own the place.
+
+*page_break
+
+"Competition motivates you," she says. "You want to prove you're the strongest student Avalon has seen in generations."
+
+*line_break
+
+Choosing this means formal duels, public research challenges, and a scoreboard in the common hall. Someone will always be hunting your flaws.
+
+*page_break
+
+*choice
+  #Yes. Rivalry will forge me into something sharper.
+    *set chosen_path "Rivalry Ascent"
+    *set campaign_route "rivalry_arc"
+    *set rivalry_heat +20
+    *set power +10
+    *set confidence +5
+    *goto rivalry_commitment
+
+  #Actually, I need to reconsider.
+    *goto reflection_moment
+
+*label rivalry_commitment
+
+Zara clasps your forearm, grin fierce. [b]"I'll sanction the dueling ladder. But understand: no one bows out. Every victory paints a target on you."[/b]
+
+*line_break
+
+*set zara_relationship +10
+
+*page_break
+
+Polly lands on your shoulder. [i]"Bold. Dangerous. Dramatic. I approve."[/i]
+
+*page_break
+
+*finish To be continued in: Rivalry Ascent
+
+*goto_scene rivalry_path
+
+*label redemption_pitch
+
+You glance at the World Tree's scar from last year, remembering the close call you caused—or failed to prevent.
+
+*page_break
+
+"I don't want prestige," you admit. "I want to fix things I've broken. To take the dangerous assignments no one else will touch."
+
+*line_break
+
+Izack's expression softens. "A redemption campaign," he murmurs. "Difficult. Unforgiving. But meaningful."
+
+*page_break
+
+*choice
+  #Yes. Give me the risky debts to repay.
+    *set chosen_path "Redemption Arc"
+    *set campaign_route "redemption_arc"
+    *set redemption_oath true
+    *set empathy +10
+    *set stress +5
+    *goto redemption_commitment
+
+  #Actually, I need to reconsider.
+    *goto reflection_moment
+
+*label redemption_commitment
+
+Aria places a rune-sealed ledger in your hands. [b]"These are Avalon's unresolved harms. You'll take responsibility for them. No glory. Only repair."[/b]
+
+*line_break
+
+*set aria_relationship +8
+
+*page_break
+
+Polly whistles softly. [i]"That's heavy, ${name}. But if anyone can turn guilt into greatness, it's you."[/i]
+
+*page_break
+
+*finish To be continued in: Redemption Arc
+
+*goto_scene redemption_path
+
+*label manipulator_pitch
+
+Near the golden diplomatic door, you notice the council balcony overhead. It's half-empty. Power sits there quietly, waiting.
+
+*page_break
+
+"Someone has to shape who enters those rooms," you say. "Not by speeches. By alliances, secrets, and favors."
+
+*line_break
+
+Izack gives you a long, assessing look. "A political web. Subtle. Dangerous. Effective—if you stay ethical." Zara just smirks.
+
+*page_break
+
+*choice
+  #Yes. I'll weave influence until Avalon listens when I whisper.
+    *set chosen_path "Political Web"
+    *set campaign_route "political_arc"
+    *set manipulation_network +15
+    *set empathy +5
+    *set fame +5
+    *goto manipulator_commitment
+
+  #Actually, I need to reconsider.
+    *goto reflection_moment
+
+*label manipulator_commitment
+
+Izack hands you a silver signet. [b]"Council access. Quietly. Use it to prevent crises before they reach the field."[/b]
+
+*line_break
+
+*set izack_relationship +8
+
+*page_break
+
+[i]"Congratulations,"[/i] Polly says dryly. [i]"You're about to learn how much gossip can save—or doom—a realm."[/i]
+
+*page_break
+
+*finish To be continued in: Political Web
+
+*goto_scene political_web
 
 *comment ================================================
 
@@ -413,6 +606,7 @@ Aria's expression brightens—subtle, but genuine. "You're choosing the Research
 *choice
   #Yes. I want to understand the deepest truths of magic.
     *set chosen_path "research"
+    *set campaign_route "core_research"
     *goto research_commitment
 
   #Actually, let me reconsider.
@@ -433,6 +627,7 @@ Zara nods with approval. "You're choosing the Combat Path?"
 *choice
   #Yes. I want to defend the realms and become a battle mage.
     *set chosen_path "combat"
+    *set campaign_route "core_combat"
     *goto combat_commitment
 
   #Actually, let me reconsider.
@@ -453,6 +648,7 @@ Izack's smile is warm and welcoming. "You're choosing the Diplomatic Path?"
 *choice
   #Yes. I want to build bridges between worlds.
     *set chosen_path "diplomatic"
+    *set campaign_route "core_diplomatic"
     *goto diplomatic_commitment
 
   #Actually, let me reconsider.
