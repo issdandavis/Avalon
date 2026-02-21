@@ -1,502 +1,124 @@
-*comment ================================================
-*comment DORM ROOM CUSTOMIZATION
-*comment Player's personal space in Avalon Academy
-*comment ================================================
+*comment dorm_room.txt
+*comment Scene where the player personalizes their dorm room and meets their roommate (optional).  
+*comment Room customization influences ongoing stat modifiers and yields different narrative descriptions.  
 
-*temp room_style ""
-*temp furniture_choice ""
-*temp decoration_choice ""
-*temp magical_feature ""
+*label dorm_room
+The corridors of the student dorms twist in spirals lined with runes and charm-lights. The walls themselves hum softly as if sharing secrets among themselves.  
 
-*comment Track room customization for later references
-*create dorm_style "default"
-*create dorm_comfort 0
-*create dorm_magical 0
-*create has_familiar_perch false
-*create has_study_nook false
-*create has_alchemy_corner false
-*create window_view "courtyard"
+You find your assigned door — a wood panel carved with your initials and a faint shimmer of protective spells.  
+Inside is an empty room waiting to be made yours. Floating crates hold sheets, blankets, and a variety of decorations waiting for you to pick from.  
 
-*label start
+Polly perches on a shelf. "First lesson of Avalon dorm life," she says. "Make your space suit *you*, not what you think you should be. Reality will adjust."
 
-After the initial greetings and orientation, a second-year student named Marcus leads you through the winding corridors of the residential tower.
-
-[b]"All first-years get their own room,"[/b] he explains, gesturing at the numbered doors. [b]"Avalon grows them custom. Literally. The Academy is a living dimension, remember?"[/b]
-
-*line_break
-
-He stops in front of a door marked with your name—${name}—already inscribed in flowing script.
-
-[b]"The room will shape itself to your preferences. Just... think about what you want, and the Academy will listen. It's actually pretty cool."[/b]
-
-*page_break
-
-You step inside.
-
-The room is... empty. No, not empty—[i]potential[/i]. The walls shimmer with soft dimensional energy, waiting. There's a basic bed, a desk, and a window, but everything else is undefined, like a sketch waiting to be colored in.
-
-*line_break
-
-Polly hops off your shoulder and surveys the space critically.
-
-[i]"Right. Your first major decision: interior design. How terrifyingly domestic."[/i]
-
-*page_break
-
-You reach out to touch the wall, and immediately feel the Academy's consciousness brush against yours. It's asking a question—not in words, but in feelings:
-
-[i]What kind of space do you need?[/i]
-
-*page_break
+How do you set up your room?
 
 *choice
-  #A cozy, comfortable sanctuary—warm colors, soft furniture, a space to relax and feel safe.
-    *set room_style "cozy"
-    *set dorm_style "sanctuary"
-    *set dorm_comfort +20
-    *set collaboration +5
+    #Make it cozy and inviting: pillows, rugs, and plant charms.
+        *set room_style "cozy"
+        *set base_comfort 75
+        *set stress -5
+        *set empathy +3
+        Your room becomes a nest of warm colors and gentle textures. Tiny luminescent vines twine around the bedposts, and a faint herbal scent fills the air.
+        Polly nods. "Your nesting instinct is strong. With any luck, it will keep stress at bay when exams roll around."
+        *goto roommate_intro
+    #Fill it with books, maps, and runic diagrams.
+        *set room_style "scholarly"
+        *set base_knowledge_gain 1.2
+        *set academics +5
+        *set relationship_aria +3
+        You arrange your shelves by subject and era. A central table is soon covered in scribbled notes and open codices. The air vibrates with intellectual promise.
+        Aria pokes her head in at some point and offers you a rare scroll. "I've been meaning to give this to someone who will appreciate it," she says.
+        *goto roommate_intro
+    #Turn it into a miniature workshop: prototypes, enchanted gadgets, and experiment tables.
+        *set room_style "experimental"
+        *set magical_accident_chance 0.15
+        *set creativity +5
+        *set relationship_izack +3
+        Tools and scraps fill your desk, and a variety of half-built devices hum gently. Spells inscribed on the walls adjust to your tinkering frequency.
+        Izack stops by and grins. "Ah, a fellow inventor," he says. "Just remember to file the proper safety runes."
+        *goto roommate_intro
+    #Leave it mostly empty, a blank canvas that adapts to your mood.
+        *set room_style "adaptive"
+        *set flexibility +5
+        *set stress -2
+        The room remains airy and uncluttered. You hang a single tapestry that shifts colors with your emotions, and everything else rearranges itself as needed.
+        Polly caws softly. "I see your desire for change reflected here. Just don't misplace your shoes between dimensions."
+        *goto roommate_intro
 
-    You think of warmth. Comfort. Home.
+*label roommate_intro
+*comment Introduce a random roommate or allow the player to choose.
+*temp roommate ""
+*rand roommate_choice 1 3
 
-    The room [i]responds[/i].
+*if (roommate_choice = 1)
+    *set roommate "Nora"
+    *set roommate_description "a Timeweaver student who meticulously labels everything and has a clock collection that hums in sync with the leylines."
+*elseif (roommate_choice = 2)
+    *set roommate "Jax"
+    *set roommate_description "a Diplomancer with a talent for playing the lute and charming even the grumpiest spellbooks."
+*else
+    *set roommate "Mina"
+    *set roommate_description "an Elementalist who keeps a small thundercloud in a jar and doodles storm patterns when bored."
 
-    *page_break
+*comment Present the roommate.
+As you put the finishing touches on your space, there is a soft knock at the door.  
+Standing there is ${roommate}, ${roommate_description}
+.
 
-    The walls shift to warm amber and deep burgundy. Soft rugs spread across the floor. The bed expands into a plush nest of pillows and blankets. A fireplace grows from the wall—not burning wood, but captured starlight that radiates gentle warmth.
-
-    *line_break
-
-    Polly settles onto a cushion that appeared specifically for her.
-
-    [i]"Well. I approve. If I must narrate your story, at least I'll be comfortable doing it."[/i]
-
-    *goto furniture_selection
-
-  #A focused study space—clean lines, lots of natural light, organized shelves for research.
-    *set room_style "scholarly"
-    *set dorm_style "study"
-    *set collaboration +5
-    *set aria_relationship +5
-
-    You think of clarity. Focus. Knowledge.
-
-    The room [i]transforms[/i].
-
-    *page_break
-
-    The walls become a soft cream color. The window expands, flooding the space with natural light. Bookshelves grow from the walls in elegant spirals. The desk multiplies into a proper research station with multiple surfaces.
-
-    *line_break
-
-    A small library ladder appears, providing access to the higher shelves.
-
-    Polly perches on a reading stand.
-
-    [i]"A scholar's retreat. Aria would approve. Though I hope you actually plan to use all these shelves."[/i]
-
-    *goto furniture_selection
-
-  #A magical workshop—space for experiments, unusual storage, organized chaos.
-    *set room_style "experimental"
-    *set dorm_style "workshop"
-    *set dorm_magical +20
-    *set izack_relationship +5
-
-    You think of possibility. Experimentation. Creative chaos.
-
-    The room [i]erupts[/i] with potential.
-
-    *page_break
-
-    The walls become a shifting color—blue, then purple, then silver, cycling through hues. Workbenches grow from the floor. Cabinets with dozens of small drawers appear, each labeled in glowing script. The ceiling opens up, revealing a miniature dimensional pocket for dangerous experiments.
-
-    *line_break
-
-    A crystal sphere materializes in the corner, constantly swirling with captured dimensional energy.
-
-    Polly eyes it warily.
-
-    [i]"Please tell me you're not going to blow up your own room within the first week."[/i]
-
-    *goto furniture_selection
-
-  #A minimalist space—simple, clean, meditative. Less clutter, more room to think.
-    *set room_style "minimal"
-    *set dorm_style "zen"
-    *set collaboration +10
-
-    You think of simplicity. Space. Breathing room.
-
-    The room [i]clarifies[/i].
-
-    *page_break
-
-    The walls become a soft gray-blue. The furniture reduces to essentials—a simple bed, a single elegant desk, one perfect chair. The window becomes a floor-to-ceiling view of the sky. The floor is smooth pale wood.
-
-    *line_break
-
-    There's something peaceful about the emptiness. Room to think. Room to be.
-
-    Polly lands on the windowsill.
-
-    [i]"Zen monastery aesthetic. I can work with this. Though I warn you—I'm likely to clutter it within days."[/i]
-
-    *goto furniture_selection
-
-*label furniture_selection
-
-*page_break
-
-The room has taken its basic shape, but the Academy is still listening.
-
-You feel it asking: [i]What else do you need?[/i]
-
-*line_break
-
-Marcus pokes his head in, clearly impressed.
-
-[b]"Whoa. Nice choice. You can add features too—Avalon's pretty generous with first-year accommodations. Pick something useful."[/b]
-
-*page_break
+"Oh! You must be ${name}," ${roommate} says. "I heard we were assigned together. Mind if I come in?"
 
 *choice
-  #A familiar perch—a special roost near the window for Polly (or future familiars).
-    *set has_familiar_perch true
-    *set polly_relationship +10
-    *set dorm_comfort +5
+    #Invite them warmly and offer to help unpack.
+        *set social +3
+        *set empathy +2
+        ${roommate} beams. "Thanks! It's nice to meet someone friendly right away."  
+        You spend the next hour chatting about classes and hometowns while unpacking.  
+        Polly watches from the shelf, occasionally adding unhelpful commentary.
+        *goto roommate_bond
+    #Smile politely and return to your own tasks.
+        *set social +1
+        *set individual_power +2
+        ${roommate} takes the hint and quietly sets up their side of the room.  
+        The silence isn't uncomfortable, just companionable.  
+        Polly winks at you. "You two will figure out your rhythm," she says.
+        *goto roommate_bond
+    #Close the door gently and ask for some space to finish settling in.
+        *set stress -2
+        *set independence +3
+        ${roommate} nods understandingly. "No problem," they say. "I'll come back later to introduce myself properly."
+        Polly raises an eyebrow but doesn't comment.  
+        *goto roommate_bond
 
-    You gesture toward the window.
-
-    "Can we have a perch? For Polly?"
-
-    *line_break
-
-    The Academy responds immediately.
-
-    A beautiful perch grows from the windowsill—carved from what looks like crystallized starlight, perfectly sized for a raven. It even has a small cushion.
-
-    *page_break
-
-    Polly flies over and settles onto it, fluffing her feathers with obvious pleasure.
-
-    [i]"Oh. Oh, this is [b]nice[/b]. You may have just earned points, ${name}. I have my own throne."[/i]
-
-    *line_break
-
-    She preens, clearly delighted.
-
-    [i]"I take back half the sarcastic things I was planning to say about you this week. Half."[/i]
-
-    *goto magical_addition
-
-  #A study nook—a cozy reading corner with perfect lighting and a comfortable chair.
-    *set has_study_nook true
-    *set dorm_comfort +10
-    *set aria_relationship +5
-
-    You point to a corner.
-
-    "A reading nook? Somewhere quiet to study?"
-
-    *line_break
-
-    The Academy shapes the space.
-
-    An alcove grows from the wall, just large enough for a perfect armchair. The lighting adjusts automatically—soft for relaxation, bright for reading. A small side table appears, perfectly positioned for tea or books.
-
-    *page_break
-
-    Marcus nods approvingly.
-
-    [b]"Smart. You'll spend a lot of late nights studying. That's going to save your back."[/b]
-
-    *line_break
-
-    Polly examines the nook.
-
-    [i]"Practical. I can perch on the chair back and offer unsolicited commentary on your reading material."[/i]
-
-    *goto magical_addition
-
-  #An alchemy corner—proper ventilation, heat-resistant surfaces, ingredient storage.
-    *set has_alchemy_corner true
-    *set dorm_magical +15
-    *set zara_relationship +5
-
-    You look at the wall.
-
-    "Could I have a small workspace? For potions and alchemy?"
-
-    *line_break
-
-    The Academy creates something remarkable.
-
-    A corner of the room transforms into a miniature alchemist's lab—small but perfectly organized. A heat-proof workbench appears with built-in burners. Ventilation opens to an external dimension. Rows of small vials and jars materialize, empty but ready.
-
-    *page_break
-
-    Marcus whistles.
-
-    [b]"Whoa. Advanced choice. You planning to study with Zara?"[/b]
-
-    *line_break
-
-    Polly eyes the setup nervously.
-
-    [i]"Please be careful with that. I've seen what happens when alchemy goes wrong. It's messy. And occasionally explosive."[/i]
-
-    *goto magical_addition
-
-  #A meditation space—clear floor area, calming atmospheric magic, peaceful energy.
-    *set dorm_comfort +10
-    *set dorm_magical +5
-    *set collaboration +10
-
-    You gesture to an open area.
-
-    "A space for meditation? Practicing dimensional awareness?"
-
-    *line_break
-
-    The Academy understands.
-
-    A section of floor becomes subtly different—still the same material, but somehow more [i]present[/i]. The dimensional energy in that space clarifies, making it easier to sense magical currents. Soft ambient light emanates from nowhere in particular.
-
-    *page_break
-
-    Marcus looks impressed.
-
-    [b]"That's... actually really smart. Practicing dimensional sense in a controlled environment. Izack will love that."[/b]
-
-    *line_break
-
-    Polly tilts her head.
-
-    [i]"The wise choice. Though I'll try not to interrupt when you're being all zen and mystical."[/i]
-
-    [i]She pauses.[/i]
-
-    [i]"I'll [b]try[/b]. No promises."[/i]
-
-    *goto magical_addition
-
-*label magical_addition
-
-*page_break
-
-Marcus checks a small notebook.
-
-[b]"Okay, last thing. Every room gets one magical feature—something unique from the Academy itself. What sounds interesting?"[/b]
-
-*page_break
+*label roommate_bond
+*comment Strengthen or weaken the bond with the roommate.
+${roommate} eventually returns with a plate of pastries from the cafeteria.
 
 *choice
-  #A window that shows different realms—toggle between views of Avalon's pocket dimensions.
-    *set window_view "multi_realm"
-    *set dorm_magical +15
-    *set izack_relationship +5
-
-    "Can the window show different places? Like, different realms?"
-
-    *line_break
-
-    The window [i]shifts[/i].
-
-    *page_break
-
-    Suddenly you're not looking at the courtyard anymore. You're looking at the Singing Dunes—golden sand stretching to the horizon under three moons.
-
-    *line_break
-
-    You blink, and the view changes to the Verdant Tithe—massive trees swaying in the wind.
-
-    Another blink: the Rune Glacier, ice glittering with embedded runes.
-
-    *page_break
-
-    Marcus grins.
-
-    [b]"Multi-realm window. Fancy. You can control it mentally—just think about where you want to look."[/b]
-
-    *line_break
-
-    You focus on "courtyard," and the window shifts back to the normal view.
-
-    Polly approves.
-
-    [i]"Excellent. Now I can people-watch across multiple dimensions. My favorite hobby."[/i]
-
-    *goto room_complete
-
-  #A dimensional clock that tracks time differently—helpful for sensing temporal shifts.
-    *set magical_feature "time_clock"
-    *set dorm_magical +10
-    *set aria_relationship +5
-
-    "Something to help track time? Dimensional time is confusing..."
-
-    *line_break
-
-    A clock appears on the wall.
-
-    *page_break
-
-    But it's not a normal clock.
-
-    It has multiple faces, each showing time in a different pocket dimension. Avalon Standard Time. Earth Time. Leyline Resonance. Dimensional Flow Rate.
-
-    *line_break
-
-    Marcus nods.
-
-    [b]"Temporal awareness clock. Really useful. You'll learn to read it in Aria's class. Helps you sense when dimensional time is being weird."[/b]
-
-    *page_break
-
-    Polly studies it.
-
-    [i]"Practical. Though I've been alive long enough that I've stopped caring what time it is. Time is a social construct anyway."[/i]
-
-    *goto room_complete
-
-  #A growth garden—a small dimensional pocket where plants grow impossibly fast.
-    *set magical_feature "garden_pocket"
-    *set dorm_magical +15
-    *set zara_relationship +10
-
-    "Could I have a small garden? For growing magical plants?"
-
-    *line_break
-
-    The Academy creates something beautiful.
-
-    *page_break
-
-    A section of wall becomes transparent, revealing a pocket dimension beyond—a small garden space where plants grow in accelerated time. You could plant something in the morning and harvest it by evening.
-
-    *line_break
-
-    Marcus's eyes widen.
-
-    [b]"Whoa. A growth pocket. That's an advanced request. Zara's going to love you."[/b]
-
-    *page_break
-
-    You can see herbs and flowers already starting to grow inside—the Academy must have seeded it.
-
-    Polly peers at it.
-
-    [i]"Don't grow anything poisonous. Or carnivorous. I've seen what happens when students get ambitious with magical plants."[/i]
-
-    *goto room_complete
-
-  #A memory crystal—records moments you want to remember, plays them back as holograms.
-    *set magical_feature "memory_crystal"
-    *set dorm_magical +10
-    *set dorm_comfort +10
-
-    "Something to help remember important moments?"
-
-    *line_break
-
-    A crystal grows from your desk—palm-sized, multifaceted, glowing softly.
-
-    *page_break
-
-    Marcus picks it up carefully and hands it to you.
-
-    [b]"Memory crystal. Touch it when you want to record a moment—it'll capture everything. Visual, audio, even emotional context. Touch it again later to replay. Really personal."[/b]
-
-    *line_break
-
-    You hold it, and it warms to your touch, responding to your magical signature.
-
-    *page_break
-
-    Polly eyes it thoughtfully.
-
-    [i]"That's... actually sweet. Though fair warning—I'm in most of your memories, so prepare for a lot of sarcastic commentary when you replay them."[/i]
-
-    *goto room_complete
-
-*label room_complete
-
-*page_break
-
-The room settles.
-
-What was potential and possibility has become [i]yours[/i]. This space knows you now. The Academy shaped it to fit who you are, or who you're becoming.
-
-*line_break
-
-Marcus heads toward the door.
-
-[b]"All set! Classes start tomorrow. Get some rest—you'll need it."[/b]
-
-*page_break
-
-He leaves, and you're alone in your new room.
-
-*if room_style = "cozy"
-  You sink into the soft cushions, feeling the warmth of the dimensional fireplace.
-
-*if room_style = "scholarly"
-  You run your hand along the bookshelves, already imagining them filled with texts.
-
-*if room_style = "experimental"
-  You examine the workbenches, your mind already racing with possibilities.
-
-*if room_style = "minimal"
-  You stand in the center of the open space, breathing in the simplicity.
-
-*line_break
-
-Polly settles into her spot and regards you with one bright eye.
-
-*page_break
-
-[i]"So,"[/i] she says. [i]"This is your home now. In a living, sentient pocket dimension created by the greatest dimensional mage in history. No pressure."[/i]
-
-*line_break
-
-You look around at what the Academy created for you.
-
-*if has_familiar_perch
-  Polly's perch gleams in the light.
-
-*if has_study_nook
-  The reading nook looks inviting and comfortable.
-
-*if has_alchemy_corner
-  The alchemy corner waits, ready for experiments.
-
-*if window_view = "multi_realm"
-  The multi-realm window shows the Singing Dunes in the distance.
-
-*line_break
-
-It feels right. It feels like [i]yours[/i].
-
-*page_break
-
-[i]"Get some sleep,"[/i] Polly advises. [i]"Tomorrow, your real education begins."[/i]
-
-*line_break
-
-You settle into bed.
-
-The room dims automatically, responding to your tiredness. Through the window, you can see the Spiral Spire gleaming against the night sky, and the World Tree's branches swaying in a breeze that carries magic itself.
-
-*page_break
-
-You're here. You're home.
-
-And tomorrow, everything changes.
-
-*page_break
-
-*comment Track choices for later references
-*comment Room style affects some dialogue and options later
-*comment Magical features may unlock unique paths
-
-*goto_scene first_lesson
+    #Accept and share stories about your first day.
+        *set social +2
+        *set empathy +2
+        *set collaboration +2
+        The two of you swap tales of guild ceremonies and hidden staircases.  
+        ${roommate} becomes more animated when talking about their chosen focus.  
+        A comfortable friendship forms.
+        *goto dorm_closing
+    #Politely decline and suggest they enjoy them.
+        *set individual_power +1
+        *set independence +2
+        ${roommate} shrugs and starts eating while reading a spell tome.  
+        Polly whispers, "Introverts unite separately in your own rooms."  
+        *goto dorm_closing
+    #Share the pastries with Polly and laugh about living with a magical raven.
+        *set polly_relationship +3
+        *set joy +2
+        Polly hops down and selects the flakiest pastry.  
+        "Finally, a perk to this 'familiar' gig," she says. You all laugh, even if the pastries vanish quickly.  
+        ${roommate} seems bemused but entertained.  
+        *goto dorm_closing
+
+*label dorm_closing
+As evening settles, you feel your room adjusting around you, resonating with your choices.  
+The spiral outside glows gently; students' lights flicker like fireflies across the campus.  
+Polly fluffs her feathers and nods approvingly at your space. "Good work, ${name}," she says. "The Spiralverse will shape you, but you shape it right back."
+
+*finish

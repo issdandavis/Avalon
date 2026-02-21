@@ -8,3 +8,14 @@ Thumbs.db
 
 # ChoiceScript engine clone (downloaded locally)
 game/choicescript/
+
+# Personal files (music production, game configs, shortcuts, notes)
+*.flp
+*.lnk
+*.log
+*.xml
+*court date.txt
+notes.txt
+notes2.txt
+not ures.txt
+numbers.txt

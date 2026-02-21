@@ -1,37 +1,83 @@
 ═══════════════════════════════════════════════════════
-  WHERE EVERYTHING IS - QUICK REFERENCE
+  WHERE EVERYTHING IS - QUICK REFERENCE (Updated)
 ═══════════════════════════════════════════════════════
 
 🎮 TO PLAY THE GAME:
    game/index.html ← OPEN THIS FILE
+   PLAY_HERE.html ← Alternative launcher
 
-📚 DOCUMENTATION:
+📚 GETTING STARTED:
    START_HERE.md ← Simplest instructions
    README.md ← Full project overview
    QUICK_START.md ← Detailed play instructions
+   PLAY_THE_GAME.md ← Game playing guide
 
 📖 GAME FILES:
-   game/ ← HTML version (complete)
-   choicescript_game/ ← Professional version
+   game/ ← HTML version (complete, playable)
+   choicescript_game/ ← Professional ChoiceScript version
 
 📚 LORE & WORLDBUILDING:
    lore/ ← All worldbuilding documents
+      ├── # IZACK'S MAGICAL UNIVERSE - COMPLE.txt
+      ├── Pollys_Wingscrolls_Worldbuilding.markdown
+      ├── Unified Worldbuilding Master Framew.txt
+      ├── Spiralverse_Language_Summary.markdown
+      ├── Fae_Song_Appendix.txt
+      ├── Tower_Layout_Reference.txt
+      ├── Lore_Codex.txt
+      └── __Geography and Natural Lore__.pdf
 
-📝 WRITING:
-   writing_drafts/ ← Novel manuscripts
+📝 WRITING DRAFTS:
+   writing_drafts/ ← Novel manuscripts and drafts
+      ├── DarkSetting_Happy_Ending_Complete_Chronicle.txt
+      ├── # The Spiral of Avalon.txt
+      ├── spiral-of-pollyoneth-novel.md
+      ├── SpiralOfPollyoneth_Book1_FinishedChapters_Prose.markdown
+      ├── Complete_Writing_Guide.txt
+      ├── Positioning_The_Avalon_Codex.txt
+      └── [Various manuscript PDFs and outlines]
 
-📋 PROJECT DOCS:
-   docs/AUTOMATION_GUIDE.md ← Zapier workflows
-   docs/PROJECT_ROADMAP.md ← Development plan
+📋 PROJECT DOCUMENTATION:
+   docs/ ← Development documentation
+      ├── AETHERMOOR_CHRONICLES.md ← Complete world history
+      ├── GAME_DEVELOPMENT_MASTER_REFERENCE.md
+      ├── FINAL_GAME_DEV_CHECKLIST.md
+      ├── COMPLETE_MATERIALS_SUMMARY.md
+      ├── FEATURES_COMPLETE.md
+      ├── PROJECT_ROADMAP.md ← Development plan
+      ├── AUTOMATION_GUIDE.md ← Zapier workflows
+      ├── AI_SESSION_HANDOFF.md
+      ├── TRACING.md
+      ├── AI_Handoff_Prompt.txt
+      ├── Chapter_Change_Map.txt
+      ├── MATERIALS_FOUND.txt
+      └── [Reference materials in subdirectories]
 
-📦 OLD FILES:
-   archive/ ← Chat logs and old versions
+📦 ARCHIVED MATERIALS:
+   archive/ ← Chat logs, old versions, legacy files
+      ├── Entire chat log.txt (multiple versions)
+      ├── Conversation logs
+      ├── Old bundles and exports
+      └── Historical reference materials
+
+🔧 CONFIGURATION:
+   config/ ← Environment configuration
+   .gitignore ← Git exclusions
 
 ═══════════════════════════════════════════════════════
 
 MOST IMPORTANT:
-• To play: game/index.html
-• To understand structure: README.md
-• To learn how to play: START_HERE.md
+• To play instantly: game/index.html or PLAY_HERE.html
+• To understand project: README.md
+• To get started: START_HERE.md
+• For development: docs/PROJECT_ROADMAP.md
+
+CONSOLIDATED STRUCTURE:
+✅ No duplicate files across directories
+✅ Clear separation of concerns
+✅ All lore in lore/
+✅ All writing in writing_drafts/
+✅ All documentation in docs/
+✅ All archives in archive/
 
 ═══════════════════════════════════════════════════════
