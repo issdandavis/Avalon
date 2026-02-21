@@ -1,0 +1,71 @@
+name: AI Stat Balancer - Game Balance
+
+# Automatically analyzes and balances stat progression across all scenes
+# Ensures fair difficulty and meaningful choices
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Daily at noon
+  workflow_dispatch:
+
+jobs:
+  balance-stats:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install deps
+        run: pip install anthropic GitPython pyyaml pandas matplotlib
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "SpiralVerse Stat Balancer"
+          git config --global user.email "stats@spiralverse.dev"
+      
+      - name: Analyze stat distribution
+        id: analyze
+        run: |
+          python .github/scripts/stat_analyzer.py > stat_report.txt
+          cat stat_report.txt
+      
+      - name: Balance stats with AI
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python .github/scripts/stat_balancer.py
+      
+      - name: Create balance report
+        run: |
+          mkdir -p docs/balance-reports
+          DATE=$(date +%Y-%m-%d)
+          mv stat_report.txt docs/balance-reports/${DATE}-analysis.md
+          
+          # Generate visualization if changes made
+          if [[ -n $(git diff --name-only | grep '.txt$') ]]; then
+            python .github/scripts/generate_stat_charts.py
+          fi
+      
+      - name: Commit balance changes
+        run: |
+          git checkout ai-stat-balance 2>/dev/null || git checkout -b ai-stat-balance
+          
+          if [[ -n $(git status --porcelain) ]]; then
+            git add choicescript_game/scenes/*.txt docs/balance-reports/
+            
+            git commit -m "[AI-BALANCE] Automated stat balancing
+
+- Analyzed stat progression across all scenes
+- Balanced collaboration stat opportunities
+- Ensured fair relationship progression
+- Updated balance report"
+            
+            git push origin ai-stat-balance --force-with-lease
+          fi

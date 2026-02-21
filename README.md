@@ -15,8 +15,44 @@ This repository contains narrative source material and chat logs related to the 
 4. Start the ChoiceScript server from inside `game/choicescript/` (`run-server.bat` on Windows, `serve.command` on macOS, `bash serve.sh` on Linux/WSL), then open the browser at `http://localhost:4200/` if it does not open automatically.
 5. Edit scenes in `game/scenes/` and re-run `./game/sync_scenes.sh` to refresh the playable build.
 
+## 🤖 Automation & Connected Accounts
+This repository features AI-powered automation for inter-account communications and progress tracking. All automation runs in **silent mode** by default (no user notifications for routine updates).
+
+**Key Features:**
+- Automated progress tracking and metrics
+- Silent content synchronization
+- Quality checks and validation
+- Daily maintenance tasks
+- **NEW:** AI-powered inbox management with auto-replies
+- **NEW:** Enterprise functions monitoring and validation
+
+**🆕 Inbox Management:**
+- ✅ **Auto-replies** to all GitHub notifications within 30 seconds
+- ✅ **Smart categorization** of issues, PRs, and discussions
+- ✅ **Multi-account support** for GitHub, GitLab, Bitbucket
+- ✅ **Email integration** ready (setup required)
+- ✅ **5 AI agents** working 24/7 to manage your inbox
+
+**🏢 Enterprise Monitoring (NEW):**
+- ✅ **Automated validation** every 4 hours of all enterprise functions
+- ✅ **AI-powered confirmation** that all systems are operational
+- ✅ **Health reports** with detailed analysis and recommendations
+- ✅ **Multi-platform monitoring** (GitHub, GitLab, Bitbucket, 2FA)
+- ✅ **Security validation** and integration status
+
+**Quick Start Guides:**
+- **[AI Employees Guide](docs/AI_EMPLOYEES_GUIDE.md)** - 5-minute setup for inbox management
+- **[Inbox Management](docs/INBOX_MANAGEMENT.md)** - Complete documentation
+- **[Enterprise Monitoring](docs/ENTERPRISE_MONITORING.md)** - Enterprise functions validation
+
+**Documentation:**
+- **[ACCOUNTS_README.md](ACCOUNTS_README.md)** - Complete account automation setup guide
+- **[docs/AUTOMATION_GUIDE.md](docs/AUTOMATION_GUIDE.md)** - Integration workflows
+- **[docs/pipedream_team_setup_workflows.md](docs/pipedream_team_setup_workflows.md)** - Two Pipedream flows for team onboarding and daily ops digests
+- **Configuration:** `config/automation-settings.json`, `config/enterprise-settings.json`
+
 ## Security
-Previous commits contained plaintext API keys. They have been removed from the tracked files. Make sure to rotate any keys that may have been exposed and only store live credentials in your local `.env` file.
+Previous commits contained plaintext API keys. They have been removed from the tracked files. Make sure to rotate any keys that may have been exposed and only store live credentials in your local `.env` file. All automation credentials are stored securely in GitHub Secrets.
 # 🎮 Polly's Wingscroll: The First Thread
 
 **A choice-based narrative game set in Avalon Academy**
@@ -35,6 +71,42 @@ See **[PLAY_THE_GAME.md](PLAY_THE_GAME.md)** for detailed instructions.
 
 ---
 
+## 🤖 NEW: AI Autonomous Development System
+
+**Game development on autopilot!**
+
+This repository now includes a complete **AI autonomous workflow system** that:
+- ✨ Writes ChoiceScript scenes automatically (every 3 hours)
+- ✨ Polishes content with sensory details (every 4 hours)
+- ✨ Balances stats and game difficulty (daily)
+- ✨ Tests for bugs and validates code (daily)
+- ✨ Makes progress even while you sleep!
+
+### 🎯 NEW: Agent Management System
+
+**Managing your AI team made easy!**
+
+The **Agent Manager** coordinates all 5 AI workers and tells you exactly what needs attention:
+
+```bash
+# Check system health (60 seconds)
+python .github/scripts/agent_manager_cli.py health
+
+# See what to do next
+python .github/scripts/agent_manager_cli.py recommend
+```
+
+**Visual Dashboard:** Open `agent-dashboard.html` in browser for colorful status display
+
+👉 **For Beginners:** [AGENT_MANAGEMENT_README.md](AGENT_MANAGEMENT_README.md) - 3 minute guide  
+👉 **Detailed Guide:** [docs/AGENT_MANAGEMENT_GUIDE.md](docs/AGENT_MANAGEMENT_GUIDE.md)  
+👉 **Activation:** [AI_SYSTEM_ACTIVATION_GUIDE.md](AI_SYSTEM_ACTIVATION_GUIDE.md)  
+👉 **Verify Closed PRs:** [CLOSED_SESSIONS_VERIFICATION.md](CLOSED_SESSIONS_VERIFICATION.md)
+
+**Quick activation:** Add `ANTHROPIC_API_KEY` to repository secrets and watch the magic happen!
+
+---
+
 ## 📖 About the Game
 
 ### Story
@@ -47,7 +119,7 @@ You're a new student at Avalon Academy, a living pocket dimension where the grea
 - **14 unique endings** from legendary master to humble student
 - **Deep character relationships** that affect your story
 - **5 achievements** to unlock
-- **40,000+ words** of content
+- **40,000+ words** of content (and growing via AI!)
 - **High replay value** - every playthrough is different
 
 ### Game Statistics
@@ -196,6 +268,28 @@ Avalon/
 5. **Publication** if approved (4-6 months total)
 
 **See [SUBMISSION_GUIDE.md](SUBMISSION_GUIDE.md) for complete details**
+
+---
+
+## 🤖 Multi-AI Collaboration System
+
+This project uses a coordinated multi-AI workflow to ensure quality and consistency across all content.
+
+### For AI Assistants Working on This Project
+- **Start Here:** [MULTI_AI_COLLABORATION_GUIDE.md](MULTI_AI_COLLABORATION_GUIDE.md) - Complete workflow guide
+- **Quick Reference:** [QUICK_COLLAB_REF.md](QUICK_COLLAB_REF.md) - One-page overview
+- **Current Status:** [STATUS_CONTEXT.md](STATUS_CONTEXT.md) - What's happening now
+- **Scene Tracking:** [SCENE_PARITY_CHECKLIST.md](SCENE_PARITY_CHECKLIST.md) - Conversion progress
+- **Balance Data:** [STATS_MATRIX.md](STATS_MATRIX.md) - Choice impact tracking
+
+### AI Roles
+1. **Lore Curator** - Validates narrative consistency
+2. **Conversion Engineer** - HTML → ChoiceScript translation
+3. **Structural Reviewer** - Ensures scene parity
+4. **Quality Balancer** - Stat difficulty tuning
+5. **Automation Planner** - Workflow documentation
+
+All AIs share context through tracked files to maintain consistency and enable seamless handoffs.
 
 ---
 

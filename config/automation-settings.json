@@ -1,0 +1,348 @@
+{
+  "version": "1.1",
+  "last_updated": "2025-11-25",
+  "automation_settings": {
+    "silent_mode": {
+      "enabled": true,
+      "description": "Suppress non-critical notifications to user",
+      "exceptions": [
+        "build_failure",
+        "security_alert",
+        "manual_trigger"
+      ]
+    },
+    "notification_levels": {
+      "routine_commits": false,
+      "content_updates": false,
+      "lore_changes": false,
+      "game_updates": false,
+      "documentation_changes": false,
+      "build_success": false,
+      "build_failure": true,
+      "test_failure": true,
+      "security_alerts": true,
+      "dependency_updates": false,
+      "releases": true,
+      "major_milestones": true
+    },
+    "sync_frequencies": {
+      "github_pages_deploy": "on_push",
+      "progress_tracking": "daily",
+      "quality_checks": "on_push",
+      "external_sync": "on_significant_change",
+      "metrics_collection": "hourly",
+      "backup_generation": "weekly"
+    },
+    "thresholds": {
+      "significant_change_lines": 50,
+      "significant_change_files": 5,
+      "notification_commit_count": 10,
+      "quality_check_skip_small_changes": true,
+      "small_change_threshold_lines": 10
+    }
+  },
+  "connected_accounts": {
+    "github": {
+      "enabled": true,
+      "primary": true,
+      "auto_sync": true,
+      "silent_notifications": true,
+      "features": [
+        "version_control",
+        "actions_workflow",
+        "project_boards",
+        "pages_hosting"
+      ]
+    },
+    "github_pages": {
+      "enabled": true,
+      "auto_deploy": true,
+      "deploy_branch": "main",
+      "silent_deploy": true,
+      "build_on_push": true
+    },
+    "discord": {
+      "enabled": false,
+      "webhook_configured": false,
+      "silent_mode": true,
+      "notification_types": [
+        "major_releases",
+        "build_failures"
+      ],
+      "suppress_routine_updates": true
+    },
+    "google_workspace": {
+      "enabled": false,
+      "services": {
+        "docs": false,
+        "sheets": false,
+        "forms": false
+      },
+      "auto_sync": false,
+      "sync_direction": "bidirectional",
+      "silent_mode": true
+    },
+    "zapier": {
+      "enabled": false,
+      "webhook_configured": false,
+      "workflows": [],
+      "silent_mode": true
+    },
+    "social_media": {
+      "twitter": {
+        "enabled": false,
+        "auto_post": false,
+        "post_on": ["major_releases"]
+      },
+      "reddit": {
+        "enabled": false,
+        "auto_post": false,
+        "post_on": ["major_releases"]
+      }
+    }
+  },
+  "inter_account_workflows": {
+    "development_progress_sync": {
+      "enabled": true,
+      "silent": true,
+      "frequency": "on_push",
+      "targets": [
+        "github_projects",
+        "internal_metrics"
+      ],
+      "skip_user_notification": true
+    },
+    "content_pipeline": {
+      "enabled": true,
+      "silent": true,
+      "triggers": [
+        "lore_update",
+        "scene_update",
+        "documentation_update"
+      ],
+      "actions": [
+        "validate_syntax",
+        "update_metrics",
+        "sync_repository"
+      ],
+      "notify_user": false
+    },
+    "release_automation": {
+      "enabled": true,
+      "silent": false,
+      "triggers": ["version_tag"],
+      "actions": [
+        "build_artifacts",
+        "update_changelog",
+        "deploy_github_pages",
+        "create_release_notes"
+      ],
+      "notify_user": true,
+      "notification_channels": ["github_release"]
+    },
+    "quality_monitoring": {
+      "enabled": true,
+      "silent": true,
+      "frequency": "on_push",
+      "checks": [
+        "choicescript_syntax",
+        "link_validation",
+        "word_count_tracking",
+        "stat_consistency"
+      ],
+      "notify_user_on_error": true,
+      "store_reports": true,
+      "report_retention_days": 30
+    },
+    "scheduled_maintenance": {
+      "enabled": true,
+      "silent": true,
+      "schedule": "daily",
+      "tasks": [
+        "collect_metrics",
+        "generate_summary",
+        "cleanup_artifacts",
+        "validate_links"
+      ],
+      "notify_user": false,
+      "archive_reports": true
+    }
+  },
+  "security_settings": {
+    "credential_storage": "github_secrets",
+    "require_2fa": true,
+    "minimum_permissions": true,
+    "audit_frequency": "quarterly",
+    "api_rate_limiting": {
+      "enabled": true,
+      "max_requests_per_hour": 100,
+      "backoff_strategy": "exponential"
+    }
+  },
+  "reporting": {
+    "progress_reports": {
+      "enabled": true,
+      "frequency": "daily",
+      "silent": true,
+      "storage": "github_artifacts",
+      "retention_days": 30,
+      "include_metrics": true
+    },
+    "quality_reports": {
+      "enabled": true,
+      "frequency": "on_push",
+      "silent": true,
+      "storage": "github_artifacts",
+      "retention_days": 30
+    },
+    "summary_reports": {
+      "enabled": true,
+      "frequency": "weekly",
+      "silent": true,
+      "email_enabled": false,
+      "storage": "github_artifacts",
+      "retention_days": 90
+    }
+  },
+  "error_handling": {
+    "continue_on_error": true,
+    "retry_strategy": {
+      "max_retries": 3,
+      "retry_delay_seconds": 60,
+      "exponential_backoff": true
+    },
+    "notification_on_failure": {
+      "critical_failures": true,
+      "routine_failures": false,
+      "aggregate_failures": true
+    },
+    "fallback_actions": {
+      "webhook_failure": "log_and_continue",
+      "api_rate_limit": "queue_for_later",
+      "authentication_error": "notify_admin"
+    }
+  },
+  "feature_flags": {
+    "enable_external_webhooks": false,
+    "enable_social_media_posting": false,
+    "enable_google_workspace_sync": false,
+    "enable_advanced_analytics": true,
+    "enable_automated_backups": true,
+    "enable_link_validation": true,
+    "enable_syntax_checking": true,
+    "enable_enterprise_monitoring": true,
+    "enable_2fa_integration": false
+  },
+  "enterprise_monitoring": {
+    "enabled": true,
+    "config_file": "config/enterprise-settings.json",
+    "validation_frequency": "every_4_hours",
+    "ai_confirmation": true,
+    "report_generation": true
+  },
+  "inbox_management": {
+    "enabled": true,
+    "description": "AI-powered inbox management across all connected accounts",
+    "auto_reply": {
+      "enabled": true,
+      "delay_seconds": 30,
+      "skip_if_replied": true,
+      "templates_path": "config/email-templates/"
+    },
+    "categorization": {
+      "enabled": true,
+      "auto_label": true,
+      "priority_detection": true,
+      "categories": [
+        "bug-report",
+        "feature-request",
+        "question",
+        "pull-request",
+        "discussion",
+        "collaboration",
+        "general"
+      ]
+    },
+    "monitoring": {
+      "schedule": "every_6_hours",
+      "stale_threshold_days": 7,
+      "needs_response_threshold_hours": 24,
+      "generate_summaries": true,
+      "summary_retention_days": 30
+    },
+    "email_integration": {
+      "enabled": false,
+      "service": "none",
+      "auto_reply": true,
+      "forward_to_github": true,
+      "parse_notifications": true
+    },
+    "multi_account": {
+      "enabled": true,
+      "sync_frequency": "daily",
+      "platforms": {
+        "github": {
+          "enabled": true,
+          "username": "issdandavis",
+          "repositories": ["Avalon"]
+        },
+        "gitlab": {
+          "enabled": false,
+          "username": "",
+          "projects": []
+        },
+        "bitbucket": {
+          "enabled": false,
+          "username": "",
+          "repositories": []
+        },
+        "codeberg": {
+          "enabled": false,
+          "username": "",
+          "repositories": []
+        }
+      },
+      "unified_inbox": true,
+      "cross_platform_sync": true
+    },
+    "ai_agents": {
+      "categorization_agent": {
+        "enabled": true,
+        "triggers": ["issues", "pull_request", "discussion", "issue_comment"]
+      },
+      "auto_reply_agent": {
+        "enabled": true,
+        "triggers": ["issues.opened", "pull_request.opened", "discussion.created"]
+      },
+      "monitoring_agent": {
+        "enabled": true,
+        "schedule": "0 */6 * * *"
+      },
+      "sync_agent": {
+        "enabled": true,
+        "schedule": "0 0 * * *"
+      },
+      "email_agent": {
+        "enabled": false,
+        "requires_setup": true
+      }
+    },
+    "labels": {
+      "auto_create": false,
+      "required_labels": [
+        "automated:inbox-managed",
+        "priority:critical",
+        "priority:high",
+        "bug",
+        "enhancement",
+        "question"
+      ]
+    },
+    "notifications": {
+      "user_notifications": false,
+      "admin_on_critical": true,
+      "daily_summary": true,
+      "weekly_report": true
+    }
+  }
+}

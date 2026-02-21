@@ -3,6 +3,39 @@
 
 This document outlines how to automate and integrate various tools to streamline game development and publishing.
 
+> **NEW:** For comprehensive inter-account automation setup, see [ACCOUNTS_README.md](../ACCOUNTS_README.md)  
+> **Configuration:** Automation settings are in `config/automation-settings.json`  
+> **Workflows:** GitHub Actions workflows are in `.github/workflows/ai-automation.yml`
+
+---
+
+## 🤖 AI-POWERED INTER-ACCOUNT AUTOMATION (NEW)
+
+### Silent Automation System
+The repository now includes automated workflows that handle inter-account communications without user notifications:
+
+**Automated Tasks (Silent Mode):**
+- ✅ Development progress tracking
+- ✅ Content synchronization across platforms
+- ✅ Quality checks and validation
+- ✅ Metrics collection and reporting
+- ✅ Daily maintenance and cleanup
+- ✅ **Auto-add PRs and issues to GitHub Projects** (NEW)
+
+**User Notifications Only For:**
+- ❗ Build failures
+- ❗ Security alerts
+- ❗ Major releases
+- ❗ Critical errors
+
+### Quick Setup
+1. Review `config/automation-settings.json` for preferences
+2. Add required secrets in GitHub Settings → Secrets
+3. Enable workflows in Actions tab
+4. Automation runs automatically (silent by default)
+
+For complete setup instructions, see [ACCOUNTS_README.md](../ACCOUNTS_README.md#-quick-setup-guide).
+
 ---
 
 ## 🔌 ZAPIER AUTOMATION IDEAS
@@ -40,7 +73,7 @@ This document outlines how to automate and integrate various tools to streamline
 
 ### **Project Management:**
 - **Trello/Asana** - Task tracking
-- **GitHub Projects** - Development roadmap
+- **GitHub Projects** - Development roadmap (auto-populated via workflows)
 - **Discord** - Community & beta testing
 
 ### **Game Development:**

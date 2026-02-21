@@ -1,0 +1,206 @@
+name: Agent Management Dashboard
+
+# Monitor and coordinate all AI workers
+# Provides health checks, conflict detection, and recommendations
+
+on:
+  # Run twice daily to monitor system health
+  schedule:
+    - cron: '0 6,18 * * *'  # 6 AM and 6 PM UTC
+  
+  # Manual trigger for on-demand status checks
+  workflow_dispatch:
+    inputs:
+      detailed_report:
+        description: 'Generate detailed report with full analysis'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  agent-management:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Needed to commit reports
+      actions: read    # Needed to check workflow status
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for branch analysis
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Fetch all branches
+        run: |
+          git fetch --all
+          echo "✅ Fetched all remote branches"
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install PyYAML
+          echo "✅ Dependencies installed"
+      
+      - name: Run Agent Orchestrator
+        id: orchestrator
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python .github/scripts/agent_orchestrator.py
+          echo "orchestrator_exit_code=$?" >> $GITHUB_OUTPUT
+      
+      - name: Check workflow run history
+        id: workflow_history
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Checking recent workflow runs..."
+          
+          # Create summary of recent workflow activity
+          cat > /tmp/workflow_summary.txt << 'EOF'
+          # Recent Workflow Activity (Last 24 Hours)
+          
+          EOF
+          
+          # Check each AI worker workflow
+          for workflow in "ai-scene-writer.yml" "ai-content-polish.yml" "ai-stat-balancer.yml" "ai-game-tester.yml" "ai-autonomous-worker.yml"; do
+            echo "## $workflow" >> /tmp/workflow_summary.txt
+            
+            # This would query GitHub API in a real implementation
+            # For now, just note the workflow exists
+            echo "- Status: Monitoring" >> /tmp/workflow_summary.txt
+            echo "" >> /tmp/workflow_summary.txt
+          done
+          
+          cat /tmp/workflow_summary.txt
+      
+      - name: Analyze worker coordination
+        id: coordination
+        run: |
+          echo "Checking for worker coordination issues..."
+          
+          # Check if multiple workers modified the same files recently
+          COORDINATION_ISSUES=0
+          
+          # Scene Writer and Content Polisher could conflict
+          if git log origin/ai-scene-development --since="24 hours ago" --name-only 2>/dev/null | grep -q "scenes/"; then
+            if git log origin/ai-content-polish --since="24 hours ago" --name-only 2>/dev/null | grep -q "scenes/"; then
+              echo "⚠️ Both Scene Writer and Content Polisher modified scenes recently"
+              COORDINATION_ISSUES=$((COORDINATION_ISSUES + 1))
+            fi
+          fi
+          
+          echo "coordination_issues=$COORDINATION_ISSUES" >> $GITHUB_OUTPUT
+          
+          if [ $COORDINATION_ISSUES -eq 0 ]; then
+            echo "✅ No coordination issues detected"
+          else
+            echo "⚠️ $COORDINATION_ISSUES coordination issues found"
+          fi
+      
+      - name: Generate recommendations
+        id: recommendations
+        run: |
+          echo "Generating system recommendations..."
+          
+          RECOMMENDATIONS=""
+          
+          # Check API key
+          if [ -z "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- 🔴 CRITICAL: Configure ANTHROPIC_API_KEY in repository secrets"
+          fi
+          
+          # Check coordination issues
+          if [ "${{ steps.coordination.outputs.coordination_issues }}" -gt 0 ]; then
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- ⚠️ Review recent commits for potential worker conflicts"
+          fi
+          
+          # Check health score
+          if [ -f "logs/agent-management/status-$(date +%Y-%m-%d).json" ]; then
+            HEALTH=$(python -c "import json; print(json.load(open('logs/agent-management/status-$(date +%Y-%m-%d).json'))['health_score'])" 2>/dev/null || echo "100")
+            if [ "$HEALTH" -lt 70 ]; then
+              RECOMMENDATIONS="${RECOMMENDATIONS}\n- ⚠️ System health at ${HEALTH}% - investigate issues"
+            fi
+          fi
+          
+          if [ -z "$RECOMMENDATIONS" ]; then
+            RECOMMENDATIONS="- ✅ System operating normally"
+          fi
+          
+          echo -e "$RECOMMENDATIONS"
+          echo -e "$RECOMMENDATIONS" > /tmp/recommendations.txt
+      
+      - name: Upload status reports as artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: agent-management-reports
+          path: |
+            logs/agent-management/status-*.json
+            logs/agent-management/status-*.md
+          retention-days: 30
+      
+      - name: Commit reports to logs
+        run: |
+          if [[ -n $(git status --porcelain logs/) ]]; then
+            git config --global user.name "Agent Manager"
+            git config --global user.email "agent-manager@spiralverse.dev"
+            
+            git add logs/agent-management/
+            git commit -m "[AGENT-MANAGER] Status report $(date +%Y-%m-%d)
+            
+            Health Score: $(python -c "import json; print(json.load(open('logs/agent-management/status-$(date +%Y-%m-%d).json'))['health_score'])" 2>/dev/null || echo 'N/A')
+            Coordination Issues: ${{ steps.coordination.outputs.coordination_issues }}
+            Timestamp: $(date -u)"
+            
+            # Push to a management branch (don't clutter main)
+            # Use --force-with-lease for safety - if push fails, branch has unexpected changes
+            git push origin HEAD:agent-management-logs --force-with-lease
+            
+            echo "✅ Reports committed to agent-management-logs branch"
+          else
+            echo "ℹ️ No new reports to commit"
+          fi
+      
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## 🎯 Agent Management Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "logs/agent-management/status-$(date +%Y-%m-%d).json" ]; then
+            HEALTH=$(python -c "import json; print(json.load(open('logs/agent-management/status-$(date +%Y-%m-%d).json'))['health_score'])" 2>/dev/null || echo "Unknown")
+            echo "- **System Health:** ${HEALTH}/100" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "- **Coordination Issues:** ${{ steps.coordination.outputs.coordination_issues }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### Recommendations" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat /tmp/recommendations.txt >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 Detailed reports available in artifacts" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Set workflow status
+        if: always()
+        run: |
+          EXIT_CODE=${{ steps.orchestrator.outputs.orchestrator_exit_code }}
+          
+          if [ "$EXIT_CODE" = "0" ]; then
+            echo "✅ Agent management system healthy"
+            exit 0
+          elif [ "$EXIT_CODE" = "1" ]; then
+            echo "⚠️ Agent management system has warnings"
+            exit 0  # Don't fail workflow, just warn
+          else
+            echo "🔴 Agent management system has critical issues"
+            exit 0  # Still don't fail - this is just monitoring
+          fi

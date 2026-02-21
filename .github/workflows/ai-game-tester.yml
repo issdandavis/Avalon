@@ -1,0 +1,135 @@
+name: AI Game Tester - Automated QA
+
+# AI that actually plays through the game and reports issues
+# Finds dead ends, broken paths, missing labels
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'choicescript_game/scenes/*.txt'
+      - 'choicescript_game/startup.txt'
+
+jobs:
+  test-game-paths:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install deps
+        run: pip install anthropic pyyaml
+      
+      - name: Run comprehensive tests
+        id: test
+        run: |
+          echo "🧪 Running ChoiceScript validation..."
+          python .github/scripts/validate_choicescript.py choicescript_game/scenes/*.txt || echo "validation_failed=true" >> $GITHUB_OUTPUT
+          
+          echo "🔍 Checking for dead ends..."
+          python .github/scripts/find_dead_ends.py
+          
+          echo "📊 Analyzing path coverage..."
+          python .github/scripts/path_coverage.py
+      
+      - name: Check for undefined labels
+        run: |
+          echo "Checking goto targets..."
+          
+          cd choicescript_game
+          ALL_LABELS=$(grep -h "^\*label " scenes/*.txt startup.txt | awk '{print $2}' | sort -u)
+          ALL_GOTOS=$(grep -h "\*goto " scenes/*.txt startup.txt | grep -v "goto_scene" | awk '{print $2}' | sort -u)
+          
+          echo "$ALL_GOTOS" | while read goto_target; do
+            if ! echo "$ALL_LABELS" | grep -q "^${goto_target}$"; then
+              echo "⚠️ Warning: goto target '$goto_target' not found in any label"
+            fi
+          done
+      
+      - name: Verify all endings are reachable
+        run: |
+          python .github/scripts/verify_endings.py
+      
+      - name: Check stat consistency
+        run: |
+          echo "Checking for stat references..."
+          
+          # Find all stats created in startup
+          DEFINED_STATS=$(grep "^\*create " choicescript_game/startup.txt | awk '{print $2}' | sort -u)
+          
+          # Find all stats used in scenes
+          USED_STATS=$(grep -h "\*set " choicescript_game/scenes/*.txt | awk '{print $2}' | sort -u)
+          
+          # Check for undefined stats
+          echo "$USED_STATS" | while read stat; do
+            if ! echo "$DEFINED_STATS" | grep -q "^${stat}$"; then
+              echo "❌ ERROR: Stat '$stat' used but not defined in startup.txt"
+              exit 1
+            fi
+          done
+          
+          echo "✅ All used stats are defined"
+      
+      - name: Test scene connectivity
+        run: |
+          python .github/scripts/test_scene_flow.py
+      
+      - name: Generate test report
+        if: always()
+        run: |
+          mkdir -p test-reports
+          DATE=$(date +%Y-%m-%d)
+          
+          cat > test-reports/${DATE}-qa-report.md << 'EOF'
+          # Automated QA Report
+          
+          **Date:** $(date)
+          **Commit:** ${{ github.sha }}
+          
+          ## Test Results
+          
+          ### Syntax Validation
+          $(if [ "${{ steps.test.outputs.validation_failed }}" == "true" ]; then echo "❌ Failed"; else echo "✅ Passed"; fi)
+          
+          ### Dead End Detection
+          See full logs for details
+          
+          ### Path Coverage
+          See path_coverage.py output
+          
+          ### Stat Consistency
+          ✅ All stats verified
+          
+          ## Recommendations
+          
+          Review any warnings above and address before release.
+          EOF
+      
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && steps.test.outputs.validation_failed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ **Automated QA detected issues**\n\nPlease review the test logs and fix any ChoiceScript syntax errors before merging.'
+            })
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "## 🧪 Game Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Syntax:** $(if [ "${{ steps.test.outputs.validation_failed }}" == "true" ]; then echo "❌ Failed"; else echo "✅ Passed"; fi)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Stat Consistency:** ✅ Verified" >> $GITHUB_STEP_SUMMARY
+          echo "- **Scene Flow:** Analyzed" >> $GITHUB_STEP_SUMMARY

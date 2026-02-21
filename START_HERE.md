@@ -65,4 +65,18 @@ Avalon/
 
 ---
 
+## 🤖 NEW: Managing Your AI Workers?
+
+If you're here because you need to manage the autonomous AI workers:
+
+**→ Go to: [AGENT_START_HERE.md](AGENT_START_HERE.md)**
+
+This covers:
+- Verifying your closed PRs worked ✅
+- Using the Agent Management System
+- Checking system health (30 seconds)
+- Activating the AI workers
+
+---
+
 **The game is ready to play. Just find `game/index.html` and open it!**

@@ -1,0 +1,49 @@
+Subject: Re: Bug Report - {SUBJECT}
+
+Thank you for reporting this bug!
+
+**Automated Bug Report Processing:**
+
+Your bug report has been received and logged in our automated tracking system.
+
+**Report Status:**
+- ✅ Received and categorized
+- ⏱️ Priority: {PRIORITY}
+- 🏷️ Category: Bug Report
+- ⏰ Expected Response: Within 24 hours
+
+**Next Steps:**
+1. A GitHub issue has been created automatically (or will be created shortly)
+2. The development team has been notified
+3. You'll receive updates on the issue status via email and GitHub
+
+**To help us resolve this faster, please ensure your report includes:**
+- [ ] Steps to reproduce the bug
+- [ ] Expected behavior vs. actual behavior
+- [ ] System information (browser, operating system, version)
+- [ ] Screenshots or error messages (if applicable)
+- [ ] Any relevant console logs
+
+**Track Your Bug Report:**
+- Issue URL: {ISSUE_URL}
+- Reference ID: {REFERENCE_ID}
+
+**What happens next:**
+1. **Within 24 hours:** Initial review and triage
+2. **Within 48 hours:** Priority assignment and assignment to developer
+3. **Within 1 week:** Progress update or resolution
+
+**Already found a solution?**
+Please update the GitHub issue to help other users who might encounter the same problem!
+
+Thank you for helping improve the Avalon project! 🐛🔧
+
+Best regards,
+Avalon Development Team
+
+---
+Automated Bug Tracking System
+GitHub: https://github.com/issdandavis/Avalon
+View All Issues: https://github.com/issdandavis/Avalon/issues
+
+To unsubscribe from this issue, visit the GitHub issue page and click "Unsubscribe"
