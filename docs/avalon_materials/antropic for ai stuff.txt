@@ -1,4 +1,5 @@
-antropic for ai stuff 
-https://console.anthropic.com/dashboard
-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
+REDACTED
 
+This file previously contained a plaintext Anthropic API key.
+Do not store provider keys or credentials in this repository.
+Use local environment variables or a secrets manager instead.
