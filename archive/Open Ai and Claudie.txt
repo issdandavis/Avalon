@@ -1,2 +1,5 @@
-OPENAI_API_KEY=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
-ANTHROPIC_API_KEY=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
+REDACTED
+
+This file previously contained plaintext provider API keys.
+Do not store provider keys or credentials in this repository.
+Use local environment variables or a secrets manager instead.
