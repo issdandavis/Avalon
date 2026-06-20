@@ -1,5 +1,5 @@
 REDACTED
 
-This file previously contained a plaintext Anthropic API key.
+This file previously contained plaintext provider API keys.
 Do not store provider keys or credentials in this repository.
 Use local environment variables or a secrets manager instead.
