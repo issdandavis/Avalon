@@ -1,0 +1,1359 @@
+*comment ╔══════════════════════════════════════════════════════════════════════════════╗
+*comment ║                     THE SPIRALVERSE CHRONICLES                              ║
+*comment ║                 Complete ChoiceScript Game Package                          ║
+*comment ║                                                                             ║
+*comment ║  By Issac                                                                   ║
+*comment ║  "Terry Pratchett meets Studio Ghibli"                                      ║
+*comment ║                                                                             ║
+*comment ║  This file contains the complete game, organized by scene file.            ║
+*comment ║  To deploy: Split each section into its named .txt file in your            ║
+*comment ║  ChoiceScript /scenes/ folder.                                             ║
+*comment ╚══════════════════════════════════════════════════════════════════════════════╝
+
+*comment ══════════════════════════════════════════════════════════════════════════════
+*comment  FILE: startup.txt
+*comment  Purpose: Variable initialization and game entry point
+*comment ══════════════════════════════════════════════════════════════════════════════
+
+*title The Spiralverse Chronicles
+*author Issac
+*scene_list
+    startup
+    arrival
+    academy_life
+    relationships
+    polly_annotations
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  VARIABLE INITIALIZATION
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*comment --- Core Identity ---
+*create name ""
+*create title_earned "Newcomer"
+*create personal_motto "The spiral unfolds as I walk it."
+
+*comment --- Consciousness Stats ---
+*create collaboration 50
+*create individual_power 50
+*create magical_understanding 0
+*create knowledge 0
+*create magical_skill 0
+*create failure_count 0
+*create dimensional_awareness 0
+
+*comment --- Relationship Scores ---
+*create izack_relationship 0
+*create aria_relationship 0
+*create zara_relationship 0
+*create alex_relationship 0
+*create polly_relationship 0
+*create clay_bond 0
+
+*comment --- Trust Levels ---
+*create trust_izack 0
+*create trust_aria 0
+*create trust_zara 0
+*create trust_alex 0
+
+*comment --- Emotional/Romance Variables ---
+*create emotional_intimacy 0
+*create fun_memories 0
+*create daily_interaction_count 0
+*create romantic_interest "none"
+*create romance_depth 0
+*create romance_transcendence false
+*create cosmic_love_achievement false
+*create romance_grounded false
+*create practical_love_achievement false
+
+*comment --- Progress Flags ---
+*create has_understood_invitation false
+*create has_understood_clay_origin false
+*create has_witnessed_productive_failure false
+*create has_completed_verdant_tithe false
+*create has_achieved_collaboration_mastery false
+*create has_recognized_meta_narrative false
+*create has_met_clay false
+*create remembers_beach_arrival false
+*create first_visit true
+*create visits 0
+
+*comment --- Achievement Tracking ---
+*create achievement_count 0
+*create latest_achievement ""
+*create expedition_role ""
+*create magical_philosophy ""
+*create thesis_topic ""
+
+*comment --- State Variables ---
+*create time_of_day "morning"
+*create energy 100
+*create current_crisis ""
+*create solution_type ""
+*create carrying_emotional_weight false
+*create emotional_continuity false
+*create choice_prevented false
+*create player_about_to_break_reality false
+
+*comment --- Collaboration Flags ---
+*create working_with_izack false
+*create working_with_aria false
+*create working_with_zara false
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  GAME START
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label start
+
+[b]Welcome to the Spiralverse![/b]
+
+The world shimmers into existence around you—or perhaps you shimmer into existence around it. Hard to tell, really.
+
+A raven perches on what might be a dimensional threshold, or possibly just a very pretentious doorframe. She regards you with eyes that have seen too many timelines to be impressed by any single one.
+
+"Name?" Polly asks, quill poised over parchment that definitely wasn't there a moment ago.
+
+*input_text name
+
+"${name}?" She tilts her head, feathers ruffling with what might be amusement. "Huh. Good luck."
+
+*gosub_scene polly_annotations polly_commentary
+
+*page_break The spiral begins...
+
+*goto_scene arrival
+
+
+
+*comment ══════════════════════════════════════════════════════════════════════════════
+*comment  FILE: arrival.txt
+*comment  Purpose: Multiple entry paths into Avalon Academy
+*comment ══════════════════════════════════════════════════════════════════════════════
+
+*label arrival_start
+
+*set visits +1
+*set first_visit false
+
+Avalon unfurls like a scroll etched in light. Floating gardens hum with arcane music, and a welcoming committee waits at the portal: Izack with his nervous grin, Aria with a quill poised to record your reactions, and Polly scribbling snarky notes.
+
+"Welcome to my—our—well, to Avalon," Izack stammers, managing a smile. His hands flutter near several pouches of what might be spell components, or possibly emergency snacks.
+
+Aria tilts her head at a precise 23-degree angle. "We predicted a 93.7% chance of your arrival. I'm recording variables for an experiment in inter-dimensional hospitality. Don't mind the measuring instruments."
+
+Polly adds, "I give you three days before you accidentally summon a pudding elemental." She winks at you conspiratorially. "The current record is two days."
+
+*choice
+    #Attend the official orientation
+        *goto orientation_path
+        
+    #Sneak off to explore on your own
+        *goto explore_path
+        
+    #Follow the sound of distant singing
+        *goto zara_path
+        
+    #Ask Polly for a shortcut
+        *goto shortcut_path
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  ORIENTATION PATH
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label orientation_path
+
+You follow Aria and Izack through the Hall of Cartography. Maps of impossible places line the walls—some showing dimensions that exist only on Tuesdays, others depicting the emotional geography of forgotten dreams.
+
+Aria expounds on leyline theory with precise gestures, each hand movement calibrated to the nearest millimeter. "The Academy exists at the intersection of seventeen major leylines, which allows for—"
+
+Izack accidentally trips over a dimensional anchor. The universe hiccups slightly.
+
+"—which allows for occasional spatial irregularities," Aria continues without missing a beat. "Case in point."
+
+Polly follows behind making bracketed comments like [i]"Polly note: At least they didn't break the universe this time. The paperwork for that is astronomical."[/i]
+
+*set izack_relationship +2
+*set aria_relationship +2
+*gosub_scene polly_annotations polly_commentary
+
+*goto orientation_lecture
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  EXPLORATION PATH
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label explore_path
+
+You duck down a hallway lined with paintings of previous students. The portraits whisper gossip and offer you peanuts.
+
+"Psst," hisses a young woman in Renaissance robes, "the third floor bathroom sometimes leads to another dimension. Pack snacks."
+
+"Don't listen to her," counters a stern-looking wizard. "The bathroom is perfectly safe. It's the *fourth* floor you need to worry about."
+
+You discover a hidden balcony overlooking a kaleidoscopic forest where the trees appear to be having a very slow argument about philosophy.
+
+Izack catches up, breathless. "You shouldn't—oh!" He stops, seeing your awe reflected in the shifting colors below. "It's beautiful, isn't it?" He relaxes, forgetting to be nervous for a moment.
+
+Polly perches on the railing and writes, [i]"Player chooses adventure. Probability of chaos increases. Probability of interesting story also increases. Acceptable trade-off."[/i]
+
+*set izack_relationship +3
+*set fun_memories +1
+*gosub_scene polly_annotations polly_commentary
+
+*goto explore_balcony
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  ZARA'S PATH
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label zara_path
+
+A haunting melody floats through the air, notes that seem to paint colors in your peripheral vision. You follow the sound through corridors that rearrange themselves politely to accommodate your journey.
+
+In a grove where the ceiling is open sky (despite being indoors), Zara practices weaving reality with song. Her voice rises and falls like breathing, and the plants around her dance in response—literally dance, some of them attempting what might be a waltz.
+
+She smiles when she sees you, warmth radiating from her like sunlight. "New blood? Come, let me show you how harmonics reshape existence!"
+
+Polly mutters from a nearby branch, "Prepare for a soundtrack. She does everything to music. *Everything.* I once watched her harmonize with a door hinge for forty minutes."
+
+You join Zara in song, tentatively at first, then with growing confidence. The plants lean toward you, curious. One particularly enthusiastic fern attempts to applaud.
+
+*set zara_relationship +3
+*gosub_scene polly_annotations polly_commentary
+
+*goto zara_introduction
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  SHORTCUT PATH
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label shortcut_path
+
+"Shortcut?" Polly repeats, fixing you with an appraising stare. "You want to skip the exposition? Bold. I appreciate bold. Also foolish. I appreciate foolish too—it's more entertaining to document."
+
+She flutters and the world flickers. Reality stutters like a scratched record. Suddenly you're in the kitchen, surrounded by magical snacks and Aria's experimental teapot (which is currently arguing with itself about optimal brewing temperatures).
+
+"Huh," Aria says, looking up from a notebook. "Did the raven just bypass causality? I need to adjust my probability matrices."
+
+Izack's voice echoes from somewhere distant: "Polly! That's not in the script!"
+
+[i]"There is no script,"[/i] Polly writes, then pauses. [i]"Well. There is. But I wrote it, so I can skip the boring parts."[/i]
+
+*set fun_memories +1
+*set polly_relationship +2
+*gosub_scene polly_annotations polly_commentary
+
+*goto kitchen_shortcut
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  DESTINATION SCENES
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label orientation_lecture
+
+The orientation continues in a lecture hall that has more dimensions than strictly necessary. Aria explains the Academy's founding principles while Izack occasionally interjects with practical advice like "don't pet the philosophical cats" and "if a door asks you a riddle, it's okay to just walk away."
+
+*page_break The Academy awaits...
+
+*goto_scene academy_life academy_day_start
+
+*label explore_balcony
+
+You spend another hour on the balcony, watching the forest debate and learning the names of the more talkative stars. Izack stays with you, pointing out constellations that only appear when you're not looking directly at them.
+
+*page_break The Academy awaits...
+
+*goto_scene academy_life academy_day_start
+
+*label zara_introduction
+
+Zara teaches you your first harmonic—a simple note that makes nearby objects slightly more cooperative. "Magic here isn't about force," she explains. "It's about asking nicely. With music. And occasionally bribing reality with good intentions."
+
+*page_break The Academy awaits...
+
+*goto_scene academy_life academy_day_start
+
+*label kitchen_shortcut
+
+You sample something called "possibility pastries" (which taste different with every bite) while the teapot finally settles its internal debate and produces a cup of tea that remembers being coffee.
+
+[i]"Welcome to Avalon,"[/i] Polly writes, [i]"where even breakfast is metaphysically complicated."[/i]
+
+*page_break The Academy awaits...
+
+*goto_scene academy_life academy_day_start
+
+
+
+*comment ══════════════════════════════════════════════════════════════════════════════
+*comment  FILE: academy_life.txt
+*comment  Purpose: Daily rhythm with classes, activities, and evening events
+*comment ══════════════════════════════════════════════════════════════════════════════
+
+*label academy_day_start
+
+*set time_of_day "morning"
+*set energy 100
+
+*gosub describe_academy
+
+*label morning_classes
+
+Polly flutters into your dorm room, landing on a stack of books that may or may not have been there before. "Classes!" she caws. "Or you could sleep in and risk being eaten by your own bed. Your call."
+
+She pauses, then adds, [i]"The bed-eating thing only happened once. Probably won't happen again. Probably."[/i]
+
+*choice
+    #Attend Aria's Dimensional Mathematics
+        *goto class_aria
+        
+    #Attend Izack's Practical Spellcasting
+        *goto class_izack
+        
+    #Attend Zara's Harmonic Weaving
+        *goto class_zara
+        
+    #Attend Polly's Metafiction 101
+        *goto class_polly
+        
+    *selectable_if (energy < 50) #Sleep in (you're exhausted)
+        *goto sleep_in
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  CLASS SCENES
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label class_aria
+
+You file into a lecture hall suspended in mid-air. Below you, clouds drift past with studied indifference. Above you, a star chart rearranges itself to show your current probability vectors.
+
+Aria writes formulae that glow and hum, each equation a small song of mathematical certainty. "Dimensional cascade occurs at 73.2% probability when variables misalign," she notes, eyes glittering with the joy of precision. "However, intentional misalignment can produce controlled cascade effects. Observe."
+
+She draws a symbol. Reality ripples. For a moment, you can see seventeen versions of yourself, all taking notes with varying degrees of success.
+
+"Questions?" Aria asks.
+
+You take notes until they start to rewrite themselves, adding marginalia in languages you don't recognize but somehow understand.
+
+*set knowledge +5
+*set energy -15
+*set aria_relationship +2
+*set dimensional_awareness +3
+*gosub_scene polly_annotations polly_commentary
+
+*goto midday
+
+*label class_izack
+
+Izack greets you with a stack of magic wands, several of which appear to be arguing with each other. "Today we practice collaborative spells. The key is to invite the magic, don't boss it around."
+
+He pauses, looking at a wand that's making rude gestures. "And don't take it personally when it gets snippy. Magic has opinions."
+
+Half the class sets something on fire in the first five minutes. Izack sighs, then laughs—a genuine, warm sound that makes the flames feel less catastrophic.
+
+"See, this is perfect," he says, gesturing at the small inferno. "You've learned what not to do. That's progress!"
+
+You experiment, trying to command the magic. It refuses. You try again, this time asking politely. The spell manifests as a gentle warmth in your palms.
+
+"Beautiful," Izack breathes. "You're learning to listen."
+
+*set collaboration +5
+*set individual_power -3
+*set izack_relationship +3
+*set energy -20
+*set has_understood_invitation true
+*gosub_scene polly_annotations polly_commentary
+
+*goto midday
+
+*label class_zara
+
+Zara fills a grove with music that makes the air shimmer and dance. The trees lean in like attentive students, and several flowers have produced what appear to be tiny notebooks.
+
+"Feel the notes in your bones," she instructs, her voice resonating with something deeper than sound. "Magic and music are the same language spoken at different frequencies."
+
+You sing, hum, and sometimes screech. Each attempt produces different effects—one screech accidentally summons a small flock of confused sparrows.
+
+"Good!" Zara encourages. "Even discordance has purpose. The universe learns what it wants by hearing what it doesn't."
+
+Your voice begins to resonate with the leylines, a humming connection you can feel in your chest. Polly covers her ears and scribbles, [i]"Note to self: teach raven groupies proper pitch. Also, invest in earplugs."[/i]
+
+*set zara_relationship +3
+*set magical_skill +4
+*set energy -15
+*gosub_scene polly_annotations polly_commentary
+
+*goto midday
+
+*label class_polly
+
+Polly stands at a chalkboard covered in tweets, marginalia, and what appears to be a very passive-aggressive correspondence with the narrative itself.
+
+"Today we learn that you're in a story," she announces. "Try not to panic. Panic is boring to read."
+
+The class shifts uncomfortably. One student raises a hand. "But if we're in a story, do our choices matter?"
+
+Polly fixes them with an ancient stare. "Do your choices matter outside a story? Philosophy aside—and I've done the philosophy, it's exhausting—your choices shape the narrative. The narrative shapes reality. Ergo, your choices shape reality. Simple."
+
+She draws a spiral on the board. "This is the structure of all meaning. Not linear. Not circular. Spiral. Every revolution brings you back to familiar ground, but higher. Or lower, depending on your choices."
+
+[i]"Pop quiz,"[/i] she writes. [i]"What are you going to do differently this time around?"[/i]
+
+*set knowledge +3
+*set polly_relationship +3
+*set has_recognized_meta_narrative true
+*set energy -10
+*gosub_scene polly_annotations polly_commentary
+
+*goto midday
+
+*label sleep_in
+
+You pull the covers over your head. The bed makes a satisfied purring sound—comforting, probably, rather than predatory.
+
+Dreams come in spirals: beaches you've never visited, clay taking shape under desperate hands, a raven writing your future in perfect calligraphy.
+
+You wake feeling rested, but with the sense that you've missed something important.
+
+*set energy +30
+*set has_witnessed_productive_failure true
+*gosub_scene polly_annotations polly_commentary
+
+*goto midday
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  MIDDAY ACTIVITIES
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label midday
+
+*set time_of_day "afternoon"
+
+The Academy shifts around you—not dramatically, but with the gentle inevitability of breathing. Lunch appears in the dining hall, which may or may not have been there before.
+
+*choice
+    #Spend time with Izack
+        *goto_scene relationships relationship_loop_izack
+        
+    #Spend time with Aria
+        *goto_scene relationships relationship_loop_aria
+        
+    #Spend time with Zara
+        *goto_scene relationships relationship_loop_zara
+        
+    #Study alone in the library
+        *goto solo_study
+        
+    #Explore a new part of the Academy
+        *goto explore_academy
+
+*label solo_study
+
+The library exists in a state of polite quantum uncertainty—books appear when needed, disappear when finished, and occasionally reorganize themselves based on obscure filing systems that even Aria can't decode.
+
+You find a corner and study. The knowledge seeps in slowly, like sunlight through morning fog.
+
+*set knowledge +3
+*set energy -10
+*gosub_scene polly_annotations polly_commentary
+
+*goto evening
+
+*label explore_academy
+
+*set visits +1
+
+*gosub describe_academy
+
+Every corridor in Avalon holds secrets. Today, you find [i]something[/i]:
+
+*temp discovery 0
+*rand discovery 1 4
+
+*if discovery = 1
+    A garden where the plants speak in riddles. One rosebush offers surprisingly good life advice.
+    *set magical_understanding +2
+    *set fun_memories +1
+    
+*elseif discovery = 2
+    A workshop where Izack once created Clay—the space still hums with the memory of desperate, beautiful creation.
+    *set has_understood_clay_origin true
+    *set emotional_intimacy +3
+    
+*elseif discovery = 3
+    A quiet chapel to forgotten gods, where prayers go not to be answered but to be remembered.
+    *set magical_understanding +3
+    
+*else
+    A balcony where the stars are close enough to name, and one star names you back.
+    *set fun_memories +1
+    *set dimensional_awareness +2
+
+*gosub_scene polly_annotations polly_commentary
+
+*goto evening
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  EVENING ACTIVITIES
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label evening
+
+*set time_of_day "evening"
+
+The light shifts, painting new shadows across Avalon. Evening in the Academy brings a different quality of magic—softer, more contemplative, with a hint of dreams at the edges.
+
+*if carrying_emotional_weight
+    You carry the weight of today's moments with you, each experience settling into memory like stones in a still pond.
+    *set emotional_continuity true
+
+*choice
+    #Attend the evening gathering in the common room
+        *goto common_room
+        
+    #Practice magic alone
+        *goto solo_practice
+        
+    #Retire early to your dorm
+        *goto dorm_rest
+        
+    *selectable_if (romantic_interest != "none") #Seek out ${romantic_interest}
+        *goto romantic_evening
+
+*label common_room
+
+The common room fills with students sharing stories, playing games that exist in multiple dimensions, and occasionally setting small, contained fires (it's tradition, apparently).
+
+Izack plays a dimensional card game where the cards argue with the players. Aria calculates optimal strategies and announces them to no one in particular. Zara provides musical accompaniment that somehow makes everything feel like an epic moment.
+
+You join them, and the evening unfolds in warmth.
+
+*set izack_relationship +1
+*set aria_relationship +1
+*set zara_relationship +1
+*set fun_memories +1
+*gosub_scene polly_annotations polly_commentary
+
+*goto night_end
+
+*label solo_practice
+
+You find a quiet corner and practice what you've learned. Magic responds to your invitation—sometimes.
+
+*if collaboration > individual_power
+    The magic flows more easily when you think of it as a conversation rather than a command.
+    *set magical_skill +3
+*else
+    You try to force the magic. It resists. You try again. It resists again. Eventually, you learn to ask.
+    *set failure_count +1
+    *set has_witnessed_productive_failure true
+    *set magical_skill +2
+
+*gosub_scene polly_annotations polly_commentary
+
+*goto night_end
+
+*label dorm_rest
+
+Your dorm room welcomes you with the warmth of familiar spaces. You rest, and the day settles into dreams.
+
+*set energy +20
+*goto night_end
+
+*label romantic_evening
+
+*if romantic_interest = "izack"
+    You find Izack on the balcony, watching stars that blink in Morse code. He startles when he sees you, then smiles—that genuine smile that transforms his whole face.
+    "I was hoping you'd come," he admits.
+    *set izack_relationship +5
+    *set romance_depth +1
+    
+*elseif romantic_interest = "aria"
+    Aria has spread star charts across a table, but looks up when you approach. "Your arrival probability was 67.3%," she says. "I'm pleased the universe cooperated."
+    *set aria_relationship +5
+    *set romance_depth +1
+    
+*elseif romantic_interest = "zara"
+    Zara is humming a melody that makes the evening light dance. She weaves you into the song without missing a beat, and suddenly you're part of the music.
+    *set zara_relationship +5
+    *set romance_depth +1
+
+*gosub_scene polly_annotations polly_commentary
+
+*goto night_end
+
+*label night_end
+
+*page_break Night falls over Avalon...
+
+[i]The spiral turns. Tomorrow brings new choices, new chances, new possibilities spiraling outward into infinity.[/i]
+
+*goto academy_day_start
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  SUBROUTINES
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label describe_academy
+
+*if first_visit
+    Avalon Academy rises before you—impossible architecture that makes your eyes water and your heart soar. Towers spiral in directions that shouldn't exist. Gardens float between buildings like afterthoughts made physical. The whole place hums with a music just below hearing.
+    
+*elseif visits < 5
+    The Academy feels slightly more familiar now, though it still surprises you daily. That tower wasn't there yesterday. Or was it? The buildings seem to rearrange themselves when you're not looking, like a cat settling into a more comfortable position.
+    
+*else
+    You know these halls like breathing now. The Academy has become home—strange, shifting, occasionally terrifying home, but home nonetheless. Even the wandering architecture feels like an old friend's eccentricities.
+
+*return
+
+
+
+*comment ══════════════════════════════════════════════════════════════════════════════
+*comment  FILE: relationships.txt
+*comment  Purpose: Character relationship loops and romance mechanics
+*comment ══════════════════════════════════════════════════════════════════════════════
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  IZACK RELATIONSHIP LOOP
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label relationship_loop_izack
+
+*set daily_interaction_count +1
+*temp available_activities ""
+
+*if izack_relationship > 10
+    *set available_activities "study,"
+*if izack_relationship > 25
+    *set available_activities "${available_activities}practice_magic,"
+*if trust_izack > 30
+    *set available_activities "${available_activities}share_secrets,"
+*if emotional_intimacy > 20
+    *set available_activities "${available_activities}deep_conversation,"
+
+You find Izack in his usual spot—surrounded by dimensional anchors, probability crystals, and at least one thing that's definitely alive but shouldn't be.
+
+"Oh! ${name}!" He nearly drops something that might have been important. "I was just, um, organizing. Or disorganizing. Hard to tell sometimes."
+
+*choice
+    #Study dimensional resonance together
+        *goto izack_study
+        
+    *selectable_if (izack_relationship > 25) #Practice collaborative spells
+        *goto izack_practice
+        
+    *selectable_if (trust_izack > 30) #Share personal secrets
+        *goto izack_secrets
+        
+    *selectable_if (emotional_intimacy > 20) #Have a deep conversation
+        *goto izack_deep
+        
+    *selectable_if ((izack_relationship > 40) and (romantic_interest = "none")) #Explore romantic feelings
+        *goto izack_romance_start
+        
+    #Just spend casual time together
+        *goto izack_casual
+
+*label izack_study
+
+Izack spreads out diagrams of swirling dimensions, his hands twitching nervously as he traces impossible geometries. "So, imagine two points on a spiral—not that you can really imagine it, the brain isn't built for this, but try anyway—"
+
+He knocks over a dimensional anchor. The room flickers briefly into what might be another universe.
+
+"Sorry!" He blushes, scrambling to right the anchor. "That one's been unstable since I used it to, um, accidentally create a small pocket dimension. Long story."
+
+You both laugh and piece the model back together. In the process, your hands brush. He turns slightly pinker.
+
+*set izack_relationship +3
+*set trust_izack +2
+*set knowledge +2
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label izack_practice
+
+You stand together beneath the Leyline Gazebo, where the magic flows strongest. Izack takes a deep breath.
+
+"Okay, so collaborative casting. The key is to invite the magic, not command it. Watch me—" He reaches for the leyline energy and immediately starts sneezing. The spell fizzles like a soap bubble.
+
+"Sorry," he says with a sheepish grin, wiping his nose. "Allergic to my own ambition, apparently."
+
+You both try again, this time listening to the hum of the leyline, letting it guide rather than forcing it to obey. The magic rises between you like a shared breath, warm and cooperative.
+
+"There!" Izack whispers, eyes wide with wonder. "See? It wants to help. It just needs us to ask properly."
+
+*set collaboration +5
+*set izack_relationship +4
+*set trust_izack +3
+*set magical_skill +2
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label izack_secrets
+
+Sitting by a floating garden that smells of moonlight and possibility, you and Izack whisper secrets into the evening air.
+
+He admits to accidentally creating a small black hole under his bed once. "It ate three socks and a textbook before I noticed. The textbook I don't miss—it was judgmental—but those were good socks."
+
+You share something equally vulnerable. The air feels lighter afterwards, as if secrets, once spoken, lose their weight.
+
+"Thanks," Izack says quietly. "For trusting me with that. I know I'm a disaster, but..." He trails off, then meets your eyes. "I'm glad you're here."
+
+*set trust_izack +10
+*set emotional_intimacy +5
+*set izack_relationship +5
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label izack_deep
+
+"Can I ask you something?" Izack says, unusually serious. "About Clay?"
+
+He explains Clay's origin—how loneliness and desperation and need shaped clay into a companion. "I didn't mean to create life. I just... needed someone. And the magic responded to that need."
+
+His voice drops. "Sometimes I wonder if that was wrong. Creating something because I was lonely. Using magic to fill a void in myself."
+
+*choice
+    #"Need isn't wrong. Clay is loved and real because of that need."
+        Izack's eyes brighten with something like relief. "You think so? I worry that—that I forced existence on something, for selfish reasons."
+        *set trust_izack +5
+        *set izack_relationship +3
+        *set has_understood_clay_origin true
+        
+    #"The ethics are complicated, but Clay seems happy."
+        "Complicated." Izack laughs, a bit sadly. "That's one word for it. But you're right—Clay [i]is[/i] happy. At least, I think so."
+        *set trust_izack +3
+        *set izack_relationship +2
+        *set has_understood_clay_origin true
+        
+    #"What matters is how you treat Clay now, not how Clay began."
+        Izack nods slowly. "I try. I try so hard to be worthy of having created something. Someone. Does that make sense?"
+        *set trust_izack +5
+        *set izack_relationship +4
+        *set has_understood_clay_origin true
+
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label izack_romance_start
+
+The evening light catches Izack's face as he turns to look at you. Something shifts in the air—possibility, potential, the spiral tightening around a new axis.
+
+"${name}," he says, voice softer than you've heard it. "I've been meaning to... that is, I wanted to say..."
+
+He takes a breath. Squares his shoulders. Looks at you with an expression that's equal parts terrified and hopeful.
+
+"I think I might have feelings for you. Romantic ones. The kind that make me nervous—more nervous than usual, which is saying something—and I completely understand if you don't feel the same, I just thought you should know because honesty is important and also I'm terrible at hiding things and—"
+
+*choice
+    #"Izack. I feel the same way."
+        His face transforms—relief, joy, disbelief, more joy. "You do? Really? You're not just saying that because I'm rambling?"
+        *set romantic_interest "izack"
+        *set romance_depth 1
+        *set izack_relationship +10
+        
+    #"I need time to think about this."
+        He nods quickly. "Of course! Yes! Time is important. Very important. I'll just, um, be over here. Not pressuring you. Being patient. I'm very good at patience." He is visibly not good at patience.
+        *set izack_relationship +3
+        
+    #"I care about you, but as a friend."
+        His face falls for just a moment before he catches it, rearranges it into something supportive. "That's—that's great. Friends is great. I value our friendship enormously. I'll just, um, go compose myself. Briefly."
+        *set trust_izack +2
+
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label izack_casual
+
+You spend the afternoon in comfortable companionship—watching Izack's experiments go charmingly wrong, helping clean up the inevitable mess, and listening to his enthusiastic explanations of things you only half understand.
+
+It's nice. Simple. The kind of friendship that doesn't need to be anything more than presence.
+
+*set izack_relationship +2
+*set fun_memories +1
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  ARIA RELATIONSHIP LOOP
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label relationship_loop_aria
+
+*set daily_interaction_count +1
+
+You find Aria in the observatory, surrounded by instruments that measure things with no names and charts of probabilities that haven't happened yet.
+
+"Ah, ${name}. I calculated a 52.3% chance you'd seek me out today. I'm pleased the favorable outcome manifested." She gestures at a constellation of floating numbers. "I'm modeling the Academy's temporal fluctuations. Would you like to observe?"
+
+*choice
+    #Help with her research
+        *goto aria_research
+        
+    *selectable_if (aria_relationship > 25) #Discuss the philosophy of probability
+        *goto aria_philosophy
+        
+    *selectable_if (trust_aria > 30) #Ask about her past
+        *goto aria_past
+        
+    *selectable_if ((aria_relationship > 40) and (romantic_interest = "none")) #Explore romantic possibilities
+        *goto aria_romance_start
+        
+    #Just enjoy her company
+        *goto aria_casual
+
+*label aria_research
+
+Aria hands you a calibrated instrument. "Measure the ambient possibility density. I'll record the dimensional variance."
+
+You work together in comfortable silence, punctuated by Aria's precise observations and your increasingly confident measurements. The numbers dance between you like a language you're both learning to speak.
+
+"Your measurements are improving," Aria notes. It might be the highest compliment she knows how to give.
+
+*set aria_relationship +3
+*set knowledge +3
+*set dimensional_awareness +2
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label aria_philosophy
+
+"Probability," Aria says, "is not about prediction. It's about understanding the space of possibility." She traces a complex diagram in the air. "Every choice collapses infinite possibilities into one actuality. But the other possibilities don't disappear—they simply become... adjacent."
+
+*choice
+    #"So alternate realities are real?"
+        "Real is an imprecise term, but yes. Every choice bifurcates. We inhabit one branch while the others... continue. Somewhere. Somehow."
+        *set dimensional_awareness +5
+        *set knowledge +3
+        
+    #"That sounds lonely. Infinite versions of ourselves, all alone."
+        Aria pauses—something flickers across her face that might be surprise. "I... hadn't considered the emotional implications. The mathematics are elegant, but you're right. It's rather melancholy."
+        *set trust_aria +3
+        *set emotional_intimacy +2
+
+*set aria_relationship +4
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label aria_past
+
+"You're curious about my origins," Aria states. Not a question—she's already calculated the probability.
+
+"I was... not always good with people. Numbers made sense in ways emotions didn't. Coming to Avalon was—" She pauses, recalibrating. "It was difficult. But also necessary. The magic here responds to connection, and I was forced to learn."
+
+She looks at you directly. "I'm still learning. You're helping. I don't have precise metrics for that kind of help, but I'm... grateful."
+
+*set trust_aria +8
+*set aria_relationship +5
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label aria_romance_start
+
+"I've been analyzing our interaction patterns," Aria says, "and the data suggests a 78.6% probability of romantic compatibility."
+
+She pauses, adjusts her glasses. "That was the wrong way to say that. Let me recalculate my approach."
+
+A breath. Then, more softly: "I find myself wanting to share probability spaces with you. Not as a mathematical construct, but as... a future. Together."
+
+*choice
+    #"I'd like that, Aria. Very much."
+        Her face softens in a way you've never seen—like mathematics finally encountering poetry. "The probability of mutual affection was 43.7%. I'm pleased to be on the favorable side of the distribution."
+        *set romantic_interest "aria"
+        *set romance_depth 1
+        *set aria_relationship +10
+        
+    #"I need to process this data."
+        She nods approvingly. "A logical response. I'll await your calculations."
+        *set aria_relationship +3
+        
+    #"I value our connection, but not romantically."
+        "Understood. I'll adjust my models accordingly." Her voice is steady, but there's a flicker in her eyes. "The friendship probability remains high. I find that... acceptable."
+        *set trust_aria +2
+
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label aria_casual
+
+You spend time watching Aria work—the precise way she moves, the quiet satisfaction when an equation resolves correctly. She doesn't need you to help, but she seems to appreciate your presence.
+
+"Company increases productivity by 12.4%," she notes. "Or perhaps I simply... like having you here."
+
+*set aria_relationship +2
+*set fun_memories +1
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  ZARA RELATIONSHIP LOOP
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label relationship_loop_zara
+
+*set daily_interaction_count +1
+
+Zara is always surrounded by music—humming, singing, harmonizing with the wind itself. You find her in a garden where the flowers sway to rhythms only she can hear.
+
+"${name}!" Her smile is like sunrise. "Come, sing with me. The afternoon needs more melody."
+
+*choice
+    #Join her in song
+        *goto zara_sing
+        
+    *selectable_if (zara_relationship > 25) #Ask her to teach you harmony magic
+        *goto zara_teach
+        
+    *selectable_if (trust_zara > 30) #Talk about something serious
+        *goto zara_serious
+        
+    *selectable_if ((zara_relationship > 40) and (romantic_interest = "none")) #Let the music speak what words can't
+        *goto zara_romance_start
+        
+    #Just listen
+        *goto zara_listen
+
+*label zara_sing
+
+Your voice joins hers—imperfect, searching, but sincere. The garden responds, flowers leaning toward your harmonies like an audience captivated.
+
+"Beautiful!" Zara laughs. "See how the magic answers joy? You don't need to be perfect. You just need to be present."
+
+*set zara_relationship +3
+*set magical_skill +2
+*set collaboration +2
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label zara_teach
+
+"Harmony magic is about resonance," Zara explains, her voice weaving demonstrations through the air. "Finding the frequency that matches what you want to change, then... shifting it. Gently. Like convincing water to flow uphill by making uphill feel like home."
+
+She takes your hands. "Now, feel the leyline's song. Match it. Then change one note."
+
+You try. The leyline hums. You hum back. Something shifts—not dramatically, but definitely.
+
+"There!" Zara squeezes your hands. "You spoke to reality, and it listened."
+
+*set zara_relationship +5
+*set magical_skill +4
+*set has_achieved_collaboration_mastery true
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label zara_serious
+
+The music softens as you sit together. Even Zara's eternal melody becomes something quieter, more contemplative.
+
+"Sometimes," she admits, "I sing because silence frightens me. If I stop, I might hear the emptiness underneath."
+
+She looks at you, suddenly vulnerable. "But with you, the silence feels... safe. Like rest instead of absence."
+
+*set trust_zara +8
+*set emotional_intimacy +4
+*set zara_relationship +5
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label zara_romance_start
+
+The music around Zara shifts—becomes something tender, intimate, a melody that feels like it's reaching for you specifically.
+
+"Music can say things words can't," she murmurs. "Can you hear what this song is saying?"
+
+You can. It's a love song. A question set to melody.
+
+*choice
+    #Answer with your own harmony
+        Your voice joins hers, adding a note of acceptance, of yes, of together. The music swells, and the garden blooms around you.
+        *set romantic_interest "zara"
+        *set romance_depth 1
+        *set zara_relationship +10
+        
+    #"I hear it, but I'm not sure how to answer yet."
+        The melody softens but doesn't stop. "That's alright. Some songs take time to learn."
+        *set zara_relationship +3
+        
+    #Gently introduce a discord
+        She understands immediately—the music shifts to something bittersweet. "Ah. A different harmony then. But still harmony."
+        *set trust_zara +2
+
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*label zara_listen
+
+You sit in the grass and simply listen. Zara's music washes over you—healing, warm, endless. The plants sway. The light dances. Time becomes irrelevant.
+
+"Thank you for listening," Zara says when the song finally fades. "Most people want to join. You understand that sometimes music needs witnesses."
+
+*set zara_relationship +3
+*set fun_memories +1
+*gosub_scene polly_annotations polly_commentary
+
+*goto_scene academy_life evening
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  GROUP SPELL SYSTEM
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label group_spell
+
+*temp total_resonance 0
+
+*if working_with_izack
+    *set total_resonance total_resonance + (izack_relationship / 10)
+    Izack adds his dimensional expertise to the weaving, his nervousness transforming into focused precision.
+    
+*if working_with_aria
+    *set total_resonance total_resonance + (aria_relationship / 10)
+    Aria stabilizes the boundaries with surgical precision, equations humming at the edges of the spell.
+    
+*if working_with_zara
+    *set total_resonance total_resonance + (zara_relationship / 10)
+    Zara harmonizes with the natural flow, smoothing rough edges with melody.
+
+*if total_resonance > 15
+    The spell manifests beautifully—a true collaboration, greater than the sum of its parts. This is what magic at Avalon is supposed to feel like.
+    *set has_achieved_collaboration_mastery true
+    *set achievement_count +1
+    *set latest_achievement "Master Collaborator"
+*elseif total_resonance > 8
+    The spell works, forming something functional if not elegant. There's room to grow.
+    *set magical_skill +2
+*else
+    The spell sputters, barely holding together. You need stronger bonds—not more power, but more connection.
+    *set failure_count +1
+    *set has_witnessed_productive_failure true
+
+*return
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  ROMANCE TRANSCENDENCE
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label romance_across_realities
+
+*if (romantic_interest = "aria") and (dimensional_awareness > 80)
+    
+    "I can feel you," Aria whispers, "across every possible timeline where we exist. The probability of us—in some form—is nearly 1."
+    
+    *choice
+        #"In every reality, I choose you."
+            *set romance_transcendence true
+            *set cosmic_love_achievement true
+            *set achievement_count +1
+            *set latest_achievement "Love Beyond Dimensions"
+            
+            The confession ripples outward, touching versions of you both in adjacent realities. Somewhere, countless yous are making the same choice.
+            
+        #"Let's focus on this reality first."
+            *set romance_grounded true
+            *set practical_love_achievement true
+            *set achievement_count +1
+            *set latest_achievement "Present-Focused Love"
+            
+            Aria nods, something like relief in her eyes. "One reality at a time. Probabilities can wait."
+
+*return
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  MEMORY RECURSION
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label memory_recursion
+
+*if remembers_beach_arrival
+    
+    The moment echoes: sand between your fingers, desperation in your heart, Clay forming from pure need...
+    
+    *if current_crisis = "loneliness"
+        That same need that created Clay rises in you again. But this time, you're not alone. This time, there are people who care.
+        *set solution_type "creation_through_need"
+        *set collaboration +5
+
+*return
+
+
+
+*comment ══════════════════════════════════════════════════════════════════════════════
+*comment  FILE: polly_annotations.txt
+*comment  Purpose: Meta-narrative commentary and intervention system
+*comment ══════════════════════════════════════════════════════════════════════════════
+
+*label polly_commentary
+
+*temp snark_level 0
+*rand snark_level 1 20
+
+*if snark_level = 1
+    [i]"How touching. I'd cry if I had tear ducts. Or emotions. Or the capacity for sentimentality. Wait, I have all of those. Still not crying though."[/i]
+*elseif snark_level = 2
+    [i]"Interesting choice. Not the one I'd make, but then I have several centuries of context you lack. Also feathers. The feathers give perspective."[/i]
+*elseif snark_level = 3
+    [i]"Are you sure you want to do that? I mean, it's your timeline... I'm just documenting the wreckage."[/i]
+*elseif snark_level = 4
+    [i]"In another dimension, this choice went very differently. Just saying. The you over there is having a much worse day. Or better. Dimensions are weird."[/i]
+*elseif snark_level = 5
+    [i]"Bold move. Let's see if it pays off. I'm betting against you, but affectionately."[/i]
+*elseif snark_level = 6
+    [i]"I'm jotting this down for my memoir: 'Player pressed button, chaos ensued.' Chapter 47, if you're curious."[/i]
+*elseif snark_level = 7
+    [i]"Narrative twist incoming in 3…2…1… nope, false alarm. The twist is that there's no twist. Twisty."[/i]
+*elseif snark_level = 8
+    [i]"Back when I wrote my first story, we didn't have buttons. We had quills and existential dread. Be grateful for progress."[/i]
+*elseif snark_level = 9
+    [i]"You're making choices faster than Izack can drop vials. That's not a compliment to you OR him."[/i]
+*elseif snark_level = 10
+    [i]"If sarcasm were currency, I'd be rich. Oh wait, I am. Not in sarcasm. In actual wealth. Ravens hoard, it's a thing."[/i]
+*elseif snark_level = 11
+    [i]"Remember: failure is progress. So if you fail, I get to progress by mocking you. Win-win, really."[/i]
+*elseif snark_level = 12
+    [i]"Note to self: update the Raven Guide to include 'Player now knows what they're doing.' Actually, scratch that. Premature."[/i]
+*elseif snark_level = 13
+    [i]"Do you ever feel like you're in a game? Because you are. Don't overthink it. Or do. I find existential crises entertaining."[/i]
+*elseif snark_level = 14
+    [i]"I'm starting to think you enjoy my commentary. Should I charge? My rates are reasonable. One shiny object per quip."[/i]
+*elseif snark_level = 15
+    [i]"This timeline just got more interesting. Carry on. I need material for my sequel."[/i]
+*elseif snark_level = 16
+    [i]"In case you forgot: your choices matter. My commentary matters more. Just kidding. Sort of. Not really."[/i]
+*elseif snark_level = 17
+    [i]"Ravens don't typically get attached, but I'm invested in how badly you might mess this up. That's almost affection."[/i]
+*elseif snark_level = 18
+    [i]"Just between us, I'm rooting for you. Don't tell anyone. I have a reputation to maintain."[/i]
+*elseif snark_level = 19
+    [i]"Meta note: I'm actually a collective of ravens in a trench coat. Kidding. Or am I? You'll never know."[/i]
+*else
+    [i]"If none of these quips land, blame the random number generator. I blame everything on the random number generator."[/i]
+
+*return
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  POLLY'S INTERVENTION SYSTEM
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label polly_intervention
+
+*if player_about_to_break_reality
+    
+    [i]"*CAW!* STOP!"[/i]
+    
+    I manifest more solidly than usual, my form rippling with dimensional energy that I usually keep hidden. No point in showing off when you can be mysterious instead.
+    
+    [i]"That will literally unweave the narrative. Trust me—I've seen it happen. Seventeen times. The cleanup is astronomical. Choose differently."[/i]
+    
+    *set choice_prevented true
+
+*return
+
+*comment ────────────────────────────────────────────────────────────────────────────
+*comment  POLLY'S WISDOM
+*comment ────────────────────────────────────────────────────────────────────────────
+
+*label polly_clay_wisdom
+
+[i]"Clay. Izack's beautiful accident. Created from loneliness and need and desperate, beautiful magic that asked instead of commanded."[/i]
+
+[i]"Remember Clay when you think power matters more than connection. Remember Clay when you feel alone. Remember Clay when someone tells you that need is weakness."[/i]
+
+[i]"Need created life. Not power. Not control. Need."[/i]
+
+[i]"That's the moral foundation of everything Avalon teaches. Write it down. Or don't. I already wrote it down. In several languages. Some of which don't exist yet."[/i]
+
+*return
+
+*label polly_spiral_wisdom
+
+[i]"The spiral is not a circle. Circles return you to where you started, identical, unchanged. The spiral returns you to familiar ground—but higher. Or lower. Depending on choices."[/i]
+
+[i]"Every lesson repeats. Every challenge returns. But you face them differently each time, because you are different each time."[/i]
+
+[i]"That's growth. That's the Spiral of Avalon. That's why we're all here, spinning upward—hopefully upward—through variations of the same themes."[/i]
+
+[i]"It's rather beautiful, actually. Don't tell anyone I said that."[/i]
+
+*return
+
+*label final_polly_note
+
+[i]"Polly's Note: 'Reducing infinite complexity to numbers. How charmingly reductive. Still, even I admit there's poetry in the patterns. The spiral continues, whether we document it or not. But documenting is more fun.'"[/i]
+
+*return
+
+
+
+*comment ══════════════════════════════════════════════════════════════════════════════
+*comment  FILE: choicescript_stats.txt
+*comment  Purpose: Character statistics display
+*comment ══════════════════════════════════════════════════════════════════════════════
+
+*stat_chart
+
+[b]${name}[/b]
+${title_earned}
+Student of Avalon Academy
+
+*line_break
+
+[i]"${personal_motto}"[/i]
+
+*line_break
+
+[b]CONSCIOUSNESS EVOLUTION[/b]
+
+*stat_chart
+    percent collaboration Collaboration
+    percent individual_power Individual Power
+
+*line_break
+
+[b]The Spiral of Growth[/b]
+
+*if has_understood_clay_origin
+    Foundation: Creation Through Need ✓
+*else
+    Foundation: Creation Through Need ○
+
+*if has_witnessed_productive_failure  
+    First Loop: Learning Through Failure ✓
+*else
+    First Loop: Learning Through Failure ○
+
+*if has_completed_verdant_tithe
+    Second Loop: Nature's Recognition ✓
+*else
+    Second Loop: Nature's Recognition ○
+
+*if has_achieved_collaboration_mastery
+    Third Loop: True Collaboration ✓
+*else
+    Third Loop: True Collaboration ○
+
+*if has_recognized_meta_narrative
+    Crown: Narrative Awareness ✓
+*else
+    Crown: Narrative Awareness ○
+
+*line_break
+
+[b]SOUL BONDS[/b]
+
+*stat_chart
+    percent izack_relationship Izack Thorne
+    percent aria_relationship Aria Ravencrest
+    percent zara_relationship Zara
+    percent polly_relationship Polly
+
+*if has_met_clay
+    *stat_chart
+        percent clay_bond Clay
+
+*line_break
+
+*if romantic_interest != "none"
+    [b]Heart's Path:[/b] ${romantic_interest}
+    
+    *temp heart_display ""
+    *if romance_depth >= 5
+        *set heart_display "♥♥♥♥♥"
+    *elseif romance_depth >= 4
+        *set heart_display "♥♥♥♥"
+    *elseif romance_depth >= 3
+        *set heart_display "♥♥♥"
+    *elseif romance_depth >= 2
+        *set heart_display "♥♥"
+    *elseif romance_depth >= 1
+        *set heart_display "♥"
+    *else
+        *set heart_display "..."
+    
+    Romance Depth: ${heart_display}
+    
+    *line_break
+
+[b]YOUR LEGEND[/b]
+
+*if achievement_count > 0
+    Achievements Earned: ${achievement_count}
+    Most Recent: ${latest_achievement}
+
+Energy: ${energy}%
+Time of Day: ${time_of_day}
+
+*line_break
+*line_break
+
+[i]"Every choice writes reality. Choose wisely, choose boldly, but always choose."[/i]
+— The Spiral of Avalon
+
+*page_break Statistics Compiled
+
+[i]*Polly's Note: "Reducing infinite complexity to numbers. How charmingly reductive. Still, even I admit there's poetry in the patterns."*[/i]
+
+
+
+*comment ══════════════════════════════════════════════════════════════════════════════
+*comment  THE SEVEN SACRED CHECKS (Meta: Quality Reminders)
+*comment ══════════════════════════════════════════════════════════════════════════════
+
+*comment 1. Variable Continuity
+*comment    All variables created before use? ✓
+*comment    No orphaned goto labels? ✓
+
+*comment 2. Character Voice Integrity  
+*comment    Does Izack compound words when nervous? ✓
+*comment    Does Aria maintain her precision? ✓
+*comment    Does Zara's warmth shine through? ✓
+*comment    Is Polly appropriately sarcastic? ✓
+
+*comment 3. Magical System Consistency
+*comment    Invitation > Command principle maintained? ✓
+*comment    Productive failure opportunities present? ✓
+*comment    Clay's origin story remains sacred? ✓
+
+*comment 4. Relationship Logic
+*comment    Romance triggers feel earned? ✓
+*comment    Friendship progressions make sense? ✓
+*comment    Character conflicts have resolutions? ✓
+
+*comment 5. Choice Architecture
+*comment    Every choice has meaningful impact? ✓
+*comment    False choices clearly marked? ✓
+*comment    No dead-end paths? ✓
+
+*comment 6. Tonal Consistency
+*comment    Whimsy balanced with depth? ✓
+*comment    Meta elements don't break immersion? ✓
+*comment    Emotional beats land properly? ✓
+
+*comment 7. The Spiral Structure
+*comment    Personal stakes established? ✓
+*comment    Community bonds developed? ✓
+*comment    Cosmic implications hinted? ✓
+
+*comment ══════════════════════════════════════════════════════════════════════════════
+*comment  END OF COMBINED FILE
+*comment  
+*comment  To deploy: Split at the FILE markers into separate .txt files
+*comment  Place all files in your ChoiceScript /scenes/ folder
+*comment  Run dfabulich's ChoiceScript package
+*comment ══════════════════════════════════════════════════════════════════════════════
